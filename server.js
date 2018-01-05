@@ -49,7 +49,19 @@ MongoClient.connect('mongodb://localhost:27017',function(err,client){
       });
     });
 
+    server.delete('/api/EventWishList', function(req, res){
+    db.collection('events').remove({},function(err,result){
+      if(err){
+        console.log(err);
+        res.status(500);
+        res.send();
+        return;
+      }
+      res.status(204);
+      res.send();
 
+    })
+  })
 
 
  server.listen(3000, function(){
