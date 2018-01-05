@@ -1,0 +1,28 @@
+{
+  "name": "week_14",
+  "version": "1.0.0",
+  "description": "JavaScript Project Specs Events Dashboard Individuals want to be able to find relevant cultural events on a dashboard. With an event type of your choice, use an existing API or create a new API to display information about fixtures, news and travel information for events.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js",
+    "build": "webpack -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MiguelMoutela/JsCodeClanProject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MiguelMoutela/JsCodeClanProject/issues"
+  },
+  "homepage": "https://github.com/MiguelMoutela/JsCodeClanProject#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "mongodb": "^3.0.1",
+    "nodemon": "^1.14.7",
+    "webpack": "^3.10.0"
+  }
+}
