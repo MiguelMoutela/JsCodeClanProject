@@ -36,7 +36,21 @@ MongoClient.connect('mongodb://localhost:27017',function(err,client){
       });
     });
 
-    
+    server.get('/api/EventWishList', function(req, res){
+      db.collection('events').find().toArray(function(err,result){
+        if(err){
+          console.log(err);
+          res.status(500);
+          res.send();
+          return;
+        }
+        res.json(result);
+
+      });
+    });
+
+
+
 
  server.listen(3000, function(){
    console.log("Listening on port 3000");
