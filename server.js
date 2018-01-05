@@ -3,6 +3,8 @@ const parser = require('body-parser');
 const server = express();
 
 const MongoClient= require('mongodb').MongoClient;
+const ObjectID = require('mongodb').ObjectID;
+
 
 server.use(parser.json());
 server.use(express.static('client/build'));
@@ -49,7 +51,8 @@ MongoClient.connect('mongodb://localhost:27017',function(err,client){
       });
     });
 
-    server.delete('/api/EventWishList', function(req, res){
+  server.delete('/api/EventWishList', function(req, res){
+
     db.collection('events').remove({},function(err,result){
       if(err){
         console.log(err);
@@ -64,6 +67,19 @@ MongoClient.connect('mongodb://localhost:27017',function(err,client){
   })
 
 
+server.delete('/api/EventWishList/:id', function(req, res){
+db.collection('events').remove({_id:new ObjectID(req.params.id)},function(err,result){
+  if(err){
+    console.log(err);
+    res.status(500);
+    res.send();
+    return;
+  }
+  res.status(204);
+  res.send();
+
+})
+})
  server.listen(3000, function(){
    console.log("Listening on port 3000");
  });
