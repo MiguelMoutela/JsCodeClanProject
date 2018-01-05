@@ -68,9 +68,6 @@
 /***/ (function(module, exports) {
 
 const app = function(){
-const greet = document.querySelector('h1');
-
-greet.innerText = "Bye";
 
 }
 
