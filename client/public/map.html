@@ -9,13 +9,19 @@
     <title></title>
   </head>
   <body>
-    <div id='container'>
-      <input type="text" name="radius">
-      <select id="categories-list" name="categories-list">
-      <option selected disabled> Select a category</option>
-    </select>
-    <button id="search-events" type="submit">Search for events</button>
-    <div id='main-map'> </div>
+    <div id="container">
+      <form>
+        <label for="radius">Radius</label>
+          <input type="text" id="radius" name="radius">
+        <label for="categories-list">Select a category</label>
+          <select id="categories-list" name="categories-list"></select>
+        <label for="start-date">Start date</label>
+          <input type="date" id="start-date" name="start-date">
+        <label for="end-date">End date</label>
+          <input type="date" id="end-date" name="end-date">
+        <button id="search-events" type="submit">Search for events</button>
+      </form>
+    <div id="main-map"> </div>
   </div>
   </body>
 </html>
