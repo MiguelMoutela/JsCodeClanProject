@@ -67,7 +67,12 @@
 /* 0 */
 /***/ (function(module, exports) {
 
-const app = function(){}
+const app = function(){
+const greet = document.querySelector('h1');
+
+greet.innerText = "Bye";
+
+}
 
 document.addEventListener('DOMContentLoaded', app);
 
