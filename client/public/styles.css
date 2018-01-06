@@ -7,14 +7,14 @@
   padding: 0;
   cursor: pointer;
 
-  
+
 }
 
 
 
 #main-map {
   height:500px;
-  width:1200px;
+  width:500px;
 }
 
 th, td {

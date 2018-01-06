@@ -1,20 +1,22 @@
-const newPageView = require('/newPageView.js');
-const Request = require('./services/request.js');
+const newPageView = require('./newPageView.js');
+const request = require('../services/request.js');
 
 // const newBody= new newPageView();
 // not sure if I shpould put this variable out or just call it on each function
 
-const formView = function(){
+const FormView = function(){
 
 }
 
-formView.prototype.viewCitySearch= function(){
- const newBody= new newPageView();
+FormView.prototype.viewCitySearch= function(){
+ const newBody= new NewPageView();
+ newBody.resetPage;
  const form = document.querySelector('#event-selection-form');
- 
+ const request = new Request('http://localhost:3000/map.html')
+
 
 
 
 }
 
-module.exports = formView;
+module.exports = FormView;

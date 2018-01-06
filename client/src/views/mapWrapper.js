@@ -17,3 +17,5 @@ MapWrapper.prototype.whereAmI = function() {
    this.addMarker(location, 'This is your current location');
  }.bind(this))
 }
+
+module.exports = MapWrapper;
