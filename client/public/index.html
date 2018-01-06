@@ -1,11 +1,29 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="styles.css">
-    <script src="/bundle.js"></script>
-    <title>Event Dashboard</title>
-  </head>
-  <body>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="styles.css">
+  <script src="/bundle.js"></script>
+  <title>Event Dashboard</title>
+</head>
+<body>
+  <div id="homepage_top_cont">
+    <h1 id= "homepage_title"> Eventify</h1>
+  </div>
+
+  <div id="homepage_sub_top_cont">
+    <h2 id = "homepage_subtitle"> Search </h2>
+  </div>
+
+  <div id="homepage_main_cont">
+
+    <form id="homepage_form" action="index.html" method="post">
+      <input class= "homepage_button" type="button" onclick="location.href='map.html';"  value="by city or postcode">
+      <input class= "homepage_button" type="button" onclick="location.href='map.html';"  value="around me">
+      <input class= "homepage_button" type="button" onclick="location.href='map.html';"  value="My  choosen events ">
+      <input class= "homepage_button" type="button" onclick="location.href='map.html';"  value="about">
+    </form>
+
+  </div>
+</body>
 </html>
