@@ -6,13 +6,25 @@
     <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script type="text/javascript" src="mapWrapper.js"></script>
     <script src="/bundle.js"></script>
-    <title></title>
+    <title>Map Display</title>
   </head>
   <body>
     <div id="container">
-      <form>
+      <input class="burger-check" id="burger-check" type="checkbox">
+      <label for="burger-check" class="burger"></label>
+      <nav id="burger-navigation" class="navigation">
+        <ul>
+          <li>Home</li>
+          <li>Around me</li>
+          <li>Choose a city</li>
+          <li>About</li>
+        </ul>
+      </nav>
+      <form id="event-selection-form">
         <label for="radius">Radius</label>
           <input type="text" id="radius" name="radius">
+        <!-- <label for="city">Type a city</label>
+          <input type="text" id="city" name="city"> -->
         <label for="categories-list">Select a category</label>
           <select id="categories-list" name="categories-list"></select>
         <label for="start-date">Start date</label>
@@ -22,6 +34,17 @@
         <button id="search-events" type="submit">Search for events</button>
       </form>
     <div id="main-map"> </div>
+    <div id="events-table">
+      <table>
+        <tr>
+          <th>Event name</th>
+          <th>Address</th>
+          <th>Time</th>
+          <th>Save to database button</th>
+        </tr>
+      </table>
+    </div>
   </div>
+
   </body>
 </html>

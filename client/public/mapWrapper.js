@@ -3,7 +3,7 @@ const MapWrapper = function (container, coords, zoom) {
     center: coords,
     zoom: zoom
   });
-  // this.markers = []
+  this.markers = []
 }
 
 
