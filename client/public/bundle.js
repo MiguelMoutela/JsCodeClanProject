@@ -96,7 +96,7 @@ const Request = __webpack_require__(0);
 const MapWrapper = __webpack_require__(4);
 const UserLocation = __webpack_require__(5);
 const NewPageView = __webpack_require__(3);
-const FormView = __webpack_require__(2);
+
 
 const app = function(){
 
@@ -120,6 +120,9 @@ const app = function(){
 const clearPage = new NewPageView();
 clearPage.resetPage();
 
+const citySearchForm = new FormView();
+citySearchForm.viewCitySearch();
+
 }
 
 document.addEventListener('DOMContentLoaded', app);
@@ -129,8 +132,8 @@ document.addEventListener('DOMContentLoaded', app);
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const newPageView = __webpack_require__(3);
-const request = __webpack_require__(0);
+const NewPageView = __webpack_require__(3);
+const Request = __webpack_require__(0);
 
 // const newBody= new newPageView();
 // not sure if I shpould put this variable out or just call it on each function
@@ -140,14 +143,25 @@ const FormView = function(){
 }
 
 FormView.prototype.viewCitySearch= function(){
- const newBody= new NewPageView();
- newBody.resetPage;
- const form = document.querySelector('#event-selection-form');
- const inputBox = document.querySelector('#city');
- const dropmenu = document.querySelector('#categories-list');
- const searchBttn = document.querySelector('#search-events');
+
+  const form = document.querySelector("#event-selection-form");
+
+form.style.display = "block";
+console.log(form);
 
 
+ // const form = document.getElementById('event-selection-form');
+ // form.display = 'block';
+ const radius = document.getElementById('radius');
+ radius.style.display = 'block';
+ console.log(radius);
+
+ // form;
+ // const inputBox = document.querySelector('#city');
+ // const dropmenu = document.querySelector('#categories-list');
+ // const searchBttn = document.querySelector('#search-events');
+ //
+ //
 
  // const request = new Request('http://localhost:3000/map.html')
 
@@ -169,7 +183,8 @@ const NewPageView = function(){
 
 NewPageView.prototype.resetPage= function(){
   const body = document.querySelector('#body_container');
-    body.innerHTML = '';
+    // body.innerHTML = '';
+    body.style.display = "none";
 
 }
 

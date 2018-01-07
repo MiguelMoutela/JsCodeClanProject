@@ -3,7 +3,7 @@ const Request = require('./services/request.js');
 const MapWrapper = require('./views/mapWrapper.js');
 const UserLocation = require('./views/userLocation.js');
 const NewPageView = require('./views/newPageView.js');
-const FormView = require('./views/formView.js');
+
 
 const app = function(){
 
@@ -26,6 +26,9 @@ const app = function(){
 
 const clearPage = new NewPageView();
 clearPage.resetPage();
+
+const citySearchForm = new FormView();
+citySearchForm.viewCitySearch();
 
 }
 
