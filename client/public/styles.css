@@ -3,7 +3,8 @@
 #homepage_sub_top_cont,
 #homepageForm,
 #searchBox,
-#events_table  {
+#events_table,
+#about_container  {
   display:none;
 }
 

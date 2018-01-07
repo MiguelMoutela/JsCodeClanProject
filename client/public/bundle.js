@@ -99,9 +99,7 @@ const NewPageView = __webpack_require__(3);
 
 
 const app = function(){
-
-
-
+  
   const mapContainer = document.querySelector('#main_map');
   const sucess = function(position){
     const location = {
@@ -124,9 +122,6 @@ const app = function(){
   // homepage.createCitySearch();
   homepage.createNearSearch();
 
-
-// const citySearchForm = new FormView();
-// citySearchForm.viewCitySearch();
 
 }
 
