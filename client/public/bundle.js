@@ -189,6 +189,9 @@ MapWrapper.prototype.addMarker = function (coords) {
     this.markers.push(marker)
   }
 
+const inputRadius = document.getElementById("radius").value;
+const inputCity = document.getElementById("city").value;
+
 
 module.exports = MapWrapper;
 
