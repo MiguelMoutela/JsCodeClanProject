@@ -2,6 +2,8 @@ const FormView = require('./views/formView.js');
 const Request = require('./services/request.js');
 const MapWrapper = require('./views/mapWrapper.js');
 const UserLocation = require('./views/userLocation.js');
+const NewPageView = require('./views/newPageView.js');
+const FormView = require('./views/formView.js');
 
 const app = function(){
 
@@ -21,6 +23,10 @@ const app = function(){
 
   const userlocation = new UserLocation();
   userlocation.getLocation(sucess, error);
+
+const clearPage = new NewPageView();
+clearPage.resetPage();
+
 }
 
 document.addEventListener('DOMContentLoaded', app);

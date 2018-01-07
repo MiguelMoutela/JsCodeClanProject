@@ -95,6 +95,8 @@ const FormView = __webpack_require__(2);
 const Request = __webpack_require__(0);
 const MapWrapper = __webpack_require__(4);
 const UserLocation = __webpack_require__(5);
+const NewPageView = __webpack_require__(3);
+const FormView = __webpack_require__(2);
 
 const app = function(){
 
@@ -114,6 +116,10 @@ const app = function(){
 
   const userlocation = new UserLocation();
   userlocation.getLocation(sucess, error);
+
+const clearPage = new NewPageView();
+clearPage.resetPage();
+
 }
 
 document.addEventListener('DOMContentLoaded', app);
@@ -137,7 +143,13 @@ FormView.prototype.viewCitySearch= function(){
  const newBody= new NewPageView();
  newBody.resetPage;
  const form = document.querySelector('#event-selection-form');
- const request = new Request('http://localhost:3000/map.html')
+ const inputBox = document.querySelector('#city');
+ const dropmenu = document.querySelector('#categories-list');
+ const searchBttn = document.querySelector('#search-events');
+
+
+
+ // const request = new Request('http://localhost:3000/map.html')
 
 
 

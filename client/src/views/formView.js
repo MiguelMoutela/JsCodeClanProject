@@ -12,7 +12,13 @@ FormView.prototype.viewCitySearch= function(){
  const newBody= new NewPageView();
  newBody.resetPage;
  const form = document.querySelector('#event-selection-form');
- const request = new Request('http://localhost:3000/map.html')
+ const inputBox = document.querySelector('#city');
+ const dropmenu = document.querySelector('#categories-list');
+ const searchBttn = document.querySelector('#search-events');
+
+
+
+ // const request = new Request('http://localhost:3000/map.html')
 
 
 
