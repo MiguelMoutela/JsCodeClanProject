@@ -28,7 +28,8 @@ const app = function(){
 
   const homepage = new NewPageView();
   // homepage.createHomepage();
-  homepage.createCitySearch();
+  // homepage.createCitySearch();
+  homepage.createNearSearch();
 
 
 // const citySearchForm = new FormView();

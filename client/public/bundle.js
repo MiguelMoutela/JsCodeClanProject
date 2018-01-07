@@ -121,7 +121,8 @@ const app = function(){
 
   const homepage = new NewPageView();
   // homepage.createHomepage();
-  homepage.createCitySearch();
+  // homepage.createCitySearch();
+  homepage.createNearSearch();
 
 
 // const citySearchForm = new FormView();
@@ -207,6 +208,17 @@ NewPageView.prototype.createCitySearch = function(){
   display.displayOn('events_table');
 }
 
+NewPageView.prototype.createNearSearch = function(){
+
+  display.displayOn('burguer_nav');
+  display.displayOn('searchBox');
+  display.displayOn('radius');
+  display.displayOn('radius_label');
+  display.displayOff('city_label');
+  display.displayOff('city');
+  display.displayOn('main_map');
+  display.displayOn('events_table');
+}
 
 
 
