@@ -106,8 +106,7 @@ const app = function(){
       lat: position.coords.latitude,
       lng: position.coords.longitude
     };
-    const mainMap = new MapWrapper(mapContainer, location, 7);
-
+    const mainMap = new MapWrapper(mapContainer, location, 15);
   }
 
   const error = function(){
@@ -135,40 +134,13 @@ document.addEventListener('DOMContentLoaded', app);
 const NewPageView = __webpack_require__(3);
 const Request = __webpack_require__(0);
 
-// const newBody= new newPageView();
-// not sure if I shpould put this variable out or just call it on each function
 
 const FormView = function(){
 
 }
 
-FormView.prototype.viewCitySearch= function(){
-
-  const form = document.querySelector("#event-selection-form");
-
-form.style.display = "block";
-console.log(form);
 
 
- // const form = document.getElementById('event-selection-form');
- // form.display = 'block';
- const radius = document.getElementById('radius');
- radius.style.display = 'block';
- console.log(radius);
-
- // form;
- // const inputBox = document.querySelector('#city');
- // const dropmenu = document.querySelector('#categories-list');
- // const searchBttn = document.querySelector('#search-events');
- //
- //
-
- // const request = new Request('http://localhost:3000/map.html')
-
-
-
-
-}
 
 module.exports = FormView;
 
@@ -186,8 +158,6 @@ const NewPageView = function(){
 const display = new DisplayChanger();
 
 NewPageView.prototype.createHomepage = function(){
-  // const display = new DisplayChanger();
-
   display.displayOn('homepage_top_cont');
   display.displayOn('homepage_sub_top_cont');
   display.displayOn('homepageForm');
@@ -231,13 +201,22 @@ const MapWrapper = function (container, coords, zoom) {
     center: coords,
     zoom: zoom
   });
-
-  const marker = new google.maps.Marker({
-    position:coords,
+  this.markers = [];
+  const youAreHereMarker = new google.maps.Marker({
+    position: coords,
     map: map
-  })
-
+    });
+  this.markers.push(youAreHereMarker);
 }
+
+MapWrapper.prototype.addMarker = function (coords) {
+  var marker = new google.maps.Marker({
+    position: coords,
+    map: this.map
+    });
+    this.markers.push(marker)
+  }
+
 
 module.exports = MapWrapper;
 
@@ -271,8 +250,6 @@ const DisplayChanger =function(){
 
 DisplayChanger.prototype.displayOn = function(id){
   document.getElementById(id).style.display = 'block';
-// document.getElementById(id).style.removeProperty( 'display' );
-// const change = element.style.display= "block";
 }
 
 DisplayChanger.prototype.displayOff = function(id){

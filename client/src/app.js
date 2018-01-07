@@ -13,8 +13,7 @@ const app = function(){
       lat: position.coords.latitude,
       lng: position.coords.longitude
     };
-    const mainMap = new MapWrapper(mapContainer, location, 7);
-
+    const mainMap = new MapWrapper(mapContainer, location, 15);
   }
 
   const error = function(){
