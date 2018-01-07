@@ -31,6 +31,7 @@ const app = function(){
 
   const citySearchLoader =function(){
     const newSearch = new NewPageView();
+    newSearch.clearpage();
     newSearch.createCitySearch();
     //   homepage.createCitySearch();
   }

@@ -20,6 +20,7 @@ NewPageView.prototype.createHomepage = function(){
 NewPageView.prototype.createCitySearch = function(){
 
   display.displayOn('burguer_nav');
+  display.displayOn('event_selection_form');
   display.displayOn('searchBox');
   display.displayOff('radius');
   display.displayOff('radius_label');
