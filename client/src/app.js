@@ -28,6 +28,7 @@ const app = function(){
   // homepage.createCitySearch();
   // homepage.createNearSearch();
   homepage.createAboutPage();
+  homepage.changeAboutPageElement("about_text","this is a test for changeAboutPageElement() ");
 
 
 }

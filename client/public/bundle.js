@@ -121,6 +121,7 @@ const app = function(){
   // homepage.createCitySearch();
   // homepage.createNearSearch();
   homepage.createAboutPage();
+  homepage.changeAboutPageElement("about_text","this is a test for changeAboutPageElement() ");
 
 
 }
@@ -189,7 +190,14 @@ NewPageView.prototype.createNearSearch = function(){
 NewPageView.prototype.createAboutPage = function(){
 
   display.displayOn('about_container');
-  
+
+}
+
+NewPageView.prototype.changeAboutPageElement = function(id,text){
+
+ display.displayOn('about_container');
+ document.getElementById(id).innerText = text;
+
 }
 
 
