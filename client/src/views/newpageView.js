@@ -44,6 +44,8 @@ NewPageView.prototype.createNearSearch = function(){
 NewPageView.prototype.createAboutPage = function(){
 
   display.displayOn('about_container');
+  display.displayOn('about_title');
+  display.displayOn('about_text');
 
 }
 
