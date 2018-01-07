@@ -64,23 +64,153 @@
 /******/ })
 /************************************************************************/
 /******/ ([
-/* 0 */,
-/* 1 */
+/* 0 */
 /***/ (function(module, exports) {
 
+const Request = function(url) {
+  this.url = url;
+}
+
+Request.prototype.get = function(callback) {
+  const request = new XMLHttpRequest();
+  request.open('GET', this.url);
+  request.addEventListener('load',function(){
+    if(this.status!==200){
+      return;
+    }
+    const responseBody= JSON.parse(this.responseText);
+    callback(responseBody)
+  });
+  request.send();
+}
+
+module.exports = Request;
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const FormView = __webpack_require__(2);
+const Request = __webpack_require__(0);
+const MapWrapper = __webpack_require__(4);
+const UserLocation = __webpack_require__(5);
+
 const app = function(){
-  // const center = {
-  //     lat: 55.946962,
-  //     lng: -3.20195
-  // }
 
   const mapContainer = document.querySelector('#main-map');
-  const mainMap = new MapWrapper(mapContainer, center, 25);
-  mainMap.whereAmI();
-  console.log(this.location);
+
+  const sucess = function(position){
+    const location = {
+      lat: position.coords.latitude,
+      lng: position.coords.longitude
+    };
+    const mainMap = new MapWrapper(mapContainer, location, 15);
+  }
+
+  const error = function(){
+    alert("Error occured. We did not get your location");
+  }
+
+  const userlocation = new UserLocation();
+  userlocation.getLocation(sucess, error);
 }
 
 document.addEventListener('DOMContentLoaded', app);
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const newPageView = __webpack_require__(3);
+const request = __webpack_require__(0);
+
+// const newBody= new newPageView();
+// not sure if I shpould put this variable out or just call it on each function
+
+const FormView = function(){
+
+}
+
+FormView.prototype.viewCitySearch= function(){
+ const newBody= new NewPageView();
+ newBody.resetPage;
+ const form = document.querySelector('#event-selection-form');
+ const request = new Request('http://localhost:3000/map.html')
+
+
+
+
+}
+
+module.exports = FormView;
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+const NewPageView = function(){
+
+}
+
+NewPageView.prototype.resetPage= function(){
+  const body = document.querySelector('#body_container');
+    body.innerHTML = '';
+
+}
+
+module.exports = NewPageView;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+const MapWrapper = function (container, coords, zoom) {
+  const map = new google.maps.Map(container, {
+    center: coords,
+    zoom: zoom
+  });
+  this.markers = [];
+  const youAreHereMarker = new google.maps.Marker({
+    position: coords,
+    map: map
+    });
+  this.markers.push(youAreHereMarker);
+}
+
+MapWrapper.prototype.addMarker = function (coords) {
+  var marker = new google.maps.Marker({
+    position: coords,
+    map: this.map
+    });
+    this.markers.push(marker)
+  }
+
+
+module.exports = MapWrapper;
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+const UserLocation = function(){
+
+}
+
+UserLocation.prototype.getLocation = function(getLocation, locationFailed){
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(getLocation, locationFailed);
+  }
+  else{
+    alert('you do not have geolocation available on your device');
+  }
+}
+
+module.exports = UserLocation;
 
 
 /***/ })

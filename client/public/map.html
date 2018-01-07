@@ -4,12 +4,11 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="styles.css">
     <script src="https://maps.googleapis.com/maps/api/js"></script>
-    <script type="text/javascript" src="mapWrapper.js"></script>
     <script src="/bundle.js"></script>
     <title>Map Display</title>
   </head>
   <body>
-    <div id="container">
+    <div id="body_container">
       <input class="burger-check" id="burger-check" type="checkbox">
       <label for="burger-check" class="burger"></label>
       <nav id="burger-navigation" class="navigation">
@@ -23,8 +22,8 @@
       <form id="event-selection-form">
         <label for="radius">Radius</label>
           <input type="text" id="radius" name="radius">
-        <!-- <label for="city">Type a city</label>
-          <input type="text" id="city" name="city"> -->
+        <label for="city">Type a city</label>
+          <input type="text" id="city" name="city">
         <label for="categories-list">Select a category</label>
           <select id="categories-list" name="categories-list"></select>
         <label for="start-date">Start date</label>
