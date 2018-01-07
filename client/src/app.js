@@ -7,11 +7,9 @@ const NewPageView = require('./views/newPageView.js');
 
 const app = function(){
 
-  const homepage = new NewPageView();
-  homepage.createHomepage();
 
 
-  const mapContainer = document.querySelector('#main-map');
+  const mapContainer = document.querySelector('#main_map');
   const sucess = function(position){
     const location = {
       lat: position.coords.latitude,
@@ -28,6 +26,9 @@ const app = function(){
   const userlocation = new UserLocation();
   userlocation.getLocation(sucess, error);
 
+  const homepage = new NewPageView();
+  // homepage.createHomepage();
+  homepage.createCitySearch();
 
 
 // const citySearchForm = new FormView();
