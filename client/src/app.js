@@ -7,6 +7,10 @@ const NewPageView = require('./views/newPageView.js');
 
 const app = function(){
 
+  const homepage = new NewPageView();
+  homepage.createHomepage();
+
+
   const mapContainer = document.querySelector('#main-map');
   const sucess = function(position){
     const location = {
@@ -24,8 +28,7 @@ const app = function(){
   const userlocation = new UserLocation();
   userlocation.getLocation(sucess, error);
 
-// const homepage = new NewPageView();
-// homepage.createHomepage();
+
 
 // const citySearchForm = new FormView();
 // citySearchForm.viewCitySearch();

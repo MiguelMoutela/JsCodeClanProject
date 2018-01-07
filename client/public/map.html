@@ -10,16 +10,19 @@
 <body>
 
   <div id="body_container">
-    <input class="burger-check" id="burger-check" type="checkbox">
-    <label for="burger-check" class="burger"></label>
-    <nav id="burger-navigation" class="navigation">
-      <ul>
-        <li>Home</li>
-        <li>Around me</li>
-        <li>Choose a city</li>
-        <li>About</li>
-      </ul>
-    </nav>
+
+    <div id="burguer_nav">
+      <input class="burger-check" id="burger_check" type="checkbox">
+      <label for="burger_check" class="burger"></label>
+      <nav id="burger_navigation" class="navigation">
+        <ul>
+          <li>Home</li>
+          <li>Around me</li>
+          <li>Choose a city</li>
+          <li>About</li>
+        </ul>
+      </nav>
+    </div>
 
     <div id="homepage_top_cont">
       <h1 id= "homepage_title"> Eventify</h1>
@@ -28,31 +31,37 @@
     <div id="homepage_sub_top_cont">
       <h2 id = "homepage_subtitle"> Search </h2>
     </div>
+    <div id="homepageForm">
 
-    <form id="homepage_form" action="index.html" method="post">
-      <input class= "homepage_button" type="button" onclick=""  value="by city or postcode">
-      <input class= "homepage_button" type="button" onclick="location.href='map.html';"  value="around me">
-      <input class= "homepage_button" type="button" onclick="location.href='map.html';"  value="My  choosen events ">
-      <input class= "homepage_button" type="button" onclick="location.href='map.html';"  value="about">
-    </form>
 
-    <form id="event-selection-form">
-      <label for="radius">Radius</label>
-      <input type="text" id="radius" name="radius">
-      <label for="city">Type a city</label>
-      <input type="text" id="city" name="city">
-      <label for="categories-list">Select a category</label>
-      <select id="categories-list" name="categories-list"></select>
-      <label for="start-date">Start date</label>
-      <input type="date" id="start-date" name="start-date">
-      <label for="end-date">End date</label>
-      <input type="date" id="end-date" name="end-date">
-      <button id="search-events" type="submit">Search for events</button>
-    </form>
+      <form id="homepage_form" action="index.html" method="post">
+        <input class= "homepage_button" type="button" onclick=""  value="by city or postcode">
+        <input class= "homepage_button" type="button" onclick="location.href='map.html';"  value="around me">
+        <input class= "homepage_button" type="button" onclick="location.href='map.html';"  value="My  choosen events ">
+        <input class= "homepage_button" type="button" onclick="location.href='map.html';"  value="about">
+      </form>
+    </div>
+    <div id="searchBox">
 
-    <div id="main-map"> </div>
 
-    <div id="events-table">
+      <form id="event_selection_form">
+        <label for="radius">Radius</label>
+        <input type="text" id="radius" name="radius">
+        <label for="city">Type a city</label>
+        <input type="text" id="city" name="city">
+        <label for="categories_list">Select a category</label>
+        <select id="categories_list" name="categories_list"></select>
+        <label for="start_date">Start date</label>
+        <input type="date" id="start_date" name="start_date">
+        <label for="end_date">End date</label>
+        <input type="date" id="end_date" name="end_date">
+        <button id="search_events" type="submit">Search for events</button>
+      </form>
+    </div>
+
+    <div id="main_map"> </div>
+
+    <div id="events_table">
       <table>
         <tr>
           <th>Event name</th>

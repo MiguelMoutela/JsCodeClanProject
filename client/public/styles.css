@@ -1,28 +1,28 @@
-* {
+#burguer_nav,
+#homepage_top_cont,
+#homepage_sub_top_cont,
+#homepageForm,
+#searchBox,
+#events_table  {
   display:none;
 }
 
 
-
-
-
 .burger {
   $width: 28px;
-  display: inline-block;
+  display:inline-block;
   border: 0;
   background: none;
   outline: 0;
   padding: 0;
   cursor: pointer;
 
-
 }
-
-
 
 #main-map {
   height:500px;
   width:1200px;
+  display:none;
 }
 
 th, td {
