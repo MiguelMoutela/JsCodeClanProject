@@ -1,1 +1,1 @@
-const request = request('./services/request.js')
+const request = require('./services/request.js');
