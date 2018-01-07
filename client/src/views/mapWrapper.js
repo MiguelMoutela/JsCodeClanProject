@@ -10,15 +10,15 @@ const MapWrapper = function (container, coords, zoom) {
     });
   this.markers.push(youAreHereMarker);
 
-  var circleOptions = {
-       center: coords,
-       fillOpacity: 0,
-       strokeOpacity:0,
-       map: map,
-       radius: 500 
-   }
-   var myCircle = new google.maps.Circle(circleOptions);
-   map.fitBounds(myCircle.getBounds());
+   var circleOptions = {
+        center: coords,
+        fillOpacity: 0,
+        strokeOpacity:0,
+        map: map,
+        radius: 500
+    }
+    var myCircle = new google.maps.Circle(circleOptions);
+    map.fitBounds(myCircle.getBounds());
 }
 
 MapWrapper.prototype.addMarker = function (coords) {
@@ -41,7 +41,29 @@ MapWrapper.prototype.setRadius = function (coords, radius) {
    this.map.fitBounds(myCircle.getBounds());
 }
 
+//centering map on the city from the input box
 
+  //const inputCity = document.getElementById("city").value;
+
+MapWrapper.prototype.centerOnInputCity = function(inputCity){
+  var city = inputCity.toString();
+  var geocoder = new google.maps.Geocoder();
+  geocoder.geocode({'address': city}, function(results, status) {
+    if (status === 'OK') {
+      map.setCenter(results[0].geometry.location);
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+}
+
+
+
+
+
+
+//MapWrapper.prototype.bounceMarker = function (marker) {
+//marker.setAnimation(google.maps.Animation.BOUNCE); }
 
 //   const inputCity = document.getElementById("city").value;
 
