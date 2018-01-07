@@ -9,6 +9,16 @@ const MapWrapper = function (container, coords, zoom) {
     map: map
     });
   this.markers.push(youAreHereMarker);
+
+  var circleOptions = {
+       center: coords,
+       fillOpacity: 0,
+       strokeOpacity:0,
+       map: map,
+       radius: 500 
+   }
+   var myCircle = new google.maps.Circle(circleOptions);
+   map.fitBounds(myCircle.getBounds());
 }
 
 MapWrapper.prototype.addMarker = function (coords) {
@@ -19,8 +29,26 @@ MapWrapper.prototype.addMarker = function (coords) {
     this.markers.push(marker)
   }
 
-const inputRadius = document.getElementById("radius").value;
-const inputCity = document.getElementById("city").value;
+MapWrapper.prototype.setRadius = function (coords, radius) {
+  var circleOptions = {
+       center: coords,
+       fillOpacity: 0,
+       strokeOpacity:0,
+       map: this.map,
+       radius: radius
+   }
+   var myCircle = new google.maps.Circle(circleOptions);
+   this.map.fitBounds(myCircle.getBounds());
+}
+
+
+
+//   const inputCity = document.getElementById("city").value;
+
+
+
+
+
 
 
 module.exports = MapWrapper;
