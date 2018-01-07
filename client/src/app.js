@@ -45,9 +45,21 @@ const app = function(){
     newSearch.createNearSearch();
 
   }
-  
+
   const nearSearchButton = document.querySelector('#near_search');
   nearSearchButton.addEventListener('click', nearSearchLoader);
+
+
+  const aboutPageLoader =function(){
+    const newSearch = new NewPageView();
+    newSearch.clearpage();
+    newSearch.createAboutPage();
+
+  }
+
+  const aboutPageButton = document.querySelector('#about_view');
+  aboutPageButton.addEventListener('click', aboutPageLoader);
+
 
 }
 
