@@ -153,6 +153,10 @@ const app = function(){
   const aboutPageButton = document.querySelector('#about_view');
   aboutPageButton.addEventListener('click', aboutPageLoader);
 
+// TODO create the button function for db and callback!
+
+
+
 
 }
 
@@ -166,11 +170,17 @@ document.addEventListener('DOMContentLoaded', app);
 const NewPageView = __webpack_require__(3);
 const Request = __webpack_require__(0);
 
-
 const FormView = function(){
 
 }
 
+const url = "http://api.eventful.com/rest/categories/list?app_key=ZpGXZc399XdxLZG9";
+const request = new Request(url);
+// request.get(url);
+
+FormView.prototype.populateDropmenu= function(){
+  const select = document.querySelector('#categories_list');
+}
 
 
 

@@ -60,6 +60,10 @@ const app = function(){
   const aboutPageButton = document.querySelector('#about_view');
   aboutPageButton.addEventListener('click', aboutPageLoader);
 
+// TODO create the button function for db and callback!
+
+
+
 
 }
 
