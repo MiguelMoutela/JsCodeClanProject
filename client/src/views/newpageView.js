@@ -31,6 +31,7 @@ NewPageView.prototype.createCitySearch = function(){
 NewPageView.prototype.createNearSearch = function(){
 
   display.displayOn('burguer_nav');
+  display.displayOn('event_selection_form');
   display.displayOn('searchBox');
   display.displayOn('radius');
   display.displayOn('radius_label');
