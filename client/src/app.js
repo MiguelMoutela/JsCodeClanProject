@@ -33,13 +33,21 @@ const app = function(){
     const newSearch = new NewPageView();
     newSearch.clearpage();
     newSearch.createCitySearch();
-    //   homepage.createCitySearch();
+
   }
 
   const citySearchButton = document.querySelector('#city_search');
   citySearchButton.addEventListener('click', citySearchLoader);
 
+  const nearSearchLoader =function(){
+    const newSearch = new NewPageView();
+    newSearch.clearpage();
+    newSearch.createNearSearch();
 
+  }
+  
+  const nearSearchButton = document.querySelector('#near_search');
+  nearSearchButton.addEventListener('click', nearSearchLoader);
 
 }
 
