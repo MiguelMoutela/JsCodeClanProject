@@ -4,18 +4,23 @@ const MapWrapper = require('./views/mapWrapper.js');
 const UserLocation = require('./views/userLocation.js');
 
 const app = function(){
-  // const center = {
-  //     lat: 55.946962,
-  //     lng: -3.20195
-  // }
-  // const newform = new FormView();
-  // newform.viewCitySearch;
+
   const mapContainer = document.querySelector('#main-map');
+  const sucess = function(position){
+    const location = {
+      lat: position.coords.latitude,
+      lng: position.coords.longitude
+    };
+    const mainMap = new MapWrapper(mapContainer, location, 7);
+
+  }
+
+  const error = function(){
+    alert("Error occured. We did not get your location");
+  }
+
   const userlocation = new UserLocation();
-  const coords = userlocation.getLocation();
-  const mainMap = new MapWrapper(mapContainer, coords, 7);
-  // mainMap.whereAmI();
-  // console.log(this.location);
+  userlocation.getLocation(sucess, error);
 }
 
 document.addEventListener('DOMContentLoaded', app);

@@ -97,18 +97,23 @@ const MapWrapper = __webpack_require__(4);
 const UserLocation = __webpack_require__(5);
 
 const app = function(){
-  // const center = {
-  //     lat: 55.946962,
-  //     lng: -3.20195
-  // }
-  // const newform = new FormView();
-  // newform.viewCitySearch;
+
   const mapContainer = document.querySelector('#main-map');
+  const sucess = function(position){
+    const location = {
+      lat: position.coords.latitude,
+      lng: position.coords.longitude
+    };
+    const mainMap = new MapWrapper(mapContainer, location, 7);
+
+  }
+
+  const error = function(){
+    alert("Error occured. We did not get your location");
+  }
+
   const userlocation = new UserLocation();
-  const coords = userlocation.getLocation();
-  const mainMap = new MapWrapper(mapContainer, coords, 7);
-  // mainMap.whereAmI();
-  // console.log(this.location);
+  userlocation.getLocation(sucess, error);
 }
 
 document.addEventListener('DOMContentLoaded', app);
@@ -164,24 +169,17 @@ module.exports = NewPageView;
 /***/ (function(module, exports) {
 
 const MapWrapper = function (container, coords, zoom) {
-  this.Map = new google.maps.Map(container, {
+  const map = new google.maps.Map(container, {
     center: coords,
     zoom: zoom
   });
 
+  const marker = new google.maps.Marker({
+    position:coords,
+    map: map
+  })
+
 }
-
-
-// MapWrapper.prototype.whereAmI = function() {
-//  navigator.geolocation.getCurrentPosition(function(position) {
-//    const location = {
-//      lat: position.coords.latitude,
-//      lng: position.coords.longitude
-//    }
-//    this.googleMap.setCenter(location);
-//    this.addMarker(location, 'This is your current location');
-//  }.bind(this))
-// }
 
 module.exports = MapWrapper;
 
@@ -192,20 +190,9 @@ module.exports = MapWrapper;
 
 const UserLocation = function(){
 
-  //  navigator.geolocation.getCurrentPosition(function(position) {
-  //   const location = {
-  //     lat: position.coords.latitude,
-  //     lng: position.coords.longitude
-  //   }
-  //
-  //   // this.googleMap.setCenter(location);
-  //
-  //   // googleMap.addMarker(location, 'This is your current location');
-  //
-  // })
 }
 
-UserLocation.prototype.getLocation = function(){
+UserLocation.prototype.getLocation = function(getLocation, locationFailed){
   if(navigator.geolocation){
     navigator.geolocation.getCurrentPosition(getLocation, locationFailed);
   }
@@ -213,22 +200,6 @@ UserLocation.prototype.getLocation = function(){
     alert('you do not have geolocation available on your device');
   }
 }
-
-  const getLocation = function(position){
-    const location = {
-      lat: position.coords.latitude,
-      lng: position.coords.longitude
-    };
-
-  }
-
-  const locationFailed = function(){
-    alert("Error occured. We did not get your location");
-  }
-
-
-
-
 
 module.exports = UserLocation;
 
