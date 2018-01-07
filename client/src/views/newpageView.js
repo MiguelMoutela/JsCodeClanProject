@@ -34,6 +34,11 @@ NewPageView.prototype.createNearSearch = function(){
   display.displayOn('events_table');
 }
 
+NewPageView.prototype.createAboutPage = function(){
+
+  display.displayOn('about_container');
+  
+}
 
 
 

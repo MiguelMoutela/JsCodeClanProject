@@ -6,7 +6,7 @@ const NewPageView = require('./views/newPageView.js');
 
 
 const app = function(){
-  
+
   const mapContainer = document.querySelector('#main_map');
   const sucess = function(position){
     const location = {
@@ -26,7 +26,8 @@ const app = function(){
   const homepage = new NewPageView();
   // homepage.createHomepage();
   // homepage.createCitySearch();
-  homepage.createNearSearch();
+  // homepage.createNearSearch();
+  homepage.createAboutPage();
 
 
 }

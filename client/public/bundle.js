@@ -99,7 +99,7 @@ const NewPageView = __webpack_require__(3);
 
 
 const app = function(){
-  
+
   const mapContainer = document.querySelector('#main_map');
   const sucess = function(position){
     const location = {
@@ -119,7 +119,8 @@ const app = function(){
   const homepage = new NewPageView();
   // homepage.createHomepage();
   // homepage.createCitySearch();
-  homepage.createNearSearch();
+  // homepage.createNearSearch();
+  homepage.createAboutPage();
 
 
 }
@@ -185,6 +186,11 @@ NewPageView.prototype.createNearSearch = function(){
   display.displayOn('events_table');
 }
 
+NewPageView.prototype.createAboutPage = function(){
+
+  display.displayOn('about_container');
+  
+}
 
 
 
