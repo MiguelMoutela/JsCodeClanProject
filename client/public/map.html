@@ -11,7 +11,7 @@
 
   <div id="body_container">
 
-    <div id="burguer_nav">
+    <div id="burguer_nav" class="toggleable">
       <input class="burger-check" id="burger_check" type="checkbox">
       <label for="burger_check" class="burger"></label>
       <nav id="burger_navigation" class="navigation">
@@ -24,14 +24,14 @@
       </nav>
     </div>
 
-    <div id="homepage_top_cont">
+    <div id="homepage_top_cont" class="toggleable">
       <h1 id= "homepage_title"> Eventify</h1>
     </div>
 
-    <div id="homepage_sub_top_cont">
+    <div id="homepage_sub_top_cont" class="toggleable">
       <h2 id = "homepage_subtitle"> Search </h2>
     </div>
-    <div id="homepageForm">
+    <div id="homepageForm" class="toggleable">
 
 
       <form id="homepage_form" action="index.html" method="post">
@@ -45,7 +45,7 @@
 
     <div id="searchBox">
 
-      <form id="event_selection_form">
+      <form id="event_selection_form" class="toggleable">
         <label id= "radius_label" for="radius">Radius</label>
         <input type="text" id="radius" name="radius">
         <label id ="city_label" for="city">Type a city</label>
@@ -60,9 +60,9 @@
       </form>
     </div>
 
-    <div id="main_map"> </div>
+    <div id="main_map" class="toggleable"> </div>
 
-    <div id="events_table">
+    <div id="events_table" class="toggleable">
       <table>
         <tr>
           <th>Event name</th>
@@ -72,7 +72,7 @@
         </tr>
       </table>
     </div>
-    <div id="about_container">
+    <div id="about_container" class="toggleable">
       <h1 id = "about_title">ABOUT TITLE TO GO HERE</h1>
       <p id = "about_text">text about to go here</p>
     </div>

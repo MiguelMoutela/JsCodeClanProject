@@ -6,6 +6,12 @@ const NewPageView = function(){
 
 const display = new DisplayChanger();
 
+NewPageView.prototype.clearpage = function(){
+
+
+
+}
+
 NewPageView.prototype.createHomepage = function(){
   display.displayOn('homepage_top_cont');
   display.displayOn('homepage_sub_top_cont');

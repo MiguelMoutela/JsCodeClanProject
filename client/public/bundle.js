@@ -99,6 +99,12 @@ const NewPageView = __webpack_require__(3);
 
 
 const app = function(){
+  const homepage = new NewPageView();
+  homepage.createHomepage();
+  // homepage.createCitySearch();
+  // homepage.createNearSearch();
+  // homepage.createAboutPage();
+  // homepage.changeAboutPageElement("about_text","this is a test for changeAboutPageElement() ");
 
   const mapContainer = document.querySelector('#main_map');
   const sucess = function(position){
@@ -116,12 +122,15 @@ const app = function(){
   const userlocation = new UserLocation();
   userlocation.getLocation(sucess, error);
 
-  const homepage = new NewPageView();
-  // homepage.createHomepage();
-  // homepage.createCitySearch();
-  // homepage.createNearSearch();
-  homepage.createAboutPage();
-  homepage.changeAboutPageElement("about_text","this is a test for changeAboutPageElement() ");
+  const citySearchLoader =function(){
+    const newSearch = new NewPageView();
+    newSearch.createCitySearch();
+    //   homepage.createCitySearch();
+  }
+
+  const citySearchButton = document.querySelector('#city_search');
+  citySearchButton.addEventListener('click', citySearchLoader);
+
 
 
 }
@@ -158,6 +167,12 @@ const NewPageView = function(){
 }
 
 const display = new DisplayChanger();
+
+NewPageView.prototype.clearpage = function(){
+
+
+
+}
 
 NewPageView.prototype.createHomepage = function(){
   display.displayOn('homepage_top_cont');
@@ -271,6 +286,15 @@ DisplayChanger.prototype.displayOff = function(id){
 
 }
 
+DisplayChanger.prototype.classON = function(id){
+  document.getElementsByClassName(id).style.display = 'block';
+
+}
+
+DisplayChanger.prototype.classOFF = function(id){
+  document.getElementsByClassName(id).style.display = 'none';
+
+}
 module.exports= DisplayChanger;
 
 

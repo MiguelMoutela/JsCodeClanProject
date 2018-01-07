@@ -6,6 +6,12 @@ const NewPageView = require('./views/newPageView.js');
 
 
 const app = function(){
+  const homepage = new NewPageView();
+  homepage.createHomepage();
+  // homepage.createCitySearch();
+  // homepage.createNearSearch();
+  // homepage.createAboutPage();
+  // homepage.changeAboutPageElement("about_text","this is a test for changeAboutPageElement() ");
 
   const mapContainer = document.querySelector('#main_map');
   const sucess = function(position){
@@ -23,12 +29,15 @@ const app = function(){
   const userlocation = new UserLocation();
   userlocation.getLocation(sucess, error);
 
-  const homepage = new NewPageView();
-  // homepage.createHomepage();
-  // homepage.createCitySearch();
-  // homepage.createNearSearch();
-  homepage.createAboutPage();
-  homepage.changeAboutPageElement("about_text","this is a test for changeAboutPageElement() ");
+  const citySearchLoader =function(){
+    const newSearch = new NewPageView();
+    newSearch.createCitySearch();
+    //   homepage.createCitySearch();
+  }
+
+  const citySearchButton = document.querySelector('#city_search');
+  citySearchButton.addEventListener('click', citySearchLoader);
+
 
 
 }

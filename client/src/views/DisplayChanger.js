@@ -10,4 +10,13 @@ DisplayChanger.prototype.displayOff = function(id){
 
 }
 
+DisplayChanger.prototype.classON = function(id){
+  document.getElementsByClassName(id).style.display = 'block';
+
+}
+
+DisplayChanger.prototype.classOFF = function(id){
+  document.getElementsByClassName(id).style.display = 'none';
+
+}
 module.exports= DisplayChanger;
