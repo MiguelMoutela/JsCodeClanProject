@@ -6,13 +6,13 @@ const UserLocation = require('./views/userLocation.js');
 const app = function(){
 
   const mapContainer = document.querySelector('#main-map');
+
   const sucess = function(position){
     const location = {
       lat: position.coords.latitude,
       lng: position.coords.longitude
     };
-    const mainMap = new MapWrapper(mapContainer, location, 7);
-
+    const mainMap = new MapWrapper(mapContainer, location, 15);
   }
 
   const error = function(){

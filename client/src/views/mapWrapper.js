@@ -3,12 +3,21 @@ const MapWrapper = function (container, coords, zoom) {
     center: coords,
     zoom: zoom
   });
-
-  const marker = new google.maps.Marker({
-    position:coords,
+  this.markers = [];
+  const youAreHereMarker = new google.maps.Marker({
+    position: coords,
     map: map
-  })
-
+    });
+  this.markers.push(youAreHereMarker);
 }
+
+MapWrapper.prototype.addMarker = function (coords) {
+  var marker = new google.maps.Marker({
+    position: coords,
+    map: this.map
+    });
+    this.markers.push(marker)
+  }
+
 
 module.exports = MapWrapper;

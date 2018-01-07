@@ -99,13 +99,13 @@ const UserLocation = __webpack_require__(5);
 const app = function(){
 
   const mapContainer = document.querySelector('#main-map');
+
   const sucess = function(position){
     const location = {
       lat: position.coords.latitude,
       lng: position.coords.longitude
     };
-    const mainMap = new MapWrapper(mapContainer, location, 7);
-
+    const mainMap = new MapWrapper(mapContainer, location, 15);
   }
 
   const error = function(){
@@ -173,13 +173,22 @@ const MapWrapper = function (container, coords, zoom) {
     center: coords,
     zoom: zoom
   });
-
-  const marker = new google.maps.Marker({
-    position:coords,
+  this.markers = [];
+  const youAreHereMarker = new google.maps.Marker({
+    position: coords,
     map: map
-  })
-
+    });
+  this.markers.push(youAreHereMarker);
 }
+
+MapWrapper.prototype.addMarker = function (coords) {
+  var marker = new google.maps.Marker({
+    position: coords,
+    map: this.map
+    });
+    this.markers.push(marker)
+  }
+
 
 module.exports = MapWrapper;
 
