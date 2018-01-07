@@ -169,8 +169,7 @@ const NewPageView = function(){
 const display = new DisplayChanger();
 
 NewPageView.prototype.clearpage = function(){
-
-
+  display.classOFF('toggleable');
 
 }
 
