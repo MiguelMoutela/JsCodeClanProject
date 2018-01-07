@@ -24,11 +24,11 @@ const app = function(){
   const userlocation = new UserLocation();
   userlocation.getLocation(sucess, error);
 
-const clearPage = new NewPageView();
-clearPage.resetPage();
+// const homepage = new NewPageView();
+// homepage.createHomepage();
 
-const citySearchForm = new FormView();
-citySearchForm.viewCitySearch();
+// const citySearchForm = new FormView();
+// citySearchForm.viewCitySearch();
 
 }
 

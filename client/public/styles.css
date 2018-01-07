@@ -1,3 +1,11 @@
+* {
+  display:none;
+}
+
+
+
+
+
 .burger {
   $width: 28px;
   display: inline-block;

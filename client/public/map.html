@@ -8,7 +8,7 @@
   <title>Map Display</title>
 </head>
 <body>
-  
+
   <div id="body_container">
     <input class="burger-check" id="burger-check" type="checkbox">
     <label for="burger-check" class="burger"></label>
@@ -29,6 +29,13 @@
       <h2 id = "homepage_subtitle"> Search </h2>
     </div>
 
+    <form id="homepage_form" action="index.html" method="post">
+      <input class= "homepage_button" type="button" onclick=""  value="by city or postcode">
+      <input class= "homepage_button" type="button" onclick="location.href='map.html';"  value="around me">
+      <input class= "homepage_button" type="button" onclick="location.href='map.html';"  value="My  choosen events ">
+      <input class= "homepage_button" type="button" onclick="location.href='map.html';"  value="about">
+    </form>
+
     <form id="event-selection-form">
       <label for="radius">Radius</label>
       <input type="text" id="radius" name="radius">
@@ -41,13 +48,6 @@
       <label for="end-date">End date</label>
       <input type="date" id="end-date" name="end-date">
       <button id="search-events" type="submit">Search for events</button>
-    </form>
-
-    <form id="homepage_form" action="index.html" method="post">
-      <input class= "homepage_button" type="button" onclick=""  value="by city or postcode">
-      <input class= "homepage_button" type="button" onclick="location.href='map.html';"  value="around me">
-      <input class= "homepage_button" type="button" onclick="location.href='map.html';"  value="My  choosen events ">
-      <input class= "homepage_button" type="button" onclick="location.href='map.html';"  value="about">
     </form>
 
     <div id="main-map"> </div>
