@@ -339,9 +339,17 @@ const FormView = function(){
 // const request = new Request(catUrl);
 // // request.get(url);
 
-FormView.prototype.populateDropmenu= function(){
-  const select = document.querySelector('#categories_list');
-}
+// FormView.prototype.populateDropmenu= function(){
+//   const categoriesMenu = document.querySelector('#categories_list');
+//   categoriesMenu.addEventListener('change', function (event) {
+//     functionThatGetsCategories(event.target.value);
+// }
+
+
+
+
+
+
 
 module.exports = FormView;
 
