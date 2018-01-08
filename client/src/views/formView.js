@@ -5,7 +5,7 @@ const FormView = function(){
 
 }
 
-const url = "http://api.eventful.com/rest/categories/list?app_key=ZpGXZc399XdxLZG9";
+const url = "http://api.eventful.com/json/categories/list?app_key=ZpGXZc399XdxLZG9";
 const request = new Request(url);
 // request.get(url);
 
