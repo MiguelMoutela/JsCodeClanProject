@@ -226,8 +226,28 @@ const app = function(){
   // TODO create the button function for db and callback!
 
 
+
+const showCitySearch = function(event){
+  event.preventDefault();
+  const inputCity = document.querySelector('#city').value;
+
+  const location = {
+    lat: 0,
+    lng: 0
+  };
+
+  const map = mainMap.createMap(mapContainer, location, 15);
+  mainMap.centerOnInputCity(inputCity, map)
+  //const test = new MapWrapper();
+  //test.centerOnInputCity(inputCity);
+  // const newSearch = new NewPageView();
+  // newSearch.clearpage();
+  // newSearch.createCitySearch();
+
+
+}
   const searchButton = document.querySelector('#search_events');
-    searchButton.addEventListener('click', mainMap.centerOnInputCity())
+    searchButton.addEventListener('click', showCitySearch)
 
 
 
@@ -353,7 +373,7 @@ MapWrapper.prototype.setRadius = function (coords, radius) {
   this.map.fitBounds(myCircle.getBounds());
 }
 
-MapWrapper.prototype.centerOnInputCity = function(city){
+MapWrapper.prototype.centerOnInputCity = function(city, map){
   const  geocoder = new google.maps.Geocoder();
   geocoder.geocode({'address': city}, function(results, status) {
     if (status === 'OK') {
@@ -364,10 +384,12 @@ MapWrapper.prototype.centerOnInputCity = function(city){
         lat,
         lng
       };
-      const container = document.querySelector('#main_map');
-      const mainMap = new MapWrapper();
-      const map = mainMap.createMap(container,cityLocation,10);
-      mainMap.addMarker(location,map);
+
+      map.setCenter(cityLocation);
+      // const container = document.querySelector('#main_map');
+      // const mainMap = new MapWrapper();
+      // const map = mainMap.createMap(container,cityLocation,10);
+      // mainMap.addMarker(location,map);
 
     };
   });

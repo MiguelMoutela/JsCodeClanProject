@@ -50,7 +50,7 @@ MapWrapper.prototype.setRadius = function (coords, radius) {
   this.map.fitBounds(myCircle.getBounds());
 }
 
-MapWrapper.prototype.centerOnInputCity = function(city){
+MapWrapper.prototype.centerOnInputCity = function(city, map){
   const  geocoder = new google.maps.Geocoder();
   geocoder.geocode({'address': city}, function(results, status) {
     if (status === 'OK') {
@@ -61,10 +61,12 @@ MapWrapper.prototype.centerOnInputCity = function(city){
         lat,
         lng
       };
-      const container = document.querySelector('#main_map');
-      const mainMap = new MapWrapper();
-      const map = mainMap.createMap(container,cityLocation,10);
-      mainMap.addMarker(location,map);
+
+      map.setCenter(cityLocation);
+      // const container = document.querySelector('#main_map');
+      // const mainMap = new MapWrapper();
+      // const map = mainMap.createMap(container,cityLocation,10);
+      // mainMap.addMarker(location,map);
 
     };
   });

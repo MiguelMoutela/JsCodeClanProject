@@ -65,8 +65,28 @@ const app = function(){
   // TODO create the button function for db and callback!
 
 
+
+const showCitySearch = function(event){
+  event.preventDefault();
+  const inputCity = document.querySelector('#city').value;
+
+  const location = {
+    lat: 0,
+    lng: 0
+  };
+
+  const map = mainMap.createMap(mapContainer, location, 15);
+  mainMap.centerOnInputCity(inputCity, map)
+  //const test = new MapWrapper();
+  //test.centerOnInputCity(inputCity);
+  // const newSearch = new NewPageView();
+  // newSearch.clearpage();
+  // newSearch.createCitySearch();
+
+
+}
   const searchButton = document.querySelector('#search_events');
-    searchButton.addEventListener('click', mainMap.centerOnInputCity())
+    searchButton.addEventListener('click', showCitySearch)
 
 
 
