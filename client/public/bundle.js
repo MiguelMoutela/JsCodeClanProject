@@ -326,33 +326,9 @@ document.addEventListener('DOMContentLoaded', app);
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-const NewPageView = __webpack_require__(1);
-const Request = __webpack_require__(0);
-
-const FormView = function(){
-
-}
-
-// const catUrl = "http://api.eventful.com/json/categories/list?app_key=ZpGXZc399XdxLZG9";
-// const request = new Request(catUrl);
-// // request.get(url);
-
-// FormView.prototype.populateDropmenu= function(){
-//   const categoriesMenu = document.querySelector('#categories_list');
-//   categoriesMenu.addEventListener('change', function (event) {
-//     functionThatGetsCategories(event.target.value);
-// }
-
-
-
-
-
-
-
-module.exports = FormView;
-
+throw new Error("Module parse failed: Unexpected token (42:0)\nYou may need an appropriate loader to handle this file type.\n| \n| \n| module.exports = FormView;\n| ");
 
 /***/ }),
 /* 4 */

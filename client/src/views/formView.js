@@ -15,6 +15,24 @@ const FormView = function(){
 //     functionThatGetsCategories(event.target.value);
 // }
 
+FormView.prototype.searchByCity= function(event){
+  event.preventDefault();
+
+  const inputCity = document.querySelector('#city').value;
+  const categoryList = document.querySelector('#categories_list');
+  categoryList.addEventListener('change', function (event) {
+   const categorySelected= event.target.value;
+   const searchUrl = `http://api.eventful.com/json/events/search?app_key=ZpGXZc399XdxLZG9&location=${inputCity}&category=${categorySelected}&date=Future`;
+
+   const request = new Request(searchUrl);
+   // not absolutly sure of this bellow well or above
+   // const outcomeObject = request.get();
+   // return outcomeObject
+}
+
+
+
+
 
 
 
