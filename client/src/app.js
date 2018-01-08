@@ -2,6 +2,7 @@ const FormView = require('./views/formView.js');
 const Request = require('./services/request.js');
 const MapWrapper = require('./views/mapWrapper.js');
 const NewPageView = require('./views/newPageView.js');
+const TableViewer = require('./views/tableView.js');
 
 
 const app = function(){
@@ -35,20 +36,28 @@ const app = function(){
     newSearch.createNearSearch();
     mainMap.refresh();
     mainMap.aroundMe();
+
   }
+
+  const request = new Request('http://api.eventful.com/json/events/search?app_key=ZpGXZc399XdxLZG9&q=comedy');
+   request.get(function(page) {
+     const tableViewer = new TableViewer(page.events.event);
+     tableViewer.render(true);
+   });
 
   const nearSearchButton = document.querySelector('#near_search');
   nearSearchButton.addEventListener('click', nearSearchLoader);
-
 
   const aboutPageLoader =function(){
     const newSearch = new NewPageView();
     newSearch.clearpage();
     newSearch.createAboutPage();
+
   }
 
   const aboutPageButton = document.querySelector('#about_view');
   aboutPageButton.addEventListener('click', aboutPageLoader);
+
 
   // TODO create the button function for db and callback!
 
@@ -56,6 +65,27 @@ const showCitySearch = function(event){
   event.preventDefault();
   const inputCity = document.querySelector('#city').value;
   mainMap.centerOnInputCity(inputCity)
+
+  const dbViewLoader =function(){
+    const newSearch = new NewPageView();
+    newSearch.clearpage();
+    newSearch.createDbView();
+    const newRequest = new Request('http://localhost:3000/api/EventWishList');
+    newRequest.get(function(events){
+      console.log(events);
+      const tableViewer = new TableViewer(events);
+      // const table = document.querySelector('#events_table')
+      tableViewer.render(false  );
+    })
+  }
+
+  const dbViewButton = document.querySelector('#db_view');
+  dbViewButton.addEventListener('click', dbViewLoader);
+// TODO create the button function for db and callback!
+
+// const tableViewer = new TableViewer();
+// tableViewer.render(false);
+
 
 }
   const searchButton = document.querySelector('#search_events');

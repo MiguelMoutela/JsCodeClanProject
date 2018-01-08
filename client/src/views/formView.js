@@ -13,6 +13,4 @@ FormView.prototype.populateDropmenu= function(){
   const select = document.querySelector('#categories_list');
 }
 
-
-
 module.exports = FormView;

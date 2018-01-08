@@ -56,6 +56,17 @@ NewPageView.prototype.changeAboutPageElement = function(id,text){
 
 }
 
+NewPageView.prototype.createDbView = function(){
+
+  display.displayOn('burguer_nav');
+  display.displayOff('event_selection_form');
+  display.displayOff('searchBox');
+  display.displayOff('radius');
+  display.displayOff('radius_label');
+  display.displayOn('main_map');
+  display.displayOn('events_table');
+}
+
 
 
 
