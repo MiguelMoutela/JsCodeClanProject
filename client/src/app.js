@@ -64,7 +64,7 @@ const app = function(){
 // TODO create the button function for db and callback!
 
 const tableViewer = new TableViewer();
-tableViewer.render(true);
+tableViewer.render(false);
 
 
 }

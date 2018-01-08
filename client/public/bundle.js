@@ -237,7 +237,7 @@ const app = function(){
 // TODO create the button function for db and callback!
 
 const tableViewer = new TableViewer();
-tableViewer.render(true);
+tableViewer.render(false);
 
 
 }
@@ -425,7 +425,7 @@ const TableViewer = function(eventsWishList) {
 				"created": "2016-11-19 09:10:48",
 				"venue_id": "V0-001-002359050-1",
 				"tz_city": null,
-				"stop_time": null,
+				"stop_time": "22:00",
 				"venue_name": "Katharine Hepburn Cultural Arts Center",
 				"venue_url": "http://eventful.com/oldsaybrook/venues/katharine-hepburn-cultural-arts-center-/V0-001-002359050-1?utm_source=apis&utm_medium=apim&utm_campaign=apic"
 			},
@@ -528,11 +528,11 @@ TableViewer.prototype.render = function(isAddButton) {
     addEventName(event, tr);
     addEventVenue(event, tr);
     addVenuePostcode(event, tr);
-    addCategory(event, tr);
     addEndDate(event, tr);
+    addCategory(event, tr);
 
     if(isAddButton) {
-      addButton(event,tr);
+      addAddButton(event,tr);
     } else {
       addDeleteButton(event, tr);
     }
@@ -561,14 +561,14 @@ TableViewer.prototype.render = function(isAddButton) {
   }
   const addEndDate = function(event, tr){
     const endDate = document.createElement('td');
-    endDate.innerText = event.endDate;
+    endDate.innerText = event.stop_time;
     tr.appendChild(endDate);
   }
 
-  const addButton = function(event, tr){
+  const addAddButton = function(event, tr){
     const buttonCell = document.createElement('td');
     const button = document.createElement('button')
-    button.innerText = 'delete';
+    button.innerText = 'add';
     button.addEventListener('click', function() {
     });
     //calls that request delete by id))
