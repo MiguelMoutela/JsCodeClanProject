@@ -7,6 +7,8 @@ const NewPageView = require('./views/newPageView.js');
 const app = function(){
   const homepage = new NewPageView();
   homepage.createHomepage();
+  const mainMap = new MapWrapper();
+
   // homepage.createCitySearch();
   // homepage.createNearSearch();
   // homepage.createAboutPage();
@@ -18,19 +20,14 @@ const app = function(){
       lat: position.coords.latitude,
       lng: position.coords.longitude
     };
-    const mainMap = new MapWrapper();
-    mainMap.createMap(mapContainer, location, 15);
-
-    // mainMap.addMarker(location);
+    const map = mainMap.createMap(mapContainer, location, 15);
+    const mark = mainMap.addMarker(location, map);
   }
-
 
   const error = function(){
     alert("Error occured. We did not get your location");
   }
 
-  // const userlocation = new UserLocation();
-  // userlocation.getLocation(sucess, error);
  const aroundMe = new MapWrapper();
  aroundMe.aroundMeMap(sucess,error);
 
@@ -39,7 +36,6 @@ const app = function(){
     const newSearch = new NewPageView();
     newSearch.clearpage();
     newSearch.createCitySearch();
-
   }
 
   const citySearchButton = document.querySelector('#city_search');
@@ -69,16 +65,13 @@ const app = function(){
   // TODO create the button function for db and callback!
 
 
+  // const searchButton = document.querySelector('#search_events');
+  // console.log(searchButton);
+  // // var inputCity = document.querySelector('#city').value;
+  //  searchButton.addEventListener('click', function() {
+  //    const inputCity = document.querySelector('#city').value;
 
-
+   // });
 }
 
-
-//this is executing the alert even though the button has not been clicked
-// var searchButton = document.querySelector('#search-events');
-// //var inputCity = document.querySelector('#city').value;
-// searchButton.addEventListener('click', alert(inputCity));
-
-
 document.addEventListener('DOMContentLoaded', app);
-// var inputCity = document.querySelector('#city').value;

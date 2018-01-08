@@ -168,6 +168,8 @@ const NewPageView = __webpack_require__(0);
 const app = function(){
   const homepage = new NewPageView();
   homepage.createHomepage();
+  const mainMap = new MapWrapper();
+
   // homepage.createCitySearch();
   // homepage.createNearSearch();
   // homepage.createAboutPage();
@@ -179,19 +181,14 @@ const app = function(){
       lat: position.coords.latitude,
       lng: position.coords.longitude
     };
-    const mainMap = new MapWrapper();
-    mainMap.createMap(mapContainer, location, 15);
-
-    // mainMap.addMarker(location);
+    const map = mainMap.createMap(mapContainer, location, 15);
+    const mark = mainMap.addMarker(location, map);
   }
-
 
   const error = function(){
     alert("Error occured. We did not get your location");
   }
 
-  // const userlocation = new UserLocation();
-  // userlocation.getLocation(sucess, error);
  const aroundMe = new MapWrapper();
  aroundMe.aroundMeMap(sucess,error);
 
@@ -200,7 +197,6 @@ const app = function(){
     const newSearch = new NewPageView();
     newSearch.clearpage();
     newSearch.createCitySearch();
-
   }
 
   const citySearchButton = document.querySelector('#city_search');
@@ -230,19 +226,16 @@ const app = function(){
   // TODO create the button function for db and callback!
 
 
+  // const searchButton = document.querySelector('#search_events');
+  // console.log(searchButton);
+  // // var inputCity = document.querySelector('#city').value;
+  //  searchButton.addEventListener('click', function() {
+  //    const inputCity = document.querySelector('#city').value;
 
-
+   // });
 }
 
-
-//this is executing the alert even though the button has not been clicked
-// var searchButton = document.querySelector('#search-events');
-// //var inputCity = document.querySelector('#city').value;
-// searchButton.addEventListener('click', alert(inputCity));
-
-
 document.addEventListener('DOMContentLoaded', app);
-// var inputCity = document.querySelector('#city').value;
 
 
 /***/ }),
@@ -306,42 +299,14 @@ module.exports= DisplayChanger;
 /***/ (function(module, exports) {
 
 const MapWrapper = function (){
-
+  this.markers = [];
 }
-// (container, coords, zoom) {
-//   const map = new google.maps.Map(container, {
-//     center: coords,
-//     zoom: zoom
-//   });
-//   this.markers = [];
-//   // const youAreHereMarker = new google.maps.Marker({
-//   //   position: coords,
-//   //   map: map
-//   //   });
-//   // this.markers.push(youAreHereMarker);
-//
-//    var circleOptions = {
-//         center: coords,
-//         fillOpacity: 0,
-//         strokeOpacity:0,
-//         map: map,
-//         radius: 500
-//     }
-//     var myCircle = new google.maps.Circle(circleOptions);
-//     map.fitBounds(myCircle.getBounds());
-// }
 
 MapWrapper.prototype.createMap = function (container, coords, zoom) {
   const map = new google.maps.Map(container, {
     center: coords,
     zoom: zoom
   });
-  this.markers = [];
-  // const youAreHereMarker = new google.maps.Marker({
-  //   position: coords,
-  //   map: map
-  //   });
-  // this.markers.push(youAreHereMarker);
 
    var circleOptions = {
         center: coords,
@@ -352,6 +317,7 @@ MapWrapper.prototype.createMap = function (container, coords, zoom) {
     }
     var myCircle = new google.maps.Circle(circleOptions);
     map.fitBounds(myCircle.getBounds());
+    return map;
 }
 
 
@@ -364,17 +330,13 @@ MapWrapper.prototype.aroundMeMap = function(getLocation, locationFailed){
   }
 }
 
-
-
-
-
-MapWrapper.prototype.addMarker = function (coords) {
-  var marker = new google.maps.Marker({
+MapWrapper.prototype.addMarker = function (coords, map) {
+  const marker = new google.maps.Marker({
     position: coords,
-    map: this.map
+    map: map
     });
-    this.markers.push(marker)
   }
+
 
 MapWrapper.prototype.setRadius = function (coords, radius) {
   var circleOptions = {
@@ -388,12 +350,6 @@ MapWrapper.prototype.setRadius = function (coords, radius) {
    this.map.fitBounds(myCircle.getBounds());
 }
 
-//centering map on the city from the input box
-
-
-//const inputCity = document.getElementById("city").value needs to be captured
-// at some point, however to no avail
-
 MapWrapper.prototype.centerOnInputCity = function(inputCity){
   var city = inputCity.toString();
   var geocoder = new google.maps.Geocoder();
@@ -406,22 +362,10 @@ MapWrapper.prototype.centerOnInputCity = function(inputCity){
   });
 }
 
-
-
-
-
-
 //MapWrapper.prototype.bounceMarker = function (marker) {
 //marker.setAnimation(google.maps.Animation.BOUNCE); }
 
 //   const inputCity = document.getElementById("city").value;
-
-
-
-
-
-
-
 module.exports = MapWrapper;
 
 

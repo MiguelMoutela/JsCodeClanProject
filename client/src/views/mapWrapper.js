@@ -1,40 +1,12 @@
 const MapWrapper = function (){
-
+  this.markers = [];
 }
-// (container, coords, zoom) {
-//   const map = new google.maps.Map(container, {
-//     center: coords,
-//     zoom: zoom
-//   });
-//   this.markers = [];
-//   // const youAreHereMarker = new google.maps.Marker({
-//   //   position: coords,
-//   //   map: map
-//   //   });
-//   // this.markers.push(youAreHereMarker);
-//
-//    var circleOptions = {
-//         center: coords,
-//         fillOpacity: 0,
-//         strokeOpacity:0,
-//         map: map,
-//         radius: 500
-//     }
-//     var myCircle = new google.maps.Circle(circleOptions);
-//     map.fitBounds(myCircle.getBounds());
-// }
 
 MapWrapper.prototype.createMap = function (container, coords, zoom) {
   const map = new google.maps.Map(container, {
     center: coords,
     zoom: zoom
   });
-  this.markers = [];
-  // const youAreHereMarker = new google.maps.Marker({
-  //   position: coords,
-  //   map: map
-  //   });
-  // this.markers.push(youAreHereMarker);
 
    var circleOptions = {
         center: coords,
@@ -45,6 +17,7 @@ MapWrapper.prototype.createMap = function (container, coords, zoom) {
     }
     var myCircle = new google.maps.Circle(circleOptions);
     map.fitBounds(myCircle.getBounds());
+    return map;
 }
 
 
@@ -57,17 +30,13 @@ MapWrapper.prototype.aroundMeMap = function(getLocation, locationFailed){
   }
 }
 
-
-
-
-
-MapWrapper.prototype.addMarker = function (coords) {
-  var marker = new google.maps.Marker({
+MapWrapper.prototype.addMarker = function (coords, map) {
+  const marker = new google.maps.Marker({
     position: coords,
-    map: this.map
+    map: map
     });
-    this.markers.push(marker)
   }
+
 
 MapWrapper.prototype.setRadius = function (coords, radius) {
   var circleOptions = {
@@ -81,12 +50,6 @@ MapWrapper.prototype.setRadius = function (coords, radius) {
    this.map.fitBounds(myCircle.getBounds());
 }
 
-//centering map on the city from the input box
-
-
-//const inputCity = document.getElementById("city").value needs to be captured
-// at some point, however to no avail
-
 MapWrapper.prototype.centerOnInputCity = function(inputCity){
   var city = inputCity.toString();
   var geocoder = new google.maps.Geocoder();
@@ -99,20 +62,8 @@ MapWrapper.prototype.centerOnInputCity = function(inputCity){
   });
 }
 
-
-
-
-
-
 //MapWrapper.prototype.bounceMarker = function (marker) {
 //marker.setAnimation(google.maps.Animation.BOUNCE); }
 
 //   const inputCity = document.getElementById("city").value;
-
-
-
-
-
-
-
 module.exports = MapWrapper;
