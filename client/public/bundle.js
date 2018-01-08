@@ -125,6 +125,17 @@ NewPageView.prototype.changeAboutPageElement = function(id,text){
 
 }
 
+NewPageView.prototype.createDbView = function(){
+
+  display.displayOn('burguer_nav');
+  display.displayOff('event_selection_form');
+  display.displayOff('searchBox');
+  display.displayOff('radius');
+  display.displayOff('radius_label');
+  display.displayOn('main_map');
+  display.displayOn('events_table');
+}
+
 
 
 
@@ -217,12 +228,13 @@ const app = function(){
     const newSearch = new NewPageView();
     newSearch.clearpage();
     newSearch.createNearSearch();
+    const tableViewer = new TableViewer();
+    tableViewer.render(true);
 
   }
 
   const nearSearchButton = document.querySelector('#near_search');
   nearSearchButton.addEventListener('click', nearSearchLoader);
-
 
   const aboutPageLoader =function(){
     const newSearch = new NewPageView();
@@ -234,10 +246,19 @@ const app = function(){
   const aboutPageButton = document.querySelector('#about_view');
   aboutPageButton.addEventListener('click', aboutPageLoader);
 
+  const dbViewLoader =function(){
+    const newSearch = new NewPageView();
+    newSearch.clearpage();
+    newSearch.createDbView();
+    const tableViewer = new TableViewer();
+    tableViewer.render(false);
+  }
+  const dbViewButton = document.querySelector('#db_view');
+  dbViewButton.addEventListener('click', dbViewLoader);
 // TODO create the button function for db and callback!
 
-const tableViewer = new TableViewer();
-tableViewer.render(false);
+// const tableViewer = new TableViewer();
+// tableViewer.render(false);
 
 
 }

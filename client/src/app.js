@@ -44,12 +44,13 @@ const app = function(){
     const newSearch = new NewPageView();
     newSearch.clearpage();
     newSearch.createNearSearch();
+    const tableViewer = new TableViewer();
+    tableViewer.render(true);
 
   }
 
   const nearSearchButton = document.querySelector('#near_search');
   nearSearchButton.addEventListener('click', nearSearchLoader);
-
 
   const aboutPageLoader =function(){
     const newSearch = new NewPageView();
@@ -61,10 +62,19 @@ const app = function(){
   const aboutPageButton = document.querySelector('#about_view');
   aboutPageButton.addEventListener('click', aboutPageLoader);
 
+  const dbViewLoader =function(){
+    const newSearch = new NewPageView();
+    newSearch.clearpage();
+    newSearch.createDbView();
+    const tableViewer = new TableViewer();
+    tableViewer.render(false);
+  }
+  const dbViewButton = document.querySelector('#db_view');
+  dbViewButton.addEventListener('click', dbViewLoader);
 // TODO create the button function for db and callback!
 
-const tableViewer = new TableViewer();
-tableViewer.render(false);
+// const tableViewer = new TableViewer();
+// tableViewer.render(false);
 
 
 }
