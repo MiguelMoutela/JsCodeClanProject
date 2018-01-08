@@ -1,22 +1,18 @@
-const newPageView = require('./newPageView.js');
-const request = require('../services/request.js');
-
-// const newBody= new newPageView();
-// not sure if I shpould put this variable out or just call it on each function
+const NewPageView = require('./newPageView.js');
+const Request = require('../services/request.js');
 
 const FormView = function(){
 
 }
 
-FormView.prototype.viewCitySearch= function(){
- const newBody= new NewPageView();
- newBody.resetPage;
- const form = document.querySelector('#event-selection-form');
- const request = new Request('http://localhost:3000/map.html')
+const url = "http://api.eventful.com/json/categories/list?app_key=ZpGXZc399XdxLZG9";
+const request = new Request(url);
+// request.get(url);
 
-
-
-
+FormView.prototype.populateDropmenu= function(){
+  const select = document.querySelector('#categories_list');
 }
+
+
 
 module.exports = FormView;
