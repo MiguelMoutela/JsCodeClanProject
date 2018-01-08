@@ -49,6 +49,17 @@ NewPageView.prototype.createNearSearch = function(){
   display.displayOn('events_table');
 }
 
+NewPageView.prototype.createDbView = function(){
+
+  display.displayOn('burguer_nav');
+  display.displayOff('event_selection_form');
+  display.displayOff('searchBox');
+  display.displayOff('radius');
+  display.displayOff('radius_label');
+  display.displayOn('main_map');
+  display.displayOn('events_table');
+}
+
 NewPageView.prototype.createAboutPage = function(){
 
   display.displayOn('about_container');
@@ -63,19 +74,6 @@ NewPageView.prototype.changeAboutPageElement = function(id,text){
  document.getElementById(id).innerText = text;
 
 }
-
-NewPageView.prototype.createDbView = function(){
-
-  display.displayOn('burguer_nav');
-  display.displayOff('event_selection_form');
-  display.displayOff('searchBox');
-  display.displayOff('radius');
-  display.displayOff('radius_label');
-  display.displayOn('main_map');
-  display.displayOn('events_table');
-}
-
-
 
 
 module.exports = NewPageView;

@@ -44,7 +44,7 @@ const app = function(){
     const newSearch = new NewPageView();
     newSearch.clearpage();
     newSearch.createNearSearch();
-    mainMap.refresh();
+    // mainMap.refresh();
     mainMap.aroundMe();
   }
 

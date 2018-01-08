@@ -23,14 +23,15 @@ MapWrapper.prototype.aroundMe = function(){
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
+      this.refresh();
       this.updateMap(location, 19);
       this.addMarker(location)
     }.bind(this), function() {
-      alert('Not worked');
+      alert('Not able to find your location');
     });
   }
   else{
-    alert('you do not have geolocation available on your device');
+    alert('You do not have geolocation available on your device');
   }
 }
 
