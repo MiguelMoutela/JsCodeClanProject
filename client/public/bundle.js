@@ -68,7 +68,7 @@
 /* 1 */
 /***/ (function(module, exports) {
 
-throw new Error("Module parse failed: Unexpected token (31:0)\nYou may need an appropriate loader to handle this file type.\n|   const userlocation = new UserLocation();\n|   userlocation.getLocation(sucess, error);\n| <<<<<<< HEAD\n| =======\n| ");
+throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/marta/codeclan_work/week_14/project/JsCodeClanProject/client/src/app.js'");
 
 /***/ })
 /******/ ]);
