@@ -377,21 +377,7 @@ module.exports = MapWrapper;
 /* 6 */
 /***/ (function(module, exports) {
 
-const UserLocation = function(){
-
-}
-
-UserLocation.prototype.getLocation = function(getLocation, locationFailed){
-  if(navigator.geolocation){
-    navigator.geolocation.getCurrentPosition(getLocation, locationFailed);
-  }
-  else{
-    alert('you do not have geolocation available on your device');
-  }
-}
-
-module.exports = UserLocation;
-
+throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/hamishstewart/codeclan_work/Week_14/Project/JsCodeClanProject/client/src/views/userLocation.js'");
 
 /***/ }),
 /* 7 */
