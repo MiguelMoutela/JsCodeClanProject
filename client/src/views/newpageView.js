@@ -24,6 +24,10 @@ NewPageView.prototype.createCitySearch = function(){
   display.displayOn('searchBox');
   display.displayOff('radius');
   display.displayOff('radius_label');
+  display.displayOff('start_date_label');
+  display.displayOff('start_date');
+  display.displayOff('end_date_label');
+  display.displayOff('end_date');
   display.displayOn('main_map');
   display.displayOn('events_table');
 }
@@ -37,6 +41,10 @@ NewPageView.prototype.createNearSearch = function(){
   display.displayOn('radius_label');
   display.displayOff('city_label');
   display.displayOff('city');
+  display.displayOff('start_date_label');
+  display.displayOff('start_date');
+  display.displayOff('end_date_label');
+  display.displayOff('end_date');
   display.displayOn('main_map');
   display.displayOn('events_table');
 }

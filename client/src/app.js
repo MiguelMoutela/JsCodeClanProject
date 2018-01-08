@@ -13,9 +13,9 @@ const app = function(){
 
 
   const defaultLocation = {
-      lat: 0.0,
-      lng: 0.0
-    };
+    lat: 0.0,
+    lng: 0.0
+  };
 
   const mainMap = new MapWrapper(mapContainer, defaultLocation, 3 );
 
@@ -40,10 +40,10 @@ const app = function(){
   }
 
   const request = new Request('http://api.eventful.com/json/events/search?app_key=ZpGXZc399XdxLZG9&q=comedy');
-   request.get(function(page) {
-     const tableViewer = new TableViewer(page.events.event);
-     tableViewer.render(true);
-   });
+  request.get(function(page) {
+    const tableViewer = new TableViewer(page.events.event);
+    tableViewer.render(true);
+  });
 
   const nearSearchButton = document.querySelector('#near_search');
   nearSearchButton.addEventListener('click', nearSearchLoader);
@@ -59,37 +59,36 @@ const app = function(){
   aboutPageButton.addEventListener('click', aboutPageLoader);
 
 
-  // TODO create the button function for db and callback!
+  const showCitySearch = function(event){
+    event.preventDefault();
+    const inputCity = document.querySelector('#city').value;
+    mainMap.centerOnInputCity(inputCity);
+  }
 
-const showCitySearch = function(event){
-  event.preventDefault();
-  const inputCity = document.querySelector('#city').value;
-  mainMap.centerOnInputCity(inputCity)
+
+  const searchButton = document.querySelector('#search_events');
+  searchButton.addEventListener('click', showCitySearch);
 
   const dbViewLoader =function(){
     const newSearch = new NewPageView();
     newSearch.clearpage();
     newSearch.createDbView();
-    const newRequest = new Request('http://localhost:3000/api/EventWishList');
-    newRequest.get(function(events){
-      console.log(events);
-      const tableViewer = new TableViewer(events);
-      // const table = document.querySelector('#events_table')
-      tableViewer.render(false  );
-    })
+    // const newRequest = new Request('http://localhost:3000/api/EventWishList');
+    // newRequest.get(function(events){
+    //   console.log(events);
+    //   const tableViewer = new TableViewer(events);
+    //   // const table = document.querySelector('#events_table')
+    //   tableViewer.render(false  );
+    // })
   }
 
   const dbViewButton = document.querySelector('#db_view');
   dbViewButton.addEventListener('click', dbViewLoader);
-// TODO create the button function for db and callback!
-
-// const tableViewer = new TableViewer();
-// tableViewer.render(false);
 
 
-}
-  const searchButton = document.querySelector('#search_events');
-    searchButton.addEventListener('click', showCitySearch)
+  // const tableViewer = new TableViewer();
+  // tableViewer.render(false);
+
 
 }
 

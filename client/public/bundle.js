@@ -65,85 +65,6 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const DisplayChanger = __webpack_require__(4);
-
-const NewPageView = function(){
-
-}
-
-const display = new DisplayChanger();
-
-NewPageView.prototype.clearpage = function(){
-  display.classOFF('toggleable');
-
-}
-
-NewPageView.prototype.createHomepage = function(){
-  display.displayOn('homepage_top_cont');
-  display.displayOn('homepage_sub_top_cont');
-  display.displayOn('homepageForm');
-}
-
-NewPageView.prototype.createCitySearch = function(){
-
-  display.displayOn('burguer_nav');
-  display.displayOn('event_selection_form');
-  display.displayOn('searchBox');
-  display.displayOff('radius');
-  display.displayOff('radius_label');
-  display.displayOn('main_map');
-  display.displayOn('events_table');
-}
-
-NewPageView.prototype.createNearSearch = function(){
-
-  display.displayOn('burguer_nav');
-  display.displayOn('event_selection_form');
-  display.displayOn('searchBox');
-  display.displayOn('radius');
-  display.displayOn('radius_label');
-  display.displayOff('city_label');
-  display.displayOff('city');
-  display.displayOn('main_map');
-  display.displayOn('events_table');
-}
-
-NewPageView.prototype.createAboutPage = function(){
-
-  display.displayOn('about_container');
-  display.displayOn('about_title');
-  display.displayOn('about_text');
-
-}
-
-NewPageView.prototype.changeAboutPageElement = function(id,text){
-
- display.displayOn('about_container');
- document.getElementById(id).innerText = text;
-
-}
-
-NewPageView.prototype.createDbView = function(){
-
-  display.displayOn('burguer_nav');
-  display.displayOff('event_selection_form');
-  display.displayOff('searchBox');
-  display.displayOff('radius');
-  display.displayOff('radius_label');
-  display.displayOn('main_map');
-  display.displayOn('events_table');
-}
-
-
-
-
-module.exports = NewPageView;
-
-
-/***/ }),
-/* 1 */
 /***/ (function(module, exports) {
 
 const Request = function(url) {
@@ -193,14 +114,101 @@ module.exports = Request;
 
 
 /***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const DisplayChanger = __webpack_require__(4);
+
+const NewPageView = function(){
+
+}
+
+const display = new DisplayChanger();
+
+NewPageView.prototype.clearpage = function(){
+  display.classOFF('toggleable');
+
+}
+
+NewPageView.prototype.createHomepage = function(){
+  display.displayOn('homepage_top_cont');
+  display.displayOn('homepage_sub_top_cont');
+  display.displayOn('homepageForm');
+}
+
+NewPageView.prototype.createCitySearch = function(){
+
+  display.displayOn('burguer_nav');
+  display.displayOn('event_selection_form');
+  display.displayOn('searchBox');
+  display.displayOff('radius');
+  display.displayOff('radius_label');
+  display.displayOff('start_date_label');
+  display.displayOff('start_date');
+  display.displayOff('end_date_label');
+  display.displayOff('end_date');
+  display.displayOn('main_map');
+  display.displayOn('events_table');
+}
+
+NewPageView.prototype.createNearSearch = function(){
+
+  display.displayOn('burguer_nav');
+  display.displayOn('event_selection_form');
+  display.displayOn('searchBox');
+  display.displayOn('radius');
+  display.displayOn('radius_label');
+  display.displayOff('city_label');
+  display.displayOff('city');
+  display.displayOff('start_date_label');
+  display.displayOff('start_date');
+  display.displayOff('end_date_label');
+  display.displayOff('end_date');
+  display.displayOn('main_map');
+  display.displayOn('events_table');
+}
+
+NewPageView.prototype.createAboutPage = function(){
+
+  display.displayOn('about_container');
+  display.displayOn('about_title');
+  display.displayOn('about_text');
+
+}
+
+NewPageView.prototype.changeAboutPageElement = function(id,text){
+
+ display.displayOn('about_container');
+ document.getElementById(id).innerText = text;
+
+}
+
+NewPageView.prototype.createDbView = function(){
+
+  display.displayOn('burguer_nav');
+  display.displayOff('event_selection_form');
+  display.displayOff('searchBox');
+  display.displayOff('radius');
+  display.displayOff('radius_label');
+  display.displayOn('main_map');
+  display.displayOn('events_table');
+}
+
+
+
+
+module.exports = NewPageView;
+
+
+/***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const FormView = __webpack_require__(3);
-const Request = __webpack_require__(1);
+const Request = __webpack_require__(0);
 const MapWrapper = __webpack_require__(5);
-const NewPageView = __webpack_require__(0);
-const TableViewer = __webpack_require__(7);
+const NewPageView = __webpack_require__(1);
+const TableViewer = __webpack_require__(6);
 
 
 const app = function(){
@@ -211,9 +219,9 @@ const app = function(){
 
 
   const defaultLocation = {
-      lat: 0.0,
-      lng: 0.0
-    };
+    lat: 0.0,
+    lng: 0.0
+  };
 
   const mainMap = new MapWrapper(mapContainer, defaultLocation, 3 );
 
@@ -238,10 +246,10 @@ const app = function(){
   }
 
   const request = new Request('http://api.eventful.com/json/events/search?app_key=ZpGXZc399XdxLZG9&q=comedy');
-   request.get(function(page) {
-     const tableViewer = new TableViewer(page.events.event);
-     tableViewer.render(true);
-   });
+  request.get(function(page) {
+    const tableViewer = new TableViewer(page.events.event);
+    tableViewer.render(true);
+  });
 
   const nearSearchButton = document.querySelector('#near_search');
   nearSearchButton.addEventListener('click', nearSearchLoader);
@@ -257,37 +265,36 @@ const app = function(){
   aboutPageButton.addEventListener('click', aboutPageLoader);
 
 
-  // TODO create the button function for db and callback!
+  const showCitySearch = function(event){
+    event.preventDefault();
+    const inputCity = document.querySelector('#city').value;
+    mainMap.centerOnInputCity(inputCity);
+  }
 
-const showCitySearch = function(event){
-  event.preventDefault();
-  const inputCity = document.querySelector('#city').value;
-  mainMap.centerOnInputCity(inputCity)
+
+  const searchButton = document.querySelector('#search_events');
+  searchButton.addEventListener('click', showCitySearch);
 
   const dbViewLoader =function(){
     const newSearch = new NewPageView();
     newSearch.clearpage();
     newSearch.createDbView();
-    const newRequest = new Request('http://localhost:3000/api/EventWishList');
-    newRequest.get(function(events){
-      console.log(events);
-      const tableViewer = new TableViewer(events);
-      // const table = document.querySelector('#events_table')
-      tableViewer.render(false  );
-    })
+    // const newRequest = new Request('http://localhost:3000/api/EventWishList');
+    // newRequest.get(function(events){
+    //   console.log(events);
+    //   const tableViewer = new TableViewer(events);
+    //   // const table = document.querySelector('#events_table')
+    //   tableViewer.render(false  );
+    // })
   }
 
   const dbViewButton = document.querySelector('#db_view');
   dbViewButton.addEventListener('click', dbViewLoader);
-// TODO create the button function for db and callback!
-
-// const tableViewer = new TableViewer();
-// tableViewer.render(false);
 
 
-}
-  const searchButton = document.querySelector('#search_events');
-    searchButton.addEventListener('click', showCitySearch)
+  // const tableViewer = new TableViewer();
+  // tableViewer.render(false);
+
 
 }
 
@@ -298,16 +305,16 @@ document.addEventListener('DOMContentLoaded', app);
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const NewPageView = __webpack_require__(0);
-const Request = __webpack_require__(1);
+const NewPageView = __webpack_require__(1);
+const Request = __webpack_require__(0);
 
 const FormView = function(){
 
 }
 
-const url = "http://api.eventful.com/json/categories/list?app_key=ZpGXZc399XdxLZG9";
-const request = new Request(url);
-// request.get(url);
+// const catUrl = "http://api.eventful.com/json/categories/list?app_key=ZpGXZc399XdxLZG9";
+// const request = new Request(catUrl);
+// // request.get(url);
 
 FormView.prototype.populateDropmenu= function(){
   const select = document.querySelector('#categories_list');
@@ -428,11 +435,10 @@ MapWrapper.prototype.centerOnInputCity = function(city, map){
 
 
 /***/ }),
-/* 6 */,
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const Request = __webpack_require__(1);
+const Request = __webpack_require__(0);
 
 
 
