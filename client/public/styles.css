@@ -26,6 +26,16 @@
   display:none;
   /* background: transparent url(./images/Loading.gif) no-repeat center center; */
 }
+ /* NOTE for possible future CSS */
+/* #main_map img {
+  display: none;
+ }
+
+ #main_map.currently-loading img {
+    display: block;
+    height:500px;
+    width:1200px;
+} */
 
 th, td {
   padding: 10px;
