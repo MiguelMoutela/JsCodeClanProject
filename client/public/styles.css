@@ -24,6 +24,7 @@
   height:500px;
   width:1200px;
   display:none;
+  /* background: transparent url(./images/Loading.gif) no-repeat center center; */
 }
 
 th, td {
