@@ -3,6 +3,7 @@ const Request = require('./services/request.js');
 const MapWrapper = require('./views/mapWrapper.js');
 const UserLocation = require('./views/userLocation.js');
 const NewPageView = require('./views/newPageView.js');
+const TableViewer = require('./views/tableView.js');
 
 
 const app = function(){
@@ -62,7 +63,8 @@ const app = function(){
 
 // TODO create the button function for db and callback!
 
-
+const tableViewer = new TableViewer();
+tableViewer.render(true);
 
 
 }
