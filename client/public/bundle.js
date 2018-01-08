@@ -199,7 +199,6 @@ module.exports = Request;
 const FormView = __webpack_require__(3);
 const Request = __webpack_require__(1);
 const MapWrapper = __webpack_require__(5);
-const UserLocation = __webpack_require__(6);
 const NewPageView = __webpack_require__(0);
 const TableViewer = __webpack_require__(7);
 
@@ -207,32 +206,23 @@ const TableViewer = __webpack_require__(7);
 const app = function(){
   const homepage = new NewPageView();
   homepage.createHomepage();
-  // homepage.createCitySearch();
-  // homepage.createNearSearch();
-  // homepage.createAboutPage();
-  // homepage.changeAboutPageElement("about_text","this is a test for changeAboutPageElement() ");
 
   const mapContainer = document.querySelector('#main_map');
-  const sucess = function(position){
-    const location = {
-      lat: position.coords.latitude,
-      lng: position.coords.longitude
+
+
+  const defaultLocation = {
+      lat: 0.0,
+      lng: 0.0
     };
-    const mainMap = new MapWrapper(mapContainer, location, 15);
-  }
 
-  const error = function(){
-    alert("Error occured. We did not get your location");
-  }
-
-  const userlocation = new UserLocation();
-  userlocation.getLocation(sucess, error);
+  const mainMap = new MapWrapper(mapContainer, defaultLocation, 3 );
 
   const citySearchLoader =function(){
     const newSearch = new NewPageView();
     newSearch.clearpage();
     newSearch.createCitySearch();
-
+    mainMap.refresh();
+    mainMap.updateMap(defaultLocation, 3);
   }
 
   const citySearchButton = document.querySelector('#city_search');
@@ -242,14 +232,16 @@ const app = function(){
     const newSearch = new NewPageView();
     newSearch.clearpage();
     newSearch.createNearSearch();
-
-    const request = new Request('http://api.eventful.com/json/events/search?app_key=ZpGXZc399XdxLZG9&q=comedy');
-    request.get(function(page) {
-      const tableViewer = new TableViewer(page.events.event);
-      tableViewer.render(true);
-    });
+    mainMap.refresh();
+    mainMap.aroundMe();
 
   }
+
+  const request = new Request('http://api.eventful.com/json/events/search?app_key=ZpGXZc399XdxLZG9&q=comedy');
+   request.get(function(page) {
+     const tableViewer = new TableViewer(page.events.event);
+     tableViewer.render(true);
+   });
 
   const nearSearchButton = document.querySelector('#near_search');
   nearSearchButton.addEventListener('click', nearSearchLoader);
@@ -263,6 +255,14 @@ const app = function(){
 
   const aboutPageButton = document.querySelector('#about_view');
   aboutPageButton.addEventListener('click', aboutPageLoader);
+
+
+  // TODO create the button function for db and callback!
+
+const showCitySearch = function(event){
+  event.preventDefault();
+  const inputCity = document.querySelector('#city').value;
+  mainMap.centerOnInputCity(inputCity)
 
   const dbViewLoader =function(){
     const newSearch = new NewPageView();
@@ -284,6 +284,10 @@ const app = function(){
 // const tableViewer = new TableViewer();
 // tableViewer.render(false);
 
+
+}
+  const searchButton = document.querySelector('#search_events');
+    searchButton.addEventListener('click', showCitySearch)
 
 }
 
@@ -348,38 +352,83 @@ module.exports= DisplayChanger;
 /* 5 */
 /***/ (function(module, exports) {
 
-const MapWrapper = function (container, coords, zoom) {
-  const map = new google.maps.Map(container, {
+const MapWrapper = function(container, coords, zoom) {
+  this.map = new google.maps.Map(container, {
     center: coords,
     zoom: zoom
   });
   this.markers = [];
-  const youAreHereMarker = new google.maps.Marker({
-    position: coords,
-    map: map
+}
+
+MapWrapper.prototype.refresh = function() {
+  google.maps.event.trigger(this.map,'resize');
+}
+
+MapWrapper.prototype.updateMap = function (coords, zoom) {
+  this.map.setCenter(coords);
+  this.map.setZoom(zoom);
+
+}
+
+MapWrapper.prototype.aroundMe = function(){
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(function(position) {
+      const location = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      this.updateMap(location, 19);
+      this.addMarker(location)
+    }.bind(this), function() {
+      alert('Not worked');
     });
-  this.markers.push(youAreHereMarker);
+  }
+  else{
+    alert('you do not have geolocation available on your device');
+  }
 }
 
 MapWrapper.prototype.addMarker = function (coords) {
-  var marker = new google.maps.Marker({
+  const marker = new google.maps.Marker({
     position: coords,
     map: this.map
-    });
-    this.markers.push(marker)
-  }
+  });
+}
 
+// MapWrapper.prototype.setRadius = function (coords, radius) {
+//   const circleOptions = {
+//     center: coords,
+//     fillOpacity: 0,
+//     strokeOpacity:0,
+//     map: this.map,
+//     radius: radius
+//   }
+//   const myCircle = new google.maps.Circle(circleOptions);
+//   this.map.fitBounds(myCircle.getBounds());
+// }
 
-module.exports = MapWrapper;
+MapWrapper.prototype.centerOnInputCity = function(city, map){
+  const  geocoder = new google.maps.Geocoder();
+  geocoder.geocode({'address': city}, function(results, status) {
+    if (status === 'OK') {
+      const result = results[0].geometry.location;
+      const lat = result.lat();
+      const lng = result.lng();
+      const cityLocation = {
+        lat,
+        lng
+      };
+      this.map.setCenter(cityLocation);
+      this.map.setZoom(19);
+    };
+  }.bind(this));
+}
+
+  module.exports = MapWrapper;
 
 
 /***/ }),
-/* 6 */
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/hamishstewart/codeclan_work/Week_14/Project/JsCodeClanProject/client/src/views/userLocation.js'");
-
-/***/ }),
+/* 6 */,
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
