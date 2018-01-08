@@ -215,8 +215,11 @@ const app = function(){
   const homepage = new NewPageView();
   homepage.createHomepage();
 
-  const mapContainer = document.querySelector('#main_map');
 
+// NOTE the following  functions and variables render a
+//default map that will updated as pages load
+
+  const mapContainer = document.querySelector('#main_map');
 
   const defaultLocation = {
     lat: 0.0,
@@ -224,6 +227,9 @@ const app = function(){
   };
 
   const mainMap = new MapWrapper(mapContainer, defaultLocation, 3 );
+
+// NOTE the following two functions are related to the
+//search by city button  on homepage
 
   const citySearchLoader =function(){
     const newSearch = new NewPageView();
@@ -236,23 +242,45 @@ const app = function(){
   const citySearchButton = document.querySelector('#city_search');
   citySearchButton.addEventListener('click', citySearchLoader);
 
+
+  // NOTE the following two functions are related to the
+  //search around button  me  on homepage
+
   const nearSearchLoader =function(){
     const newSearch = new NewPageView();
     newSearch.clearpage();
     newSearch.createNearSearch();
     mainMap.refresh();
     mainMap.aroundMe();
-
   }
-
-  const request = new Request('http://api.eventful.com/json/events/search?app_key=ZpGXZc399XdxLZG9&q=comedy');
-  request.get(function(page) {
-    const tableViewer = new TableViewer(page.events.event);
-    tableViewer.render(true);
-  });
 
   const nearSearchButton = document.querySelector('#near_search');
   nearSearchButton.addEventListener('click', nearSearchLoader);
+
+
+  // NOTE the following two functions are related to the
+  //view database button  on homepage
+
+
+  const dbViewLoader =function(){
+    const newSearch = new NewPageView();
+    newSearch.clearpage();
+    newSearch.createDbView();
+    const newRequest = new Request('http://localhost:3000/api/EventWishList');
+    newRequest.get(function(events){
+      console.log(events);
+      const tableViewer = new TableViewer(events);
+      tableViewer.render(false  );
+    })
+  }
+
+
+  const dbViewButton = document.querySelector('#db_view');
+  dbViewButton.addEventListener('click', dbViewLoader);
+
+
+  // NOTE the following two functions are related to the
+  //about button  on homepage
 
   const aboutPageLoader =function(){
     const newSearch = new NewPageView();
@@ -265,6 +293,10 @@ const app = function(){
   aboutPageButton.addEventListener('click', aboutPageLoader);
 
 
+
+// NOTE the following two functions are related to the
+//search button on the search form
+
   const showCitySearch = function(event){
     event.preventDefault();
     const inputCity = document.querySelector('#city').value;
@@ -275,21 +307,14 @@ const app = function(){
   const searchButton = document.querySelector('#search_events');
   searchButton.addEventListener('click', showCitySearch);
 
-  const dbViewLoader =function(){
-    const newSearch = new NewPageView();
-    newSearch.clearpage();
-    newSearch.createDbView();
-    // const newRequest = new Request('http://localhost:3000/api/EventWishList');
-    // newRequest.get(function(events){
-    //   console.log(events);
-    //   const tableViewer = new TableViewer(events);
-    //   // const table = document.querySelector('#events_table')
-    //   tableViewer.render(false  );
-    // })
-  }
+  // NOTE not sure what this request to get all events with cat comedy was used for...
 
-  const dbViewButton = document.querySelector('#db_view');
-  dbViewButton.addEventListener('click', dbViewLoader);
+    // const request = new Request('http://api.eventful.com/json/events/search?app_key=ZpGXZc399XdxLZG9&q=comedy');
+    // request.get(function(page) {
+    //   const tableViewer = new TableViewer(page.events.event);
+    //   tableViewer.render(true);
+    // });
+
 
 
   // const tableViewer = new TableViewer();
