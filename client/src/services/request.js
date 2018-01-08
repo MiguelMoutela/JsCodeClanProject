@@ -15,4 +15,16 @@ Request.prototype.get = function(callback) {
   request.send();
 }
 
+Request.prototype.deleteById = function(id, callback) {
+  const request = new XMLHttpRequest();
+  request.open('DELETE', `${this.url}/:{id}`)
+  request.addEventListener('load', function(){
+    if(this.status !== 500) {
+      return;
+    }
+    callback();
+  });
+  request.send()
+}
+
 module.exports = Request;

@@ -3,27 +3,82 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="styles.css">
+  <script src="https://maps.googleapis.com/maps/api/js"></script>
   <script src="/bundle.js"></script>
-  <title>Event Dashboard</title>
+  <title>Map Display</title>
 </head>
 <body>
-  <div id="homepage_top_cont">
-    <h1 id= "homepage_title"> Eventify</h1>
+
+  <div id="body_container">
+
+    <div id="burguer_nav" class="toggleable">
+      <input class="burger-check" id="burger_check" type="checkbox">
+      <label for="burger_check" class="burger"></label>
+      <nav id="burger_navigation" class="navigation">
+        <ul>
+          <li>Home</li>
+          <li>Around me</li>
+          <li>Choose a city</li>
+          <li>About</li>
+        </ul>
+      </nav>
+    </div>
+
+    <div id="homepage_top_cont" class="toggleable">
+      <h1 id= "homepage_title"> Eventify</h1>
+    </div>
+
+    <div id="homepage_sub_top_cont" class="toggleable">
+      <h2 id = "homepage_subtitle"> Search </h2>
+    </div>
+    <div id="homepageForm" class="toggleable">
+
+
+      <form id="homepage_form" action="index.html" method="post">
+        <input id ="city_search" class= "homepage_button" type="button"  value="by city or postcode">
+        <input id ="near_search" class= "homepage_button" type="button"   value="around me">
+        <input id ="db_view" class= "homepage_button" type="button"  value="My  choosen events ">
+        <input id ="about_view" class= "homepage_button" type="button"  value="about">
+      </form>
+    </div>
+
+
+    <div id="searchBox">
+
+      <form id="event_selection_form" class="toggleable">
+        <label id= "radius_label" for="radius">Radius</label>
+        <input type="text" id="radius" name="radius">
+        <label id ="city_label" for="city">Type a city</label>
+        <input type="text" id="city" name="city">
+        <label for="categories_list">Select a category</label>
+        <select id="categories_list" name="categories_list"></select>
+        <label for="start_date">Start date</label>
+        <input type="date" id="start_date" name="start_date">
+        <label for="end_date">End date</label>
+        <input type="date" id="end_date" name="end_date">
+        <button id="search_events" type="submit">Search for events</button>
+      </form>
+    </div>
+
+    <div id="main_map" class="toggleable"> </div>
+
+    <div id="events_table" class="toggleable">
+      <table>
+        <thead>
+          <th>Event name</th>
+          <th>Address</th>
+          <th>Time</th>
+          <th>Save to database button</th>
+        </thead>
+        <tbody id="table_body">
+        </tbody>
+      </table>
+    </div>
+    <div id="about_container" class="toggleable">
+      <h1 id = "about_title">ABOUT TITLE TO GO HERE</h1>
+      <p id = "about_text">text about to go here</p>
+    </div>
   </div>
 
-  <div id="homepage_sub_top_cont">
-    <h2 id = "homepage_subtitle"> Search </h2>
-  </div>
-
-  <div id="homepage_main_cont">
-
-    <form id="homepage_form" action="index.html" method="post">
-      <input class= "homepage_button" type="button" onclick="location.href='map.html';"  value="by city or postcode">
-      <input class= "homepage_button" type="button" onclick="location.href='map.html';"  value="around me">
-      <input class= "homepage_button" type="button" onclick="location.href='map.html';"  value="My  choosen events ">
-      <input class= "homepage_button" type="button" onclick="location.href='map.html';"  value="about">
-    </form>
-
-  </div>
 </body>
 </html>

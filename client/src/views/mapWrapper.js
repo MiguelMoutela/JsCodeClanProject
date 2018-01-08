@@ -1,19 +1,23 @@
 const MapWrapper = function (container, coords, zoom) {
-  this.googleMap = new google.maps.Map(container, {
+  const map = new google.maps.Map(container, {
     center: coords,
     zoom: zoom
   });
-  this.markers = []
+  this.markers = [];
+  const youAreHereMarker = new google.maps.Marker({
+    position: coords,
+    map: map
+    });
+  this.markers.push(youAreHereMarker);
 }
 
+MapWrapper.prototype.addMarker = function (coords) {
+  var marker = new google.maps.Marker({
+    position: coords,
+    map: this.map
+    });
+    this.markers.push(marker)
+  }
 
-MapWrapper.prototype.whereAmI = function() {
- navigator.geolocation.getCurrentPosition(function(position) {
-   const location = {
-     lat: position.coords.latitude,
-     lng: position.coords.longitude
-   }
-   this.googleMap.setCenter(location);
-   this.addMarker(location, 'This is your current location');
- }.bind(this))
-}
+
+module.exports = MapWrapper;
