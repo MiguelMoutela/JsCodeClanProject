@@ -1,40 +1,72 @@
-const MapWrapper = function (){
-  this.markers = [];
-}
-
-MapWrapper.prototype.createMap = function (container, coords, zoom) {
-  const map = new google.maps.Map(container, {
+const MapWrapper = function(container, coords, zoom) {
+  this.map = new google.maps.Map(container, {
     center: coords,
     zoom: zoom
   });
-
-  // var circleOptions = {
-  //   center: coords,
-  //   fillOpacity: 0,
-  //   strokeOpacity:0,
-  //   map: map,
-  //   radius: 500
-  // }
-  // var myCircle = new google.maps.Circle(circleOptions);
-  // map.fitBounds(myCircle.getBounds());
-  return map;
+  this.markers = [];
 }
 
+MapWrapper.prototype.refresh = function() {
+  google.maps.event.trigger(this.map,'resize');
+}
 
-MapWrapper.prototype.aroundMeMap = function(getLocation, locationFailed){
+// MapWrapper.prototype.render = function() {
+//   this.map = new google.maps.Map(this.container, {
+//     center: this.coords,
+//     zoom: this.zoom
+//   });
+// }
+
+MapWrapper.prototype.updateMap = function (coords, zoom) {
+  this.map.setCenter(coords);
+  this.map.setZoom(zoom);
+
+  // this.map = new google.maps.Map(container, {
+  //   center: coords,
+  //   zoom: zoom
+  // })
+  // return this.map;
+}
+
+//   // var circleOptions = {
+//   //   center: coords,
+//   //   fillOpacity: 0,
+//   //   strokeOpacity:0,
+//   //   map: map,
+//   //   radius: 500
+//   // }
+//   // var myCircle = new google.maps.Circle(circleOptions);
+//   // map.fitBounds(myCircle.getBounds());
+//   return map;
+// }
+
+MapWrapper.prototype.aroundMe = function(){
   if(navigator.geolocation){
-    navigator.geolocation.getCurrentPosition(getLocation, locationFailed);
+    navigator.geolocation.getCurrentPosition(function(position) {
+      const location = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+
+      // const map = mainMap.createMap(mapContainer, location, 15);
+      // const mark = mainMap.addMarker(location, map);
+      this.updateMap(location, 19);
+      this.addMarker(location)
+    }.bind(this), function() {
+      alert('Not worked');
+    });
   }
   else{
     alert('you do not have geolocation available on your device');
   }
 }
 
-MapWrapper.prototype.addMarker = function (coords, map) {
+MapWrapper.prototype.addMarker = function (coords) {
   const marker = new google.maps.Marker({
     position: coords,
-    map: map
+    map: this.map
   });
+
 }
 
 
@@ -62,14 +94,15 @@ MapWrapper.prototype.centerOnInputCity = function(city, map){
         lng
       };
 
-      map.setCenter(cityLocation);
+      this.map.setCenter(cityLocation);
+      this.map.setZoom(19);
       // const container = document.querySelector('#main_map');
       // const mainMap = new MapWrapper();
       // const map = mainMap.createMap(container,cityLocation,10);
       // mainMap.addMarker(location,map);
 
     };
-  });
+  }.bind(this));
 }
 
 

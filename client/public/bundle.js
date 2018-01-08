@@ -168,44 +168,23 @@ const NewPageView = __webpack_require__(0);
 const app = function(){
   const homepage = new NewPageView();
   homepage.createHomepage();
-  const mainMap = new MapWrapper();
-
-  // homepage.createCitySearch();
-  // homepage.createNearSearch();
-  // homepage.createAboutPage();
-  // homepage.changeAboutPageElement("about_text","this is a test for changeAboutPageElement() ");
 
   const mapContainer = document.querySelector('#main_map');
-  const sucess = function(position){
-    const location = {
+
+
+  const defaultLocation = {
       lat: 0.0,
       lng: 0.0
     };
-    const map = mainMap.createMap(mapContainer, location, 3);
-    const mark = mainMap.addMarker(location, map);
-  }
 
-  const sucess1 = function(position){
-    const location = {
-      lat: position.coords.latitude,
-      lng: position.coords.longitude
-    };
-    const map = mainMap.createMap(mapContainer, location, 15);
-    const mark = mainMap.addMarker(location, map);
-  }
-
-  const error = function(){
-    alert("Error occured. We did not get your location");
-  }
-
- const aroundMe = new MapWrapper();
- aroundMe.aroundMeMap(sucess,error);
-
+  const mainMap = new MapWrapper(mapContainer, defaultLocation, 3 );
 
   const citySearchLoader =function(){
     const newSearch = new NewPageView();
     newSearch.clearpage();
     newSearch.createCitySearch();
+    mainMap.refresh();
+    mainMap.updateMap(defaultLocation, 3);
   }
 
   const citySearchButton = document.querySelector('#city_search');
@@ -215,7 +194,8 @@ const app = function(){
     const newSearch = new NewPageView();
     newSearch.clearpage();
     newSearch.createNearSearch();
-
+    mainMap.refresh();
+    mainMap.aroundMe();
   }
 
   const nearSearchButton = document.querySelector('#near_search');
@@ -226,7 +206,6 @@ const app = function(){
     const newSearch = new NewPageView();
     newSearch.clearpage();
     newSearch.createAboutPage();
-
   }
 
   const aboutPageButton = document.querySelector('#about_view');
@@ -234,37 +213,15 @@ const app = function(){
 
   // TODO create the button function for db and callback!
 
-
-
 const showCitySearch = function(event){
   event.preventDefault();
   const inputCity = document.querySelector('#city').value;
-
-  const location = {
-    lat: 0,
-    lng: 0
-  };
-
-  const map = mainMap.createMap(mapContainer, location, 15);
-  mainMap.centerOnInputCity(inputCity, map)
-  //const test = new MapWrapper();
-  //test.centerOnInputCity(inputCity);
-  // const newSearch = new NewPageView();
-  // newSearch.clearpage();
-  // newSearch.createCitySearch();
-
+  mainMap.centerOnInputCity(inputCity)
 
 }
   const searchButton = document.querySelector('#search_events');
     searchButton.addEventListener('click', showCitySearch)
 
-
-
-
-    // function() {
-    //   const inputCity = document.querySelector('#city').value;
-    //   mainMap.centerOnInputCity(inputCity, mainMap);
-    // });
 }
 
 document.addEventListener('DOMContentLoaded', app);
@@ -330,43 +287,75 @@ module.exports= DisplayChanger;
 /* 5 */
 /***/ (function(module, exports) {
 
-const MapWrapper = function (){
-  this.markers = [];
-}
-
-MapWrapper.prototype.createMap = function (container, coords, zoom) {
-  const map = new google.maps.Map(container, {
+const MapWrapper = function(container, coords, zoom) {
+  this.map = new google.maps.Map(container, {
     center: coords,
     zoom: zoom
   });
-
-  // var circleOptions = {
-  //   center: coords,
-  //   fillOpacity: 0,
-  //   strokeOpacity:0,
-  //   map: map,
-  //   radius: 500
-  // }
-  // var myCircle = new google.maps.Circle(circleOptions);
-  // map.fitBounds(myCircle.getBounds());
-  return map;
+  this.markers = [];
 }
 
+MapWrapper.prototype.refresh = function() {
+  google.maps.event.trigger(this.map,'resize');
+}
 
-MapWrapper.prototype.aroundMeMap = function(getLocation, locationFailed){
+// MapWrapper.prototype.render = function() {
+//   this.map = new google.maps.Map(this.container, {
+//     center: this.coords,
+//     zoom: this.zoom
+//   });
+// }
+
+MapWrapper.prototype.updateMap = function (coords, zoom) {
+  this.map.setCenter(coords);
+  this.map.setZoom(zoom);
+
+  // this.map = new google.maps.Map(container, {
+  //   center: coords,
+  //   zoom: zoom
+  // })
+  // return this.map;
+}
+
+//   // var circleOptions = {
+//   //   center: coords,
+//   //   fillOpacity: 0,
+//   //   strokeOpacity:0,
+//   //   map: map,
+//   //   radius: 500
+//   // }
+//   // var myCircle = new google.maps.Circle(circleOptions);
+//   // map.fitBounds(myCircle.getBounds());
+//   return map;
+// }
+
+MapWrapper.prototype.aroundMe = function(){
   if(navigator.geolocation){
-    navigator.geolocation.getCurrentPosition(getLocation, locationFailed);
+    navigator.geolocation.getCurrentPosition(function(position) {
+      const location = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+
+      // const map = mainMap.createMap(mapContainer, location, 15);
+      // const mark = mainMap.addMarker(location, map);
+      this.updateMap(location, 19);
+      this.addMarker(location)
+    }.bind(this), function() {
+      alert('Not worked');
+    });
   }
   else{
     alert('you do not have geolocation available on your device');
   }
 }
 
-MapWrapper.prototype.addMarker = function (coords, map) {
+MapWrapper.prototype.addMarker = function (coords) {
   const marker = new google.maps.Marker({
     position: coords,
-    map: map
+    map: this.map
   });
+
 }
 
 
@@ -394,14 +383,15 @@ MapWrapper.prototype.centerOnInputCity = function(city, map){
         lng
       };
 
-      map.setCenter(cityLocation);
+      this.map.setCenter(cityLocation);
+      this.map.setZoom(19);
       // const container = document.querySelector('#main_map');
       // const mainMap = new MapWrapper();
       // const map = mainMap.createMap(container,cityLocation,10);
       // mainMap.addMarker(location,map);
 
     };
-  });
+  }.bind(this));
 }
 
 
