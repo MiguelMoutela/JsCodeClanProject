@@ -44,8 +44,12 @@ const app = function(){
     const newSearch = new NewPageView();
     newSearch.clearpage();
     newSearch.createNearSearch();
-    const tableViewer = new TableViewer();
-    tableViewer.render(true);
+
+    const request = new Request('http://api.eventful.com/json/events/search?app_key=ZpGXZc399XdxLZG9&q=comedy');
+    request.get(function(page) {
+      const tableViewer = new TableViewer(page.events.event);
+      tableViewer.render(true);
+    });
 
   }
 
@@ -66,9 +70,15 @@ const app = function(){
     const newSearch = new NewPageView();
     newSearch.clearpage();
     newSearch.createDbView();
-    const tableViewer = new TableViewer();
-    tableViewer.render(false);
+    const newRequest = new Request('http://localhost:3000/api/EventWishList');
+    newRequest.get(function(events){
+      console.log(events);
+      const tableViewer = new TableViewer(events);
+      // const table = document.querySelector('#events_table')
+      tableViewer.render(false  );
+    })
   }
+
   const dbViewButton = document.querySelector('#db_view');
   dbViewButton.addEventListener('click', dbViewLoader);
 // TODO create the button function for db and callback!
