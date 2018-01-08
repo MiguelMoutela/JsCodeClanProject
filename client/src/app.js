@@ -17,6 +17,15 @@ const app = function(){
   const mapContainer = document.querySelector('#main_map');
   const sucess = function(position){
     const location = {
+      lat: 0.0,
+      lng: 0.0
+    };
+    const map = mainMap.createMap(mapContainer, location, 3);
+    const mark = mainMap.addMarker(location, map);
+  }
+
+  const sucess1 = function(position){
+    const location = {
       lat: position.coords.latitude,
       lng: position.coords.longitude
     };

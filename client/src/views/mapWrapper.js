@@ -8,15 +8,15 @@ MapWrapper.prototype.createMap = function (container, coords, zoom) {
     zoom: zoom
   });
 
-  var circleOptions = {
-    center: coords,
-    fillOpacity: 0,
-    strokeOpacity:0,
-    map: map,
-    radius: 500
-  }
-  var myCircle = new google.maps.Circle(circleOptions);
-  map.fitBounds(myCircle.getBounds());
+  // var circleOptions = {
+  //   center: coords,
+  //   fillOpacity: 0,
+  //   strokeOpacity:0,
+  //   map: map,
+  //   radius: 500
+  // }
+  // var myCircle = new google.maps.Circle(circleOptions);
+  // map.fitBounds(myCircle.getBounds());
   return map;
 }
 

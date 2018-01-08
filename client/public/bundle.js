@@ -178,6 +178,15 @@ const app = function(){
   const mapContainer = document.querySelector('#main_map');
   const sucess = function(position){
     const location = {
+      lat: 0.0,
+      lng: 0.0
+    };
+    const map = mainMap.createMap(mapContainer, location, 3);
+    const mark = mainMap.addMarker(location, map);
+  }
+
+  const sucess1 = function(position){
+    const location = {
       lat: position.coords.latitude,
       lng: position.coords.longitude
     };
@@ -331,15 +340,15 @@ MapWrapper.prototype.createMap = function (container, coords, zoom) {
     zoom: zoom
   });
 
-  var circleOptions = {
-    center: coords,
-    fillOpacity: 0,
-    strokeOpacity:0,
-    map: map,
-    radius: 500
-  }
-  var myCircle = new google.maps.Circle(circleOptions);
-  map.fitBounds(myCircle.getBounds());
+  // var circleOptions = {
+  //   center: coords,
+  //   fillOpacity: 0,
+  //   strokeOpacity:0,
+  //   map: map,
+  //   radius: 500
+  // }
+  // var myCircle = new google.maps.Circle(circleOptions);
+  // map.fitBounds(myCircle.getBounds());
   return map;
 }
 
