@@ -65,13 +65,16 @@ const app = function(){
   // TODO create the button function for db and callback!
 
 
-  // const searchButton = document.querySelector('#search_events');
-  // console.log(searchButton);
-  // // var inputCity = document.querySelector('#city').value;
-  //  searchButton.addEventListener('click', function() {
-  //    const inputCity = document.querySelector('#city').value;
+  const searchButton = document.querySelector('#search_events');
+    searchButton.addEventListener('click', mainMap.centerOnInputCity())
 
-   // });
+
+
+
+    // function() {
+    //   const inputCity = document.querySelector('#city').value;
+    //   mainMap.centerOnInputCity(inputCity, mainMap);
+    // });
 }
 
 document.addEventListener('DOMContentLoaded', app);

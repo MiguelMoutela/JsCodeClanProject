@@ -226,13 +226,16 @@ const app = function(){
   // TODO create the button function for db and callback!
 
 
-  // const searchButton = document.querySelector('#search_events');
-  // console.log(searchButton);
-  // // var inputCity = document.querySelector('#city').value;
-  //  searchButton.addEventListener('click', function() {
-  //    const inputCity = document.querySelector('#city').value;
+  const searchButton = document.querySelector('#search_events');
+    searchButton.addEventListener('click', mainMap.centerOnInputCity())
 
-   // });
+
+
+
+    // function() {
+    //   const inputCity = document.querySelector('#city').value;
+    //   mainMap.centerOnInputCity(inputCity, mainMap);
+    // });
 }
 
 document.addEventListener('DOMContentLoaded', app);
@@ -308,16 +311,16 @@ MapWrapper.prototype.createMap = function (container, coords, zoom) {
     zoom: zoom
   });
 
-   var circleOptions = {
-        center: coords,
-        fillOpacity: 0,
-        strokeOpacity:0,
-        map: map,
-        radius: 500
-    }
-    var myCircle = new google.maps.Circle(circleOptions);
-    map.fitBounds(myCircle.getBounds());
-    return map;
+  var circleOptions = {
+    center: coords,
+    fillOpacity: 0,
+    strokeOpacity:0,
+    map: map,
+    radius: 500
+  }
+  var myCircle = new google.maps.Circle(circleOptions);
+  map.fitBounds(myCircle.getBounds());
+  return map;
 }
 
 
@@ -334,39 +337,55 @@ MapWrapper.prototype.addMarker = function (coords, map) {
   const marker = new google.maps.Marker({
     position: coords,
     map: map
-    });
-  }
-
-
-MapWrapper.prototype.setRadius = function (coords, radius) {
-  var circleOptions = {
-       center: coords,
-       fillOpacity: 0,
-       strokeOpacity:0,
-       map: this.map,
-       radius: radius
-   }
-   var myCircle = new google.maps.Circle(circleOptions);
-   this.map.fitBounds(myCircle.getBounds());
-}
-
-MapWrapper.prototype.centerOnInputCity = function(inputCity){
-  var city = inputCity.toString();
-  var geocoder = new google.maps.Geocoder();
-  geocoder.geocode({'address': city}, function(results, status) {
-    if (status === 'OK') {
-      map.setCenter(results[0].geometry.location);
-    } else {
-      alert('Geocode was not successful for the following reason: ' + status);
-    }
   });
 }
 
-//MapWrapper.prototype.bounceMarker = function (marker) {
-//marker.setAnimation(google.maps.Animation.BOUNCE); }
 
-//   const inputCity = document.getElementById("city").value;
-module.exports = MapWrapper;
+MapWrapper.prototype.setRadius = function (coords, radius) {
+  const circleOptions = {
+    center: coords,
+    fillOpacity: 0,
+    strokeOpacity:0,
+    map: this.map,
+    radius: radius
+  }
+  const myCircle = new google.maps.Circle(circleOptions);
+  this.map.fitBounds(myCircle.getBounds());
+}
+
+MapWrapper.prototype.centerOnInputCity = function(city){
+  const  geocoder = new google.maps.Geocoder();
+  geocoder.geocode({'address': city}, function(results, status) {
+    if (status === 'OK') {
+      const result = results[0].geometry.location;
+      const lat = result.lat();
+      const lng = result.lng();
+      const cityLocation = {
+        lat,
+        lng
+      };
+      const container = document.querySelector('#main_map');
+      const mainMap = new MapWrapper();
+      const map = mainMap.createMap(container,cityLocation,10);
+      mainMap.addMarker(location,map);
+
+    };
+  });
+}
+
+
+
+
+
+
+
+
+
+  //MapWrapper.prototype.bounceMarker = function (marker) {
+  //marker.setAnimation(google.maps.Animation.BOUNCE); }
+
+  //   const inputCity = document.getElementById("city").value;
+  module.exports = MapWrapper;
 
 
 /***/ })
