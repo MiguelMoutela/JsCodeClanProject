@@ -21,6 +21,13 @@ const app = function(){
 
   const userlocation = new UserLocation();
   userlocation.getLocation(sucess, error);
-}
 
+
+//this is executing the alert even though the button has not been clicked
+   // var searchButton = document.querySelector('#search-events');
+   // //var inputCity = document.querySelector('#city').value;
+   // searchButton.addEventListener('click', alert(inputCity));
+
+}
 document.addEventListener('DOMContentLoaded', app);
+// var inputCity = document.querySelector('#city').value;

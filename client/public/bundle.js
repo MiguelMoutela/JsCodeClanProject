@@ -114,9 +114,16 @@ const app = function(){
 
   const userlocation = new UserLocation();
   userlocation.getLocation(sucess, error);
-}
 
+
+//this is executing the alert even though the button has not been clicked
+   // var searchButton = document.querySelector('#search-events');
+   // //var inputCity = document.querySelector('#city').value;
+   // searchButton.addEventListener('click', alert(inputCity));
+
+}
 document.addEventListener('DOMContentLoaded', app);
+// var inputCity = document.querySelector('#city').value;
 
 
 /***/ }),
@@ -213,7 +220,9 @@ MapWrapper.prototype.setRadius = function (coords, radius) {
 
 //centering map on the city from the input box
 
-  //const inputCity = document.getElementById("city").value;
+
+//const inputCity = document.getElementById("city").value needs to be captured
+// at some point, however to no avail
 
 MapWrapper.prototype.centerOnInputCity = function(inputCity){
   var city = inputCity.toString();

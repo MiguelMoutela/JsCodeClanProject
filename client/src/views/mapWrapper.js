@@ -43,7 +43,9 @@ MapWrapper.prototype.setRadius = function (coords, radius) {
 
 //centering map on the city from the input box
 
-  //const inputCity = document.getElementById("city").value;
+
+//const inputCity = document.getElementById("city").value needs to be captured
+// at some point, however to no avail
 
 MapWrapper.prototype.centerOnInputCity = function(inputCity){
   var city = inputCity.toString();
