@@ -1,4 +1,6 @@
-const request = require('../services/request.js');
+const Request = require('../services/request.js');
+
+
 
 const TableViewer = function(eventsWishList) {
   this.eventsWishList = [
@@ -216,11 +218,10 @@ TableViewer.prototype.render = function(isAddButton) {
     const button = document.createElement('button')
     button.innerText = 'add';
     button.addEventListener('click', function() {
+      const newRequest = new Request('http://localhost:3000/api/EventWishList');
+      newRequest.post(function(body) {
+      alert('Event added to Wishlist')}, event);
     });
-    //calls that request delete by id))
-
-    // need js method that adds a function to the button
-    // so I cam call delete by id on that event
     buttonCell.appendChild(button);
     tr.appendChild(buttonCell);
   }
@@ -230,6 +231,8 @@ TableViewer.prototype.render = function(isAddButton) {
     const deleteButton = document.createElement('button')
     deleteButton.innerText = 'delete';
     deleteButton.addEventListener('click', function() {
+      const newRequest = new Request('http://localhost:3000/api/EventWishList');
+      newRequest.delete(event);
     });
     //calls that request delete by id))
 

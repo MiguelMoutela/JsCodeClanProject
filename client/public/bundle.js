@@ -163,6 +163,20 @@ Request.prototype.get = function(callback) {
   request.send();
 }
 
+Request.prototype.post = function(callback, body) {
+  const request = new XMLHttpRequest();
+  request.open('POST', this.url);
+  request.setRequestHeader('Content-Type', 'application/json');
+  request.addEventListener('load', function(){
+    if(this.status != 201) {
+      return;
+    }
+    const responseBody = JSON.parse(this.responseText);
+    callback(responseBody);
+  });
+  request.send(JSON.stringify(body));
+}
+
 Request.prototype.deleteById = function(id, callback) {
   const request = new XMLHttpRequest();
   request.open('DELETE', `${this.url}/:{id}`)
@@ -373,7 +387,9 @@ module.exports = UserLocation;
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const request = __webpack_require__(1);
+const Request = __webpack_require__(1);
+
+
 
 const TableViewer = function(eventsWishList) {
   this.eventsWishList = [
@@ -591,11 +607,10 @@ TableViewer.prototype.render = function(isAddButton) {
     const button = document.createElement('button')
     button.innerText = 'add';
     button.addEventListener('click', function() {
+      const newRequest = new Request('http://localhost:3000/api/EventWishList');
+      newRequest.post(function(body) {
+      alert('Event added to Wishlist')}, event);
     });
-    //calls that request delete by id))
-
-    // need js method that adds a function to the button
-    // so I cam call delete by id on that event
     buttonCell.appendChild(button);
     tr.appendChild(buttonCell);
   }
@@ -605,6 +620,8 @@ TableViewer.prototype.render = function(isAddButton) {
     const deleteButton = document.createElement('button')
     deleteButton.innerText = 'delete';
     deleteButton.addEventListener('click', function() {
+      const newRequest = new Request('http://localhost:3000/api/EventWishList');
+      newRequest.delete(event);
     });
     //calls that request delete by id))
 
