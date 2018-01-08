@@ -1,13 +1,92 @@
-const app = function(){
-  // const center = {
-  //     lat: 55.946962,
-  //     lng: -3.20195
-  // }
+const FormView = require('./views/formView.js');
+const Request = require('./services/request.js');
+const MapWrapper = require('./views/mapWrapper.js');
+const UserLocation = require('./views/userLocation.js');
+const NewPageView = require('./views/newPageView.js');
+const TableViewer = require('./views/tableView.js');
 
-  const mapContainer = document.querySelector('#main-map');
-  const mainMap = new MapWrapper(mapContainer, center, 25);
-  mainMap.whereAmI();
-  console.log(this.location);
+
+const app = function(){
+  const homepage = new NewPageView();
+  homepage.createHomepage();
+  // homepage.createCitySearch();
+  // homepage.createNearSearch();
+  // homepage.createAboutPage();
+  // homepage.changeAboutPageElement("about_text","this is a test for changeAboutPageElement() ");
+
+  const mapContainer = document.querySelector('#main_map');
+  const sucess = function(position){
+    const location = {
+      lat: position.coords.latitude,
+      lng: position.coords.longitude
+    };
+    const mainMap = new MapWrapper(mapContainer, location, 15);
+  }
+
+  const error = function(){
+    alert("Error occured. We did not get your location");
+  }
+
+  const userlocation = new UserLocation();
+  userlocation.getLocation(sucess, error);
+
+  const citySearchLoader =function(){
+    const newSearch = new NewPageView();
+    newSearch.clearpage();
+    newSearch.createCitySearch();
+
+  }
+
+  const citySearchButton = document.querySelector('#city_search');
+  citySearchButton.addEventListener('click', citySearchLoader);
+
+  const nearSearchLoader =function(){
+    const newSearch = new NewPageView();
+    newSearch.clearpage();
+    newSearch.createNearSearch();
+
+    const request = new Request('http://api.eventful.com/json/events/search?app_key=ZpGXZc399XdxLZG9&q=comedy');
+    request.get(function(page) {
+      const tableViewer = new TableViewer(page.events.event);
+      tableViewer.render(true);
+    });
+
+  }
+
+  const nearSearchButton = document.querySelector('#near_search');
+  nearSearchButton.addEventListener('click', nearSearchLoader);
+
+  const aboutPageLoader =function(){
+    const newSearch = new NewPageView();
+    newSearch.clearpage();
+    newSearch.createAboutPage();
+
+  }
+
+  const aboutPageButton = document.querySelector('#about_view');
+  aboutPageButton.addEventListener('click', aboutPageLoader);
+
+  const dbViewLoader =function(){
+    const newSearch = new NewPageView();
+    newSearch.clearpage();
+    newSearch.createDbView();
+    const newRequest = new Request('http://localhost:3000/api/EventWishList');
+    newRequest.get(function(events){
+      console.log(events);
+      const tableViewer = new TableViewer(events);
+      // const table = document.querySelector('#events_table')
+      tableViewer.render(false  );
+    })
+  }
+
+  const dbViewButton = document.querySelector('#db_view');
+  dbViewButton.addEventListener('click', dbViewLoader);
+// TODO create the button function for db and callback!
+
+// const tableViewer = new TableViewer();
+// tableViewer.render(false);
+
+
 }
 
 document.addEventListener('DOMContentLoaded', app);

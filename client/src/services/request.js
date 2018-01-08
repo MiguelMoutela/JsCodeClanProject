@@ -15,4 +15,30 @@ Request.prototype.get = function(callback) {
   request.send();
 }
 
+Request.prototype.post = function(callback, body) {
+  const request = new XMLHttpRequest();
+  request.open('POST', this.url);
+  request.setRequestHeader('Content-Type', 'application/json');
+  request.addEventListener('load', function(){
+    if(this.status != 201) {
+      return;
+    }
+    const responseBody = JSON.parse(this.responseText);
+    callback(responseBody);
+  });
+  request.send(JSON.stringify(body));
+}
+
+Request.prototype.deleteById = function(id, callback) {
+  const request = new XMLHttpRequest();
+  request.open('DELETE', `${this.url}/:{id}`)
+  request.addEventListener('load', function(){
+    if(this.status !== 500) {
+      return;
+    }
+    callback();
+  });
+  request.send()
+}
+
 module.exports = Request;
