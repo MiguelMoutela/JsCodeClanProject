@@ -620,8 +620,8 @@ TableViewer.prototype.render = function(isAddButton) {
     const deleteButton = document.createElement('button')
     deleteButton.innerText = 'delete';
     deleteButton.addEventListener('click', function() {
-      const newRequest = new Request('http://localhost:3000/api/EventWishList');
-      newRequest.delete(event);
+      const newRequest = new Request(`http://localhost:3000/api/EventWishList/${event.id}`);
+      newRequest.deleteById(event.id);
     });
     //calls that request delete by id))
 
