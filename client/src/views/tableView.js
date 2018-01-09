@@ -81,7 +81,9 @@ TableViewer.prototype.render = function(isAddButton) {
   const addAddButton = function(event, tr){
     const buttonCell = document.createElement('td');
     const button = document.createElement('button')
-    button.innerText = 'add';
+    button.innerText = 'Add';
+    button.style.background = 'green';
+    button.style.color ='white';
     button.addEventListener('click', function() {
       const newRequest = new Request('http://localhost:3000/api/EventWishList');
       newRequest.post(function(body) {
@@ -94,7 +96,9 @@ TableViewer.prototype.render = function(isAddButton) {
   const deleteButton = function(event, tr){
     const deleteButtonCell = document.createElement('td');
     const deleteButton = document.createElement('button')
-    deleteButton.innerText = 'delete';
+    deleteButton.innerText = 'Delete';
+    deleteButton.style.background = 'red';
+    deleteButton.style.color ='white';
     deleteButton.addEventListener('click', function() {
       const newRequest = new Request(`http://localhost:3000/api/EventWishList/${event._id}`);
       newRequest.delete(function(){
