@@ -47,7 +47,8 @@ MapWrapper.prototype.addPersonMarker = function (coords) {
   const marker = new google.maps.Marker({
     position: coords,
     map: this.map,
-    icon: 'https://saneenergyproject.files.wordpress.com/2014/03/map-pin.png?w=176&h=300'
+    // icon: 'https://maps.google.com/mapfiles/ms/micons/blue-dot.png'
+    icon: 'https://maps.google.com/mapfiles/kml/paddle/blu-stars.png'
   });
 
 }
