@@ -69,7 +69,7 @@ const app = function(){
     newRequest.get(function(events){
       console.log(events);
       const tableViewer = new TableViewer(events);
-      tableViewer.render(false  );
+      tableViewer.render(false);
     })
   }
 
