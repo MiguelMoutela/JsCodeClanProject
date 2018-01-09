@@ -306,7 +306,7 @@ const app = function(){
     event.preventDefault();
     const inputCity = document.querySelector('#city').value;
     mainMap.centerOnInputCity(inputCity);
-    formView.searchByCity();
+    formView.searchByCity(mainMap);
 
   }
 
@@ -320,7 +320,7 @@ const app = function(){
 
   const aroundMeSearch = function(event){
     event.preventDefault();
-    formView.searchAroundMe();
+    formView.searchAroundMe(mainMap);
 
   }
 
@@ -354,6 +354,7 @@ document.addEventListener('DOMContentLoaded', app);
 const NewPageView = __webpack_require__(1);
 const Request = __webpack_require__(0);
 const TableView = __webpack_require__(6);
+const MapWrapper = __webpack_require__(5)
 
 
 
@@ -363,7 +364,7 @@ const FormView = function(){
 }
 
 
-FormView.prototype.searchByCity= function(){
+FormView.prototype.searchByCity= function(mainMap){
 
   const inputCity = document.querySelector('#city').value;
 
@@ -377,14 +378,19 @@ FormView.prototype.searchByCity= function(){
 
 
   request.get(function(object){
-    const table = new TableView(object);
-    table.render(true);
+    console.log(object);
+    if(object.events === null) {
+      alert("There are no events listed.")
+    } else
+    {
+    mainMap.displayEventMarkers(object);}
+
   });
 
 }
 
   //not sure about the binding here..is it required or not? same for function needing event
-  FormView.prototype.searchAroundMe= function(){
+  FormView.prototype.searchAroundMe= function(mainMap){
 
     if(navigator.geolocation){
       navigator.geolocation.getCurrentPosition(function(position) {
@@ -403,9 +409,10 @@ FormView.prototype.searchByCity= function(){
         const request = new Request(searchUrl);
 
         request.get(function(object){
-          const table = new TableView(object);
-          table.render(true);
-
+          if(object.events === null) {
+            alert("There are no events listed.")
+          } else
+          {mainMap.displayEventMarkers(object);}
         })
 
       }, function() {
@@ -485,7 +492,7 @@ MapWrapper.prototype.aroundMe = function(){
       this.refresh();
       // this.map.setCenter(location);
       this.updateMap(location, 19);
-      this.addMarker(location)
+      this.addPersonMarker(location)
     }.bind(this), function() {
       alert('Not able to find your location');
     });
@@ -500,6 +507,15 @@ MapWrapper.prototype.addMarker = function (coords) {
     position: coords,
     map: this.map
   });
+}
+
+MapWrapper.prototype.addPersonMarker = function (coords) {
+  const marker = new google.maps.Marker({
+    position: coords,
+    map: this.map,
+    icon: 'https://saneenergyproject.files.wordpress.com/2014/03/map-pin.png?w=176&h=300'
+  });
+
 }
 
 // MapWrapper.prototype.setRadius = function (coords, radius) {
@@ -530,6 +546,22 @@ MapWrapper.prototype.centerOnInputCity = function(city, map){
     };
   }.bind(this));
 }
+
+
+MapWrapper.prototype.displayEventMarkers = function(object) {
+  for (i = 0; i < object.events.event.length; i++) {
+   const lat = parseFloat(object.events.event[i].latitude);
+   const lng = parseFloat(object.events.event[i].longitude);
+   const coords = {
+     lat: lat,
+     lng: lng
+   }
+   console.log(coords);
+    this.addMarker(coords);
+  }
+}
+
+
 
   module.exports = MapWrapper;
 
