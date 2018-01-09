@@ -1,6 +1,7 @@
 const NewPageView = require('./newPageView.js');
 const Request = require('../services/request.js');
 const TableView = require('./tableView.js');
+const MapWrapper = require('./mapWrapper.js')
 
 
 
@@ -10,7 +11,7 @@ const FormView = function(){
 }
 
 
-FormView.prototype.searchByCity= function(){
+FormView.prototype.searchByCity= function(mainMap){
 
   const inputCity = document.querySelector('#city').value;
 
@@ -24,15 +25,15 @@ FormView.prototype.searchByCity= function(){
 
 
   request.get(function(object){
-    const table = new TableView(object);
-    table.render(true);
+    // const mapWrapper = new MapWrapper();
+    mainMap.displayEventMarkers(object);
 
   });
 
 }
 
   //not sure about the binding here..is it required or not? same for function needing event
-  FormView.prototype.searchAroundMe= function(){
+  FormView.prototype.searchAroundMe= function(mainMap){
 
     if(navigator.geolocation){
       navigator.geolocation.getCurrentPosition(function(position) {
@@ -52,7 +53,7 @@ FormView.prototype.searchByCity= function(){
 
         request.get(function(object){
           console.log(object);
-
+          mainMap.displayEventMarkers(object);
         })
 
       }, function() {

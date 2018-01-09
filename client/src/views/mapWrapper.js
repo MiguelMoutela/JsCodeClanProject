@@ -72,4 +72,20 @@ MapWrapper.prototype.centerOnInputCity = function(city, map){
   }.bind(this));
 }
 
+
+MapWrapper.prototype.displayEventMarkers = function(object) {
+  for (i = 0; i < object.events.event.length; i++) {
+   const lat = parseFloat(object.events.event[i].latitude);
+   const lng = parseFloat(object.events.event[i].longitude);
+   const coords = {
+     lat: lat,
+     lng: lng
+   }
+   console.log(coords);
+    this.addMarker(coords);
+  }
+}
+
+
+
   module.exports = MapWrapper;
