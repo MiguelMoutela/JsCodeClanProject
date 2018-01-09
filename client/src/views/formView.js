@@ -26,7 +26,12 @@ FormView.prototype.searchByCity= function(mainMap){
 
   request.get(function(object){
     // const mapWrapper = new MapWrapper();
-    mainMap.displayEventMarkers(object);
+    console.log(object);
+    if(object.events === null) {
+      alert("There are no events listed.")
+    } else
+    {
+    mainMap.displayEventMarkers(object);}
 
   });
 
@@ -52,8 +57,10 @@ FormView.prototype.searchByCity= function(mainMap){
         const request = new Request(searchUrl);
 
         request.get(function(object){
-          console.log(object);
-          mainMap.displayEventMarkers(object);
+          if(object.events === null) {
+            alert("There are no events listed.")
+          } else
+          {mainMap.displayEventMarkers(object);}
         })
 
       }, function() {
