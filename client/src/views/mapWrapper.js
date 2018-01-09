@@ -101,16 +101,13 @@ MapWrapper.prototype.displayEventMarkers = function(object) {
       lng: lng
     }
 
-    const contentString = object.events.event[i].title + object.events.event.description
-    console.log(contentString);
+    const contentString = object.events.event[i].title + object.events.event[i].description
+
     const content = {
       content: contentString
 
     }
-    console.log(content);
-
     const markerInfo = this.addMarkerInfoWindow(content);
-   console.log(markerInfo);
 
     const marker =  this.addMarker(coords);
     marker.addListener('click', function() {
