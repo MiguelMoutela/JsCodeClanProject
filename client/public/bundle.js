@@ -65,56 +65,6 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
-
-const Request = function(url) {
-  this.url = url;
-}
-
-Request.prototype.get = function(callback) {
-  const request = new XMLHttpRequest();
-  request.open('GET', this.url);
-  request.addEventListener('load',function(){
-    if(this.status!==200){
-      return;
-    }
-    const responseBody= JSON.parse(this.responseText);
-    callback(responseBody)
-  });
-  request.send();
-}
-
-Request.prototype.post = function(callback, body) {
-  const request = new XMLHttpRequest();
-  request.open('POST', this.url);
-  request.setRequestHeader('Content-Type', 'application/json');
-  request.addEventListener('load', function(){
-    if(this.status != 201) {
-      return;
-    }
-    const responseBody = JSON.parse(this.responseText);
-    callback(responseBody);
-  });
-  request.send(JSON.stringify(body));
-}
-
-Request.prototype.deleteById = function(id, callback) {
-  const request = new XMLHttpRequest();
-  request.open('DELETE', `${this.url}/:{id}`)
-  request.addEventListener('load', function(){
-    if(this.status !== 500) {
-      return;
-    }
-    callback();
-  });
-  request.send()
-}
-
-module.exports = Request;
-
-
-/***/ }),
-/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const DisplayChanger = __webpack_require__(5);
@@ -201,10 +151,60 @@ module.exports = NewPageView;
 
 
 /***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+const Request = function(url) {
+  this.url = url;
+}
+
+Request.prototype.get = function(callback) {
+  const request = new XMLHttpRequest();
+  request.open('GET', this.url);
+  request.addEventListener('load',function(){
+    if(this.status!==200){
+      return;
+    }
+    const responseBody= JSON.parse(this.responseText);
+    callback(responseBody)
+  });
+  request.send();
+}
+
+Request.prototype.post = function(callback, body) {
+  const request = new XMLHttpRequest();
+  request.open('POST', this.url);
+  request.setRequestHeader('Content-Type', 'application/json');
+  request.addEventListener('load', function(){
+    if(this.status != 201) {
+      return;
+    }
+    const responseBody = JSON.parse(this.responseText);
+    callback(responseBody);
+  });
+  request.send(JSON.stringify(body));
+}
+
+Request.prototype.deleteById = function(id, callback) {
+  const request = new XMLHttpRequest();
+  request.open('DELETE', `${this.url}/:{id}`)
+  request.addEventListener('load', function(){
+    if(this.status !== 500) {
+      return;
+    }
+    callback();
+  });
+  request.send()
+}
+
+module.exports = Request;
+
+
+/***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const Request = __webpack_require__(0);
+const Request = __webpack_require__(1);
 
 
 
@@ -223,12 +223,18 @@ TableViewer.prototype.render = function(isAddButton) {
 
   const PopulateTable = function(eventWishList){
     const table = document.querySelector('#table_body');
-    console.log(eventWishList.events.event);
-    eventWishList.events.event.forEach(function(event){
-      console.log(event);
-      createEventEntryInTable(event, table)
-    });
+    if (isAddButton){
+      eventWishList.events.event.forEach(function(event){
+        createEventEntryInTable(event, table)
+      });
+    }
+    else {
+      eventWishList.forEach(function(event){
+        createEventEntryInTable(event, table)
+      });
+    }
   }
+
 
   // Below is the code that creates rows with event info
 
@@ -293,7 +299,9 @@ TableViewer.prototype.render = function(isAddButton) {
     deleteButton.innerText = 'delete';
     deleteButton.addEventListener('click', function() {
       const newRequest = new Request(`http://localhost:3000/api/EventWishList/${event.id}`);
-      newRequest.deleteById(event.id);
+      newRequest.deleteById(event.id, function(){
+        alert("Event deleted")
+      });
     });
     //calls that request delete by id))
 
@@ -306,7 +314,7 @@ TableViewer.prototype.render = function(isAddButton) {
   PopulateTable(this.eventsWishList);
 }
 
-//tableViewer.render(ture);
+//tableViewer.render(true);
 
 // const getSavedEvents = function() {
 //   const request = new XMLHttpRequest();
@@ -329,9 +337,9 @@ module.exports = TableViewer;
 /***/ (function(module, exports, __webpack_require__) {
 
 const FormView = __webpack_require__(4);
-const Request = __webpack_require__(0);
+const Request = __webpack_require__(1);
 const MapWrapper = __webpack_require__(6);
-const NewPageView = __webpack_require__(1);
+const NewPageView = __webpack_require__(0);
 const TableViewer = __webpack_require__(2);
 
 
@@ -399,7 +407,7 @@ const app = function(){
     newRequest.get(function(events){
       console.log(events);
       const tableViewer = new TableViewer(events);
-      tableViewer.render(false  );
+      tableViewer.render(false);
     })
   }
 
@@ -475,8 +483,8 @@ document.addEventListener('DOMContentLoaded', app);
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const NewPageView = __webpack_require__(1);
-const Request = __webpack_require__(0);
+const NewPageView = __webpack_require__(0);
+const Request = __webpack_require__(1);
 const TableView = __webpack_require__(2);
 
 

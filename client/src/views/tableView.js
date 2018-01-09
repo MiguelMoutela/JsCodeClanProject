@@ -17,12 +17,18 @@ TableViewer.prototype.render = function(isAddButton) {
 
   const PopulateTable = function(eventWishList){
     const table = document.querySelector('#table_body');
-    console.log(eventWishList.events.event);
-    eventWishList.events.event.forEach(function(event){
-      console.log(event);
-      createEventEntryInTable(event, table)
-    });
+    if (isAddButton){
+      eventWishList.events.event.forEach(function(event){
+        createEventEntryInTable(event, table)
+      });
+    }
+    else {
+      eventWishList.forEach(function(event){
+        createEventEntryInTable(event, table)
+      });
+    }
   }
+
 
   // Below is the code that creates rows with event info
 
@@ -87,7 +93,9 @@ TableViewer.prototype.render = function(isAddButton) {
     deleteButton.innerText = 'delete';
     deleteButton.addEventListener('click', function() {
       const newRequest = new Request(`http://localhost:3000/api/EventWishList/${event.id}`);
-      newRequest.deleteById(event.id);
+      newRequest.deleteById(event.id, function(){
+        alert("Event deleted")
+      });
     });
     //calls that request delete by id))
 
@@ -100,7 +108,7 @@ TableViewer.prototype.render = function(isAddButton) {
   PopulateTable(this.eventsWishList);
 }
 
-//tableViewer.render(ture);
+//tableViewer.render(true);
 
 // const getSavedEvents = function() {
 //   const request = new XMLHttpRequest();
