@@ -606,7 +606,6 @@ FormView.prototype.searchByCity= function(mainMap){
 
 
   request.get(function(object){
-    // const mapWrapper = new MapWrapper();
     console.log(object);
     if(object.events === null) {
       alert("There are no events listed.")
