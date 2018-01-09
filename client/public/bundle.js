@@ -177,7 +177,7 @@ NewPageView.prototype.createDbView = function(){
   display.displayOff('searchBox');
   display.displayOff('radius');
   display.displayOff('radius_label');
-  display.displayOff('main_map');
+  display.displayOn('main_map');
   display.displayOn('events_table');
 }
 
@@ -209,6 +209,7 @@ const Request = __webpack_require__(0);
 const MapWrapper = __webpack_require__(5);
 const NewPageView = __webpack_require__(1);
 const TableViewer = __webpack_require__(6);
+const DbView = __webpack_require__(7);
 
 
 const app = function(){
@@ -378,7 +379,7 @@ FormView.prototype.searchByCity= function(mainMap){
 
 
   request.get(function(object){
-    console.log(object);
+    
     if(object.events === null) {
       alert("There are no events listed.")
     } else
@@ -390,7 +391,7 @@ FormView.prototype.searchByCity= function(mainMap){
 
   }
 
-  
+
   FormView.prototype.searchAroundMe= function(mainMap){
 
     if(navigator.geolocation){
@@ -738,6 +739,49 @@ TableViewer.prototype.render = function(isAddButton) {
 //
 
 module.exports = TableViewer;
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const Request = __webpack_require__(0);
+const MapWrapper = __webpack_require__(5)
+
+
+const DbView = function(){
+
+}
+
+DbView.prototype.renderDBMap= function(){
+
+const mapContainer = document.querySelector('#main_map');
+
+  const defaultLocation = {
+    lat: 0.0,
+    lng: 0.0
+  };
+
+  const mainMap = new MapWrapper(mapContainer, defaultLocation, 3 );
+
+  const url = 'http://localhost:3000/api/EventWishList';
+
+  const requestToDb = new Request(url);
+
+  requestToDb.get(function(DBobject){
+
+    if(DBobject.events === null) {
+      alert("You have no events saved ")
+    } else
+    {
+      mainMap.displayEventMarkers(DBobject);}
+
+    });
+
+  }
+
+
+  module.exports = DbView; 
 
 
 /***/ })

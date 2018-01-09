@@ -25,7 +25,7 @@ FormView.prototype.searchByCity= function(mainMap){
 
 
   request.get(function(object){
-    console.log(object);
+    
     if(object.events === null) {
       alert("There are no events listed.")
     } else
@@ -37,7 +37,7 @@ FormView.prototype.searchByCity= function(mainMap){
 
   }
 
-  
+
   FormView.prototype.searchAroundMe= function(mainMap){
 
     if(navigator.geolocation){

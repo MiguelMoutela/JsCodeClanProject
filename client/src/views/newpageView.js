@@ -58,7 +58,7 @@ NewPageView.prototype.createDbView = function(){
   display.displayOff('searchBox');
   display.displayOff('radius');
   display.displayOff('radius_label');
-  display.displayOff('main_map');
+  display.displayOn('main_map');
   display.displayOn('events_table');
 }
 

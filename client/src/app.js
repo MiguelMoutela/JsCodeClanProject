@@ -3,6 +3,7 @@ const Request = require('./services/request.js');
 const MapWrapper = require('./views/mapWrapper.js');
 const NewPageView = require('./views/newPageView.js');
 const TableViewer = require('./views/tableView.js');
+const DbView = require('./views/dbView.js');
 
 
 const app = function(){
