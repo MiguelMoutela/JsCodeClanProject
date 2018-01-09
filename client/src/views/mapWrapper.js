@@ -41,6 +41,15 @@ MapWrapper.prototype.addMarker = function (coords) {
     position: coords,
     map: this.map
   });
+  return marker;
+}
+
+MapWrapper.prototype.addMarkerInfoWindow = function(content){
+
+  const infoWindow = new google.maps.InfoWindow(content);
+
+  return infoWindow;
+
 }
 
 MapWrapper.prototype.addPersonMarker = function (coords) {
@@ -85,17 +94,31 @@ MapWrapper.prototype.centerOnInputCity = function(city, map){
 
 MapWrapper.prototype.displayEventMarkers = function(object) {
   for (i = 0; i < object.events.event.length; i++) {
-   const lat = parseFloat(object.events.event[i].latitude);
-   const lng = parseFloat(object.events.event[i].longitude);
-   const coords = {
-     lat: lat,
-     lng: lng
-   }
-   console.log(coords);
-    this.addMarker(coords);
+    const lat = parseFloat(object.events.event[i].latitude);
+    const lng = parseFloat(object.events.event[i].longitude);
+    const coords = {
+      lat: lat,
+      lng: lng
+    }
+
+    const contentString = object.events.event[i].title + object.events.event.description
+    console.log(contentString);
+    const content = {
+      content: contentString
+
+    }
+    console.log(content);
+
+    const markerInfo = this.addMarkerInfoWindow(content);
+   console.log(markerInfo);
+
+    const marker =  this.addMarker(coords);
+    marker.addListener('click', function() {
+      markerInfo.open(this.map, marker);
+    });
   }
 }
 
 
 
-  module.exports = MapWrapper;
+module.exports = MapWrapper;
