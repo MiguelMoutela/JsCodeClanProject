@@ -65,56 +65,6 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
-
-const Request = function(url) {
-  this.url = url;
-}
-
-Request.prototype.get = function(callback) {
-  const request = new XMLHttpRequest();
-  request.open('GET', this.url);
-  request.addEventListener('load',function(){
-    if(this.status!==200){
-      return;
-    }
-    const responseBody= JSON.parse(this.responseText);
-    callback(responseBody)
-  });
-  request.send();
-}
-
-Request.prototype.post = function(callback, body) {
-  const request = new XMLHttpRequest();
-  request.open('POST', this.url);
-  request.setRequestHeader('Content-Type', 'application/json');
-  request.addEventListener('load', function(){
-    if(this.status != 201) {
-      return;
-    }
-    const responseBody = JSON.parse(this.responseText);
-    callback(responseBody);
-  });
-  request.send(JSON.stringify(body));
-}
-
-Request.prototype.deleteById = function(id, callback) {
-  const request = new XMLHttpRequest();
-  request.open('DELETE', `${this.url}/:{id}`)
-  request.addEventListener('load', function(){
-    if(this.status !== 500) {
-      return;
-    }
-    callback();
-  });
-  request.send()
-}
-
-module.exports = Request;
-
-
-/***/ }),
-/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const DisplayChanger = __webpack_require__(4);
@@ -201,14 +151,64 @@ module.exports = NewPageView;
 
 
 /***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+const Request = function(url) {
+  this.url = url;
+}
+
+Request.prototype.get = function(callback) {
+  const request = new XMLHttpRequest();
+  request.open('GET', this.url);
+  request.addEventListener('load',function(){
+    if(this.status!==200){
+      return;
+    }
+    const responseBody= JSON.parse(this.responseText);
+    callback(responseBody)
+  });
+  request.send();
+}
+
+Request.prototype.post = function(callback, body) {
+  const request = new XMLHttpRequest();
+  request.open('POST', this.url);
+  request.setRequestHeader('Content-Type', 'application/json');
+  request.addEventListener('load', function(){
+    if(this.status != 201) {
+      return;
+    }
+    const responseBody = JSON.parse(this.responseText);
+    callback(responseBody);
+  });
+  request.send(JSON.stringify(body));
+}
+
+Request.prototype.deleteById = function(id, callback) {
+  const request = new XMLHttpRequest();
+  request.open('DELETE', `${this.url}/:{id}`)
+  request.addEventListener('load', function(){
+    if(this.status !== 500) {
+      return;
+    }
+    callback();
+  });
+  request.send()
+}
+
+module.exports = Request;
+
+
+/***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const FormView = __webpack_require__(3);
-const Request = __webpack_require__(0);
+const Request = __webpack_require__(1);
 const MapWrapper = __webpack_require__(5);
-const NewPageView = __webpack_require__(1);
-const TableViewer = __webpack_require__(6);
+const NewPageView = __webpack_require__(0);
+const TableViewer = __webpack_require__(7);
 
 
 const app = function(){
@@ -351,9 +351,9 @@ document.addEventListener('DOMContentLoaded', app);
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const NewPageView = __webpack_require__(1);
-const Request = __webpack_require__(0);
-const TableView = __webpack_require__(6);
+const NewPageView = __webpack_require__(0);
+const Request = __webpack_require__(1);
+const TableView = __webpack_require__(7);
 
 
 
@@ -535,10 +535,11 @@ MapWrapper.prototype.centerOnInputCity = function(city, map){
 
 
 /***/ }),
-/* 6 */
+/* 6 */,
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const Request = __webpack_require__(0);
+const Request = __webpack_require__(1);
 
 
 
