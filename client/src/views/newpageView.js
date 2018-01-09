@@ -28,6 +28,7 @@ NewPageView.prototype.createCitySearch = function(){
   display.displayOff('start_date');
   display.displayOff('end_date_label');
   display.displayOff('end_date');
+  display.displayOff('search_around_me_button');
   display.displayOn('main_map');
   display.displayOn('events_table');
 }
@@ -45,6 +46,7 @@ NewPageView.prototype.createNearSearch = function(){
   display.displayOff('start_date');
   display.displayOff('end_date_label');
   display.displayOff('end_date');
+  display.displayOff('search_city_button');
   display.displayOn('main_map');
   display.displayOn('events_table');
 }

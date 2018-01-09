@@ -24,6 +24,7 @@ MapWrapper.prototype.aroundMe = function(){
         lng: position.coords.longitude
       };
       this.refresh();
+      // this.map.setCenter(location);
       this.updateMap(location, 19);
       this.addMarker(location)
     }.bind(this), function() {

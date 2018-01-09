@@ -147,6 +147,7 @@ NewPageView.prototype.createCitySearch = function(){
   display.displayOff('start_date');
   display.displayOff('end_date_label');
   display.displayOff('end_date');
+  display.displayOff('search_around_me_button');
   display.displayOn('main_map');
   display.displayOn('events_table');
 }
@@ -164,6 +165,7 @@ NewPageView.prototype.createNearSearch = function(){
   display.displayOff('start_date');
   display.displayOff('end_date_label');
   display.displayOff('end_date');
+  display.displayOff('search_city_button');
   display.displayOn('main_map');
   display.displayOn('events_table');
 }
@@ -214,8 +216,8 @@ const app = function(){
   homepage.createHomepage();
 
 
-// NOTE the following  functions and variables render a
-//default map that will updated as pages load
+  // NOTE the following  functions and variables render a
+  //default map that will updated as pages load
 
   const mapContainer = document.querySelector('#main_map');
 
@@ -227,12 +229,12 @@ const app = function(){
   const mainMap = new MapWrapper(mapContainer, defaultLocation, 3 );
 
 
-// NOTE creating a new formview to call formview functions//
+  // NOTE creating a new formview to call formview functions//
 
-const formView = new FormView();
+  const formView = new FormView();
 
-// NOTE the following two functions are related to the
-//search by city button  on homepage
+  // NOTE the following two functions are related to the
+  //search by city button  on homepage
 
   const citySearchLoader =function(){
     const newSearch = new NewPageView();
@@ -297,8 +299,8 @@ const formView = new FormView();
 
 
 
-// NOTE the following two functions are related to the
-//search button on the search form
+  // NOTE the following two functions are related to the
+  //search button on the search form
 
   const showCitySearch = function(event){
     event.preventDefault();
@@ -314,16 +316,25 @@ const formView = new FormView();
 
 
 
-//NOTE following two functions deal with search around me button on form
+  //NOTE following two functions deal with search around me button on form
 
+  const aroundMeSearch = function(event){
+    event.preventDefault();
+    formView.searchAroundMe();
+
+  }
+
+
+  const aroundMeSearchButton = document.querySelector('#search_around_me_button');
+  aroundMeSearchButton.addEventListener('click', aroundMeSearch);
 
   // NOTE not sure what this request to get all events with cat comedy was used for...
 
-    // const request = new Request('http://api.eventful.com/json/events/search?app_key=ZpGXZc399XdxLZG9&q=comedy');
-    // request.get(function(page) {
-    //   const tableViewer = new TableViewer(page.events.event);
-    //   tableViewer.render(true);
-    // });
+  // const request = new Request('http://api.eventful.com/json/events/search?app_key=ZpGXZc399XdxLZG9&q=comedy');
+  // request.get(function(page) {
+  //   const tableViewer = new TableViewer(page.events.event);
+  //   tableViewer.render(true);
+  // });
 
 
 
@@ -465,6 +476,7 @@ MapWrapper.prototype.aroundMe = function(){
         lng: position.coords.longitude
       };
       this.refresh();
+      // this.map.setCenter(location);
       this.updateMap(location, 19);
       this.addMarker(location)
     }.bind(this), function() {
