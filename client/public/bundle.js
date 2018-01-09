@@ -354,7 +354,7 @@ MapWrapper.prototype.aroundMe = function(){
       this.refresh();
       // this.map.setCenter(location);
       this.updateMap(location, 19);
-      this.addMarker(location)
+      this.addPersonMarker(location)
     }.bind(this), function() {
       alert('Not able to find your location');
     });
@@ -368,6 +368,14 @@ MapWrapper.prototype.addMarker = function (coords) {
   const marker = new google.maps.Marker({
     position: coords,
     map: this.map
+  });
+}
+
+MapWrapper.prototype.addPersonMarker = function (coords) {
+  const marker = new google.maps.Marker({
+    position: coords,
+    map: this.map,
+    icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
   });
 }
 
