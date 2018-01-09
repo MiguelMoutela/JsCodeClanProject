@@ -37,7 +37,7 @@ FormView.prototype.searchByCity= function(mainMap){
 
   }
 
-  //not sure about the binding here..is it required or not? same for function needing event
+  
   FormView.prototype.searchAroundMe= function(mainMap){
 
     if(navigator.geolocation){

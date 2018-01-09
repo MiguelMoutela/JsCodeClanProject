@@ -25,7 +25,7 @@ MapWrapper.prototype.aroundMe = function(){
       };
       this.refresh();
       // this.map.setCenter(location);
-      this.updateMap(location, 19);
+      this.updateMap(location, 17);
       this.addPersonMarker(location)
     }.bind(this), function() {
       alert('Not able to find your location');
@@ -76,7 +76,7 @@ MapWrapper.prototype.centerOnInputCity = function(city, map){
         lng
       };
       this.map.setCenter(cityLocation);
-      this.map.setZoom(19);
+      this.map.setZoom(15);
     };
   }.bind(this));
 }

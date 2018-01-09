@@ -390,7 +390,7 @@ FormView.prototype.searchByCity= function(mainMap){
 
   }
 
-  //not sure about the binding here..is it required or not? same for function needing event
+  
   FormView.prototype.searchAroundMe= function(mainMap){
 
     if(navigator.geolocation){
@@ -496,7 +496,7 @@ MapWrapper.prototype.aroundMe = function(){
       };
       this.refresh();
       // this.map.setCenter(location);
-      this.updateMap(location, 19);
+      this.updateMap(location, 17);
       this.addPersonMarker(location)
     }.bind(this), function() {
       alert('Not able to find your location');
@@ -547,7 +547,7 @@ MapWrapper.prototype.centerOnInputCity = function(city, map){
         lng
       };
       this.map.setCenter(cityLocation);
-      this.map.setZoom(19);
+      this.map.setZoom(15);
     };
   }.bind(this));
 }
