@@ -328,7 +328,7 @@ document.addEventListener('DOMContentLoaded', app);
 /* 3 */
 /***/ (function(module, exports) {
 
-throw new Error("Module parse failed: Unexpected token (42:0)\nYou may need an appropriate loader to handle this file type.\n| \n| \n| module.exports = FormView;\n| ");
+throw new Error("Module parse failed: Unexpected token (47:7)\nYou may need an appropriate loader to handle this file type.\n|         const request = new Request(searchUrl);\n| \n|       }.bind(this), function() {\n|         alert('Not able search');\n|       };");
 
 /***/ }),
 /* 4 */
