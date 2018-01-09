@@ -20,7 +20,7 @@ FormView.prototype.searchByCity= function(){
 
   const searchUrl = `http://localhost:3000/api/citysearch/${inputCity}/${categorySelected}`;
 
- const request = new Request(searchUrl);
+  const request = new Request(searchUrl);
 
 
   request.get(function(object){
