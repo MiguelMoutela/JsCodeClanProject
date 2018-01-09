@@ -1,7 +1,7 @@
 const express = require('express');
 const parser = require('body-parser');
 const server = express();
-
+const request = require('request');
 const MongoClient= require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 
@@ -20,6 +20,27 @@ MongoClient.connect('mongodb://localhost:27017',function(err,client){
   server.use(express.static('client/public'));
   server.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + 'index.html'));
+  });
+
+
+  //api/Paris
+  //api/music
+
+  //server.get('/api/:location')
+  server.get('/api/:category', function(req,res) {
+    const url = `http://api.eventful.com/json/events/search?app_key=ZpGXZc399XdxLZG9&location=Paris&category=${req.params.category}&date=Future;`
+
+    //This request goes from localhost:3000 to api.eventful.com
+    request(url, function(error, response, body) {
+      //Body came back from api (eventful)
+      if(error) {
+        res.status(500);
+        res.send();
+        return;
+      }
+      //Res is refering to the response you are sending to client(UI)
+      res.send(body);
+    });
   });
 
   server.post('/api/EventWishList', function(req,res){
