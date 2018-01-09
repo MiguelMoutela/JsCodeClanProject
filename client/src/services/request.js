@@ -29,11 +29,11 @@ Request.prototype.post = function(callback, body) {
   request.send(JSON.stringify(body));
 }
 
-Request.prototype.deleteById = function(id, callback) {
+Request.prototype.delete = function(callback) {
   const request = new XMLHttpRequest();
-  request.open('DELETE', `${this.url}/:{id}`)
+  request.open('DELETE', this.url)
   request.addEventListener('load', function(){
-    if(this.status !== 500) {
+    if(this.status !== 204) {
       return;
     }
     callback();

@@ -15,17 +15,29 @@ const TableViewer = function(eventsWishList) {
 
 TableViewer.prototype.render = function(isAddButton) {
 
+
+
   const PopulateTable = function(eventWishList){
     const table = document.querySelector('#table_body');
-    eventWishList.forEach(function(event){
-      createEventEntryInTable(event, table)
-    });
+    if (isAddButton){
+      eventWishList.events.event.forEach(function(event){
+        createEventEntryInTable(event, table)
+      });
+    }
+    else {
+      eventWishList.forEach(function(event){
+        createEventEntryInTable(event, table)
+      });
+    }
   }
+
+  // PopulateTable();
 
   // Below is the code that creates rows with event info
 
   const createEventEntryInTable = function(event, table) {
     const tr = document.createElement('tr');
+    tr.id = "id" + event._id;
     addEventName(event, tr);
     addEventVenue(event, tr);
     addVenuePostcode(event, tr);
@@ -35,7 +47,7 @@ TableViewer.prototype.render = function(isAddButton) {
     if(isAddButton) {
       addAddButton(event,tr);
     } else {
-      addDeleteButton(event, tr);
+      deleteButton(event, tr);
     }
     table.appendChild(tr);
   }
@@ -79,13 +91,23 @@ TableViewer.prototype.render = function(isAddButton) {
     tr.appendChild(buttonCell);
   }
 
-  const addDeleteButton = function(event, tr){
+  const deleteButton = function(event, tr){
     const deleteButtonCell = document.createElement('td');
     const deleteButton = document.createElement('button')
     deleteButton.innerText = 'delete';
     deleteButton.addEventListener('click', function() {
-      const newRequest = new Request(`http://localhost:3000/api/EventWishList/${event.id}`);
-      newRequest.deleteById(event.id);
+      const newRequest = new Request(`http://localhost:3000/api/EventWishList/${event._id}`);
+      newRequest.delete(function(){
+        // console.log(event);
+        // // console.log(event.id);
+        // const id = "#" + event._id;
+        //3feabbb3
+        //html/css id cannot start with number
+        const tr = document.querySelector(`#id${event._id}`);
+        const tbody = document.querySelector('#table_body');
+        tbody.removeChild(tr);
+        alert("Event deleted");
+      });
     });
     //calls that request delete by id))
 
@@ -98,7 +120,7 @@ TableViewer.prototype.render = function(isAddButton) {
   PopulateTable(this.eventsWishList);
 }
 
-//tableViewer.render(ture);
+//tableViewer.render(true);
 
 // const getSavedEvents = function() {
 //   const request = new XMLHttpRequest();
