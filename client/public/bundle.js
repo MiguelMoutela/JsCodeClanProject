@@ -353,6 +353,10 @@ document.addEventListener('DOMContentLoaded', app);
 
 const NewPageView = __webpack_require__(1);
 const Request = __webpack_require__(0);
+const TableView = __webpack_require__(6);
+
+
+
 
 const FormView = function(){
 
@@ -371,8 +375,11 @@ FormView.prototype.searchByCity= function(){
 
  const request = new Request(searchUrl);
 
+
   request.get(function(object){
-    console.log(object);
+    const table = new TableView(object);
+    table.render(true);
+
   });
 
 }

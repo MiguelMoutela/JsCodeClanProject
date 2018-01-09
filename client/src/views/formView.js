@@ -1,5 +1,9 @@
 const NewPageView = require('./newPageView.js');
 const Request = require('../services/request.js');
+const TableView = require('./tableView.js');
+
+
+
 
 const FormView = function(){
 
@@ -18,8 +22,11 @@ FormView.prototype.searchByCity= function(){
 
  const request = new Request(searchUrl);
 
+
   request.get(function(object){
-    console.log(object);
+    const table = new TableView(object);
+    table.render(true);
+
   });
 
 }
