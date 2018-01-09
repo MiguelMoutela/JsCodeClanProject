@@ -30,11 +30,12 @@ FormView.prototype.searchByCity= function(mainMap){
       alert("There are no events listed.")
     } else
     {
-    mainMap.displayEventMarkers(object);}
+      mainMap.displayEventMarkers(object);}
+      const table = new TableView(object);
+      table.render(true);
+    });
 
-  });
-
-}
+  }
 
   //not sure about the binding here..is it required or not? same for function needing event
   FormView.prototype.searchAroundMe= function(mainMap){
@@ -58,8 +59,12 @@ FormView.prototype.searchByCity= function(mainMap){
         request.get(function(object){
           if(object.events === null) {
             alert("There are no events listed.")
-          } else
-          {mainMap.displayEventMarkers(object);}
+          } else{
+            mainMap.displayEventMarkers(object);
+            const table = new TableView(object);
+            table.render(true);
+
+          }
         })
 
       }, function() {
@@ -72,4 +77,4 @@ FormView.prototype.searchByCity= function(mainMap){
   }
 
 
-    module.exports = FormView;
+  module.exports = FormView;
