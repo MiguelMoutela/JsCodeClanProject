@@ -100,7 +100,7 @@ const app = function(){
     event.preventDefault();
     const inputCity = document.querySelector('#city').value;
     mainMap.centerOnInputCity(inputCity);
-    formView.searchByCity();
+    formView.searchByCity(mainMap);
 
   }
 
@@ -114,7 +114,7 @@ const app = function(){
 
   const aroundMeSearch = function(event){
     event.preventDefault();
-    formView.searchAroundMe();
+    formView.searchAroundMe(mainMap);
 
   }
 

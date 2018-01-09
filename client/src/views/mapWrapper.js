@@ -26,7 +26,7 @@ MapWrapper.prototype.aroundMe = function(){
       this.refresh();
       // this.map.setCenter(location);
       this.updateMap(location, 19);
-      this.addMarker(location)
+      this.addPersonMarker(location)
     }.bind(this), function() {
       alert('Not able to find your location');
     });
@@ -41,6 +41,15 @@ MapWrapper.prototype.addMarker = function (coords) {
     position: coords,
     map: this.map
   });
+}
+
+MapWrapper.prototype.addPersonMarker = function (coords) {
+  const marker = new google.maps.Marker({
+    position: coords,
+    map: this.map,
+    icon: 'https://saneenergyproject.files.wordpress.com/2014/03/map-pin.png?w=176&h=300'
+  });
+
 }
 
 // MapWrapper.prototype.setRadius = function (coords, radius) {
@@ -71,5 +80,21 @@ MapWrapper.prototype.centerOnInputCity = function(city, map){
     };
   }.bind(this));
 }
+
+
+MapWrapper.prototype.displayEventMarkers = function(object) {
+  for (i = 0; i < object.events.event.length; i++) {
+   const lat = parseFloat(object.events.event[i].latitude);
+   const lng = parseFloat(object.events.event[i].longitude);
+   const coords = {
+     lat: lat,
+     lng: lng
+   }
+   console.log(coords);
+    this.addMarker(coords);
+  }
+}
+
+
 
   module.exports = MapWrapper;
