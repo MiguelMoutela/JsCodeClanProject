@@ -24,6 +24,11 @@ NewPageView.prototype.createCitySearch = function(){
   display.displayOn('searchBox');
   display.displayOff('radius');
   display.displayOff('radius_label');
+  display.displayOff('start_date_label');
+  display.displayOff('start_date');
+  display.displayOff('end_date_label');
+  display.displayOff('end_date');
+  display.displayOff('search_around_me_button');
   display.displayOn('main_map');
   display.displayOn('events_table');
 }
@@ -37,6 +42,22 @@ NewPageView.prototype.createNearSearch = function(){
   display.displayOn('radius_label');
   display.displayOff('city_label');
   display.displayOff('city');
+  display.displayOff('start_date_label');
+  display.displayOff('start_date');
+  display.displayOff('end_date_label');
+  display.displayOff('end_date');
+  display.displayOff('search_city_button');
+  display.displayOn('main_map');
+  display.displayOn('events_table');
+}
+
+NewPageView.prototype.createDbView = function(){
+
+  display.displayOn('burguer_nav');
+  display.displayOff('event_selection_form');
+  display.displayOff('searchBox');
+  display.displayOff('radius');
+  display.displayOff('radius_label');
   display.displayOn('main_map');
   display.displayOn('events_table');
 }
@@ -55,19 +76,6 @@ NewPageView.prototype.changeAboutPageElement = function(id,text){
  document.getElementById(id).innerText = text;
 
 }
-
-NewPageView.prototype.createDbView = function(){
-
-  display.displayOn('burguer_nav');
-  display.displayOff('event_selection_form');
-  display.displayOff('searchBox');
-  display.displayOff('radius');
-  display.displayOff('radius_label');
-  display.displayOn('main_map');
-  display.displayOn('events_table');
-}
-
-
 
 
 module.exports = NewPageView;
