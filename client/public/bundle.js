@@ -185,11 +185,11 @@ Request.prototype.post = function(callback, body) {
   request.send(JSON.stringify(body));
 }
 
-Request.prototype.deleteById = function(id, callback) {
+Request.prototype.delete = function(callback) {
   const request = new XMLHttpRequest();
-  request.open('DELETE', `${this.url}/:{id}`)
+  request.open('DELETE', this.url)
   request.addEventListener('load', function(){
-    if(this.status !== 500) {
+    if(this.status !== 204) {
       return;
     }
     callback();
@@ -221,6 +221,8 @@ const TableViewer = function(eventsWishList) {
 
 TableViewer.prototype.render = function(isAddButton) {
 
+
+
   const PopulateTable = function(eventWishList){
     const table = document.querySelector('#table_body');
     if (isAddButton){
@@ -235,11 +237,13 @@ TableViewer.prototype.render = function(isAddButton) {
     }
   }
 
+  // PopulateTable();
 
   // Below is the code that creates rows with event info
 
   const createEventEntryInTable = function(event, table) {
     const tr = document.createElement('tr');
+    tr.id = "id" + event._id;
     addEventName(event, tr);
     addEventVenue(event, tr);
     addVenuePostcode(event, tr);
@@ -298,9 +302,17 @@ TableViewer.prototype.render = function(isAddButton) {
     const deleteButton = document.createElement('button')
     deleteButton.innerText = 'delete';
     deleteButton.addEventListener('click', function() {
-      const newRequest = new Request(`http://localhost:3000/api/EventWishList/${event.id}`);
-      newRequest.deleteById(event.id, function(){
-        alert("Event deleted")
+      const newRequest = new Request(`http://localhost:3000/api/EventWishList/${event._id}`);
+      newRequest.delete(function(){
+        // console.log(event);
+        // // console.log(event.id);
+        // const id = "#" + event._id;
+        //3feabbb3
+        //html/css id cannot start with number
+        const tr = document.querySelector(`#id${event._id}`);
+        const tbody = document.querySelector('#table_body');
+        tbody.removeChild(tr);
+        alert("Event deleted");
       });
     });
     //calls that request delete by id))
