@@ -125,6 +125,17 @@ NewPageView.prototype.changeAboutPageElement = function(id,text){
 
 }
 
+NewPageView.prototype.createDbView = function(){
+
+  display.displayOn('burguer_nav');
+  display.displayOff('event_selection_form');
+  display.displayOff('searchBox');
+  display.displayOff('radius');
+  display.displayOff('radius_label');
+  display.displayOn('main_map');
+  display.displayOn('events_table');
+}
+
 
 
 
@@ -152,6 +163,32 @@ Request.prototype.get = function(callback) {
   request.send();
 }
 
+Request.prototype.post = function(callback, body) {
+  const request = new XMLHttpRequest();
+  request.open('POST', this.url);
+  request.setRequestHeader('Content-Type', 'application/json');
+  request.addEventListener('load', function(){
+    if(this.status != 201) {
+      return;
+    }
+    const responseBody = JSON.parse(this.responseText);
+    callback(responseBody);
+  });
+  request.send(JSON.stringify(body));
+}
+
+Request.prototype.deleteById = function(id, callback) {
+  const request = new XMLHttpRequest();
+  request.open('DELETE', `${this.url}/:{id}`)
+  request.addEventListener('load', function(){
+    if(this.status !== 500) {
+      return;
+    }
+    callback();
+  });
+  request.send()
+}
+
 module.exports = Request;
 
 
@@ -162,39 +199,30 @@ module.exports = Request;
 const FormView = __webpack_require__(3);
 const Request = __webpack_require__(1);
 const MapWrapper = __webpack_require__(5);
-const UserLocation = __webpack_require__(6);
 const NewPageView = __webpack_require__(0);
+const TableViewer = __webpack_require__(7);
 
 
 const app = function(){
   const homepage = new NewPageView();
   homepage.createHomepage();
-  // homepage.createCitySearch();
-  // homepage.createNearSearch();
-  // homepage.createAboutPage();
-  // homepage.changeAboutPageElement("about_text","this is a test for changeAboutPageElement() ");
 
   const mapContainer = document.querySelector('#main_map');
-  const sucess = function(position){
-    const location = {
-      lat: position.coords.latitude,
-      lng: position.coords.longitude
+
+
+  const defaultLocation = {
+      lat: 0.0,
+      lng: 0.0
     };
-    const mainMap = new MapWrapper(mapContainer, location, 15);
-  }
 
-  const error = function(){
-    alert("Error occured. We did not get your location");
-  }
-
-  const userlocation = new UserLocation();
-  userlocation.getLocation(sucess, error);
+  const mainMap = new MapWrapper(mapContainer, defaultLocation, 3 );
 
   const citySearchLoader =function(){
     const newSearch = new NewPageView();
     newSearch.clearpage();
     newSearch.createCitySearch();
-
+    mainMap.refresh();
+    mainMap.updateMap(defaultLocation, 3);
   }
 
   const citySearchButton = document.querySelector('#city_search');
@@ -204,12 +232,19 @@ const app = function(){
     const newSearch = new NewPageView();
     newSearch.clearpage();
     newSearch.createNearSearch();
+    mainMap.refresh();
+    mainMap.aroundMe();
 
   }
 
+  const request = new Request('http://api.eventful.com/json/events/search?app_key=ZpGXZc399XdxLZG9&q=comedy');
+   request.get(function(page) {
+     const tableViewer = new TableViewer(page.events.event);
+     tableViewer.render(true);
+   });
+
   const nearSearchButton = document.querySelector('#near_search');
   nearSearchButton.addEventListener('click', nearSearchLoader);
-
 
   const aboutPageLoader =function(){
     const newSearch = new NewPageView();
@@ -221,10 +256,38 @@ const app = function(){
   const aboutPageButton = document.querySelector('#about_view');
   aboutPageButton.addEventListener('click', aboutPageLoader);
 
+
+  // TODO create the button function for db and callback!
+
+const showCitySearch = function(event){
+  event.preventDefault();
+  const inputCity = document.querySelector('#city').value;
+  mainMap.centerOnInputCity(inputCity)
+
+  const dbViewLoader =function(){
+    const newSearch = new NewPageView();
+    newSearch.clearpage();
+    newSearch.createDbView();
+    const newRequest = new Request('http://localhost:3000/api/EventWishList');
+    newRequest.get(function(events){
+      console.log(events);
+      const tableViewer = new TableViewer(events);
+      // const table = document.querySelector('#events_table')
+      tableViewer.render(false  );
+    })
+  }
+
+  const dbViewButton = document.querySelector('#db_view');
+  dbViewButton.addEventListener('click', dbViewLoader);
 // TODO create the button function for db and callback!
 
+// const tableViewer = new TableViewer();
+// tableViewer.render(false);
 
 
+}
+  const searchButton = document.querySelector('#search_events');
+    searchButton.addEventListener('click', showCitySearch)
 
 }
 
@@ -249,8 +312,6 @@ const request = new Request(url);
 FormView.prototype.populateDropmenu= function(){
   const select = document.querySelector('#categories_list');
 }
-
-
 
 module.exports = FormView;
 
@@ -291,49 +352,202 @@ module.exports= DisplayChanger;
 /* 5 */
 /***/ (function(module, exports) {
 
-const MapWrapper = function (container, coords, zoom) {
-  const map = new google.maps.Map(container, {
+const MapWrapper = function(container, coords, zoom) {
+  this.map = new google.maps.Map(container, {
     center: coords,
     zoom: zoom
   });
   this.markers = [];
-  const youAreHereMarker = new google.maps.Marker({
-    position: coords,
-    map: map
-    });
-  this.markers.push(youAreHereMarker);
 }
 
-MapWrapper.prototype.addMarker = function (coords) {
-  var marker = new google.maps.Marker({
-    position: coords,
-    map: this.map
-    });
-    this.markers.push(marker)
-  }
+MapWrapper.prototype.refresh = function() {
+  google.maps.event.trigger(this.map,'resize');
+}
 
-
-module.exports = MapWrapper;
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports) {
-
-const UserLocation = function(){
+MapWrapper.prototype.updateMap = function (coords, zoom) {
+  this.map.setCenter(coords);
+  this.map.setZoom(zoom);
 
 }
 
-UserLocation.prototype.getLocation = function(getLocation, locationFailed){
+MapWrapper.prototype.aroundMe = function(){
   if(navigator.geolocation){
-    navigator.geolocation.getCurrentPosition(getLocation, locationFailed);
+    navigator.geolocation.getCurrentPosition(function(position) {
+      const location = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      this.updateMap(location, 19);
+      this.addMarker(location)
+    }.bind(this), function() {
+      alert('Not worked');
+    });
   }
   else{
     alert('you do not have geolocation available on your device');
   }
 }
 
-module.exports = UserLocation;
+MapWrapper.prototype.addMarker = function (coords) {
+  const marker = new google.maps.Marker({
+    position: coords,
+    map: this.map
+  });
+}
+
+// MapWrapper.prototype.setRadius = function (coords, radius) {
+//   const circleOptions = {
+//     center: coords,
+//     fillOpacity: 0,
+//     strokeOpacity:0,
+//     map: this.map,
+//     radius: radius
+//   }
+//   const myCircle = new google.maps.Circle(circleOptions);
+//   this.map.fitBounds(myCircle.getBounds());
+// }
+
+MapWrapper.prototype.centerOnInputCity = function(city, map){
+  const  geocoder = new google.maps.Geocoder();
+  geocoder.geocode({'address': city}, function(results, status) {
+    if (status === 'OK') {
+      const result = results[0].geometry.location;
+      const lat = result.lat();
+      const lng = result.lng();
+      const cityLocation = {
+        lat,
+        lng
+      };
+      this.map.setCenter(cityLocation);
+      this.map.setZoom(19);
+    };
+  }.bind(this));
+}
+
+  module.exports = MapWrapper;
+
+
+/***/ }),
+/* 6 */,
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const Request = __webpack_require__(1);
+
+
+
+const TableViewer = function(eventsWishList) {
+  this.eventsWishList = eventsWishList;
+}
+
+// const searchButton = document.querySelector('#search_events');
+// searchButton.addEventListener('click', function() {
+//   const url =
+// })
+
+//const tableViewer = new TableViewer(events);
+
+TableViewer.prototype.render = function(isAddButton) {
+
+  const PopulateTable = function(eventWishList){
+    const table = document.querySelector('#table_body');
+    eventWishList.forEach(function(event){
+      createEventEntryInTable(event, table)
+    });
+  }
+
+  // Below is the code that creates rows with event info
+
+  const createEventEntryInTable = function(event, table) {
+    const tr = document.createElement('tr');
+    addEventName(event, tr);
+    addEventVenue(event, tr);
+    addVenuePostcode(event, tr);
+    addEndDate(event, tr);
+    addCategory(event, tr);
+
+    if(isAddButton) {
+      addAddButton(event,tr);
+    } else {
+      addDeleteButton(event, tr);
+    }
+    table.appendChild(tr);
+  }
+
+  const addEventName = function(event, tr){
+    const eventName = document.createElement('td');
+    eventName.innerText = event.title;
+    tr.appendChild(eventName);
+  }
+  const addEventVenue = function(event, tr){
+    const venueName = document.createElement('td');
+    venueName.innerText = event.venue_name;
+    tr.appendChild(venueName);
+  }
+  const addVenuePostcode = function(event, tr){
+    const venuePostcode = document.createElement('td');
+    venuePostcode.innerText = event.postal_code;
+    tr.appendChild(venuePostcode);
+  }
+  const addCategory = function(event, tr){
+    const category = document.createElement('td');
+    // category.innerText = event.categories.category.id;
+    tr.appendChild(category);
+  }
+  const addEndDate = function(event, tr){
+    const endDate = document.createElement('td');
+    endDate.innerText = event.stop_time;
+    tr.appendChild(endDate);
+  }
+
+  const addAddButton = function(event, tr){
+    const buttonCell = document.createElement('td');
+    const button = document.createElement('button')
+    button.innerText = 'add';
+    button.addEventListener('click', function() {
+      const newRequest = new Request('http://localhost:3000/api/EventWishList');
+      newRequest.post(function(body) {
+      alert('Event added to Wishlist')}, event);
+    });
+    buttonCell.appendChild(button);
+    tr.appendChild(buttonCell);
+  }
+
+  const addDeleteButton = function(event, tr){
+    const deleteButtonCell = document.createElement('td');
+    const deleteButton = document.createElement('button')
+    deleteButton.innerText = 'delete';
+    deleteButton.addEventListener('click', function() {
+      const newRequest = new Request(`http://localhost:3000/api/EventWishList/${event.id}`);
+      newRequest.deleteById(event.id);
+    });
+    //calls that request delete by id))
+
+    // need js method that adds a function to the button
+    // so I cam call delete by id on that event
+    deleteButtonCell.appendChild(deleteButton);
+    tr.appendChild(deleteButtonCell);
+  }
+
+  PopulateTable(this.eventsWishList);
+}
+
+//tableViewer.render(ture);
+
+// const getSavedEvents = function() {
+//   const request = new XMLHttpRequest();
+//   request.open('GET', 'http://localhost:3000/api/eventify')
+//   request.addEventListener('load', function(){
+//     if(this.status !== 200) {
+//       return;
+//     }
+//     const eventWishList = JSON.parse(this.responseText);
+//   }
+//   request.send()
+// }
+//
+
+module.exports = TableViewer;
 
 
 /***/ })

@@ -1,15 +1,22 @@
-const request = require('./services/request.js');
+const Request = require('../services/request.js');
+
+
 
 const TableViewer = function(eventsWishList) {
   this.eventsWishList = eventsWishList;
 }
+
+// const searchButton = document.querySelector('#search_events');
+// searchButton.addEventListener('click', function() {
+//   const url =
+// })
 
 //const tableViewer = new TableViewer(events);
 
 TableViewer.prototype.render = function(isAddButton) {
 
   const PopulateTable = function(eventWishList){
-    const table = document.querySelector('#thatTableID');
+    const table = document.querySelector('#table_body');
     eventWishList.forEach(function(event){
       createEventEntryInTable(event, table)
     });
@@ -22,11 +29,11 @@ TableViewer.prototype.render = function(isAddButton) {
     addEventName(event, tr);
     addEventVenue(event, tr);
     addVenuePostcode(event, tr);
-    addCategory(event, tr);
     addEndDate(event, tr);
+    addCategory(event, tr);
 
     if(isAddButton) {
-      addButton(event,tr);
+      addAddButton(event,tr);
     } else {
       deleteButton(event, tr);
     }
@@ -40,35 +47,34 @@ TableViewer.prototype.render = function(isAddButton) {
   }
   const addEventVenue = function(event, tr){
     const venueName = document.createElement('td');
-    venueName = event.venue_name;
+    venueName.innerText = event.venue_name;
     tr.appendChild(venueName);
   }
   const addVenuePostcode = function(event, tr){
     const venuePostcode = document.createElement('td');
-    venueName.innerText = event.postal_code;
+    venuePostcode.innerText = event.postal_code;
     tr.appendChild(venuePostcode);
   }
   const addCategory = function(event, tr){
     const category = document.createElement('td');
-    category.innerText = event.categories.category.id;
+    // category.innerText = event.categories.category.id;
     tr.appendChild(category);
   }
   const addEndDate = function(event, tr){
     const endDate = document.createElement('td');
-    endDate.innerText = event.endDate;
+    endDate.innerText = event.stop_time;
     tr.appendChild(endDate);
   }
 
-  const addButton = function(event, tr){
+  const addAddButton = function(event, tr){
     const buttonCell = document.createElement('td');
     const button = document.createElement('button')
-    button.innerText = 'delete';
+    button.innerText = 'add';
     button.addEventListener('click', function() {
+      const newRequest = new Request('http://localhost:3000/api/EventWishList');
+      newRequest.post(function(body) {
+      alert('Event added to Wishlist')}, event);
     });
-    //calls that request delete by id))
-
-    // need js method that adds a function to the button
-    // so I cam call delete by id on that event
     buttonCell.appendChild(button);
     tr.appendChild(buttonCell);
   }
@@ -78,6 +84,8 @@ TableViewer.prototype.render = function(isAddButton) {
     const deleteButton = document.createElement('button')
     deleteButton.innerText = 'delete';
     deleteButton.addEventListener('click', function() {
+      const newRequest = new Request(`http://localhost:3000/api/EventWishList/${event.id}`);
+      newRequest.deleteById(event.id);
     });
     //calls that request delete by id))
 
