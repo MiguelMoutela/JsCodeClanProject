@@ -101,12 +101,17 @@ const formView = new FormView();
     const inputCity = document.querySelector('#city').value;
     mainMap.centerOnInputCity(inputCity);
     formView.searchByCity();
-    
+
   }
 
 
   const searchButton = document.querySelector('#search_city_button');
   searchButton.addEventListener('click', showCitySearch);
+
+
+
+//NOTE following two functions deal with search around me button on form
+
 
   // NOTE not sure what this request to get all events with cat comedy was used for...
 

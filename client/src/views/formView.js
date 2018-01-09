@@ -24,39 +24,38 @@ FormView.prototype.searchByCity= function(){
 
 }
 
-//   //not sure about the binding here..is it required or not? same for function needing event
-//   FormView.prototype.searchAroundMe= function(event){
-//     event.preventDefault();
-//
-//     if(navigator.geolocation){
-//       navigator.geolocation.getCurrentPosition(function(position) {
-//         const lat= position.coords.latitude;
-//         const lng= position.coords.longitude;
-//
+  //not sure about the binding here..is it required or not? same for function needing event
+  FormView.prototype.searchAroundMe= function(){
+
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(function(position) {
+        const lat= position.coords.latitude;
+        const lng= position.coords.longitude;
+
+        const categoryList = document.querySelector('#categories_list');
+
+        const categorySelected= categoryList.value;
 
 
-//       });
-//
-//       const categoryList = document.querySelector('#categories_list');
-//       categoryList.addEventListener('change', function (event) {
-//         const categorySelected= event.target.value;
-//       })
-//
-//         const radius = document.querySelector('#radius').value;
-//
-//         const searchUrl = `
-//         http://api.eventful.com/json/events/search?app_key=ZpGXZc399XdxLZG9&where=${lat},${lng}&within=${radius}&category=${categorySelected}`;
-//
-//         const request = new Request(searchUrl);
-//
-//       }.bind(this), function() {
-//         alert('Not able search');
-//       };
-//     }
-//     else{
-//       alert('You do not have geolocation available on your device');
-//     }
-//   }
+        const radius = document.querySelector('#radius').value;
+
+        const searchUrl = `http://localhost:3000/api/aroundMeSearch/${lat}/${lng}/${radius}/${categorySelected}`;
+
+        const request = new Request(searchUrl);
+
+        request.get(function(object){
+          console.log(object);
+
+        })
+
+      }, function() {
+        alert('Not able to get your location');
+      });
+    }
+    else{
+      alert('You do not have geolocation available on your device');
+    }
+  }
 
 
     module.exports = FormView;

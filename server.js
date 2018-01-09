@@ -43,6 +43,22 @@ MongoClient.connect('mongodb://localhost:27017',function(err,client){
     });
   });
 
+  server.get('/api/aroundMeSearch/:lat/:lng/:radius/:category', function(req,res) {
+    const url = `
+http://api.eventful.com/json/events/search?app_key=ZpGXZc399XdxLZG9&where=${req.params.lat},${req.params.lng}&within=${req.params.radius}&category=${req.params.category}&date=Future`;
+
+    request(url, function(error, response, body) {
+
+      if(error) {
+        res.status(500);
+        res.send();
+        return;
+      }
+
+      res.send(body);
+    });
+  });
+
   server.post('/api/EventWishList', function(req,res){
     db.collection('events').insert(req.body, function(err, result){
       if(err){
