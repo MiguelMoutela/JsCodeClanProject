@@ -22,6 +22,11 @@ const app = function(){
 
   const mainMap = new MapWrapper(mapContainer, defaultLocation, 3 );
 
+
+// NOTE creating a new formview to call formview functions//
+
+const formView = new FormView();
+
 // NOTE the following two functions are related to the
 //search by city button  on homepage
 
@@ -95,10 +100,12 @@ const app = function(){
     event.preventDefault();
     const inputCity = document.querySelector('#city').value;
     mainMap.centerOnInputCity(inputCity);
+    formView.searchByCity();
+    
   }
 
 
-  const searchButton = document.querySelector('#search_events');
+  const searchButton = document.querySelector('#search_city_button');
   searchButton.addEventListener('click', showCitySearch);
 
   // NOTE not sure what this request to get all events with cat comedy was used for...

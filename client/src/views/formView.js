@@ -6,25 +6,24 @@ const FormView = function(){
 }
 
 
-// FormView.prototype.searchByCity= function(event){
-//   event.preventDefault();
-//
-//   const inputCity = document.querySelector('#city').value;
-//   const categoryList = document.querySelector('#categories_list');
-//   categoryList.addEventListener('change', function (event) {
-//     const categorySelected= event.target.value;
-//     const searchUrl = `http://api.eventful.com/json/events/search?app_key=ZpGXZc399XdxLZG9&location=${inputCity}&category=${categorySelected}&date=Future`;
-//
-//     const request = new Request(searchUrl);
-//     request.get(function(allEvents){
-//
-//     })
-    // not absolutly sure of this bellow well or above
-    // const outcomeObject = request.get();
-    // return outcomeObject
-//   });
-// }
-//
+FormView.prototype.searchByCity= function(){
+
+  const inputCity = document.querySelector('#city').value;
+
+  const categoryList = document.querySelector('#categories_list');
+
+  const categorySelected= categoryList.value;
+
+  const searchUrl = `http://localhost:3000/api/citysearch/${inputCity}/${categorySelected}`;
+
+ const request = new Request(searchUrl);
+
+  request.get(function(object){
+    console.log(object);
+  });
+
+}
+
 //   //not sure about the binding here..is it required or not? same for function needing event
 //   FormView.prototype.searchAroundMe= function(event){
 //     event.preventDefault();
