@@ -28,7 +28,7 @@ TableViewer.prototype.render = function(isAddButton) {
     if(isAddButton) {
       addButton(event,tr);
     } else {
-      addDeleteButton(event, tr);
+      deleteButton(event, tr);
     }
     table.appendChild(tr);
   }
@@ -73,7 +73,7 @@ TableViewer.prototype.render = function(isAddButton) {
     tr.appendChild(buttonCell);
   }
 
-  const addDeleteButton = function(event, tr){
+  const deleteButton = function(event, tr){
     const deleteButtonCell = document.createElement('td');
     const deleteButton = document.createElement('button')
     deleteButton.innerText = 'delete';
