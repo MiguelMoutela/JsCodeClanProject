@@ -335,7 +335,7 @@ const FormView = function(){
 
 }
 
-//
+
 // FormView.prototype.searchByCity= function(event){
 //   event.preventDefault();
 //
@@ -346,9 +346,9 @@ const FormView = function(){
 //     const searchUrl = `http://api.eventful.com/json/events/search?app_key=ZpGXZc399XdxLZG9&location=${inputCity}&category=${categorySelected}&date=Future`;
 //
 //     const request = new Request(searchUrl);
-    //request.get(function(allEvents){
-
-    //})
+//     request.get(function(allEvents){
+//
+//     })
     // not absolutly sure of this bellow well or above
     // const outcomeObject = request.get();
     // return outcomeObject

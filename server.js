@@ -27,8 +27,8 @@ MongoClient.connect('mongodb://localhost:27017',function(err,client){
   //api/music
 
   //server.get('/api/:location')
-  server.get('/api/:category', function(req,res) {
-    const url = `http://api.eventful.com/json/events/search?app_key=ZpGXZc399XdxLZG9&location=Paris&category=${req.params.category}&date=Future;`
+  server.get('/api/citysearch/:city/:category', function(req,res) {
+    const url = `http://api.eventful.com/json/events/search?app_key=ZpGXZc399XdxLZG9&location=${req.params.city}&category=${req.params.category}&date=Future;`
 
     //This request goes from localhost:3000 to api.eventful.com
     request(url, function(error, response, body) {
