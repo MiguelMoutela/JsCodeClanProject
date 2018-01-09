@@ -60,14 +60,64 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports) {
+
+const Request = function(url) {
+  this.url = url;
+}
+
+Request.prototype.get = function(callback) {
+  const request = new XMLHttpRequest();
+  request.open('GET', this.url);
+  request.addEventListener('load',function(){
+    if(this.status!==200){
+      return;
+    }
+    const responseBody= JSON.parse(this.responseText);
+    callback(responseBody)
+  });
+  request.send();
+}
+
+Request.prototype.post = function(callback, body) {
+  const request = new XMLHttpRequest();
+  request.open('POST', this.url);
+  request.setRequestHeader('Content-Type', 'application/json');
+  request.addEventListener('load', function(){
+    if(this.status != 201) {
+      return;
+    }
+    const responseBody = JSON.parse(this.responseText);
+    callback(responseBody);
+  });
+  request.send(JSON.stringify(body));
+}
+
+Request.prototype.deleteById = function(id, callback) {
+  const request = new XMLHttpRequest();
+  request.open('DELETE', `${this.url}/:{id}`)
+  request.addEventListener('load', function(){
+    if(this.status !== 500) {
+      return;
+    }
+    callback();
+  });
+  request.send()
+}
+
+module.exports = Request;
+
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const DisplayChanger = __webpack_require__(4);
+const DisplayChanger = __webpack_require__(5);
 
 const NewPageView = function(){
 
@@ -151,64 +201,138 @@ module.exports = NewPageView;
 
 
 /***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-const Request = function(url) {
-  this.url = url;
-}
-
-Request.prototype.get = function(callback) {
-  const request = new XMLHttpRequest();
-  request.open('GET', this.url);
-  request.addEventListener('load',function(){
-    if(this.status!==200){
-      return;
-    }
-    const responseBody= JSON.parse(this.responseText);
-    callback(responseBody)
-  });
-  request.send();
-}
-
-Request.prototype.post = function(callback, body) {
-  const request = new XMLHttpRequest();
-  request.open('POST', this.url);
-  request.setRequestHeader('Content-Type', 'application/json');
-  request.addEventListener('load', function(){
-    if(this.status != 201) {
-      return;
-    }
-    const responseBody = JSON.parse(this.responseText);
-    callback(responseBody);
-  });
-  request.send(JSON.stringify(body));
-}
-
-Request.prototype.deleteById = function(id, callback) {
-  const request = new XMLHttpRequest();
-  request.open('DELETE', `${this.url}/:{id}`)
-  request.addEventListener('load', function(){
-    if(this.status !== 500) {
-      return;
-    }
-    callback();
-  });
-  request.send()
-}
-
-module.exports = Request;
-
-
-/***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const FormView = __webpack_require__(3);
-const Request = __webpack_require__(1);
-const MapWrapper = __webpack_require__(5);
-const NewPageView = __webpack_require__(0);
-const TableViewer = __webpack_require__(7);
+const Request = __webpack_require__(0);
+
+
+
+const TableViewer = function(eventsWishList) {
+  this.eventsWishList = eventsWishList;
+}
+
+// const searchButton = document.querySelector('#search_events');
+// searchButton.addEventListener('click', function() {
+//   const url =
+// })
+
+//const tableViewer = new TableViewer(events);
+
+TableViewer.prototype.render = function(isAddButton) {
+
+  const PopulateTable = function(eventWishList){
+    const table = document.querySelector('#table_body');
+    console.log(eventWishList.events.event);
+    eventWishList.events.event.forEach(function(event){
+      console.log(event);
+      createEventEntryInTable(event, table)
+    });
+  }
+
+  // Below is the code that creates rows with event info
+
+  const createEventEntryInTable = function(event, table) {
+    const tr = document.createElement('tr');
+    addEventName(event, tr);
+    addEventVenue(event, tr);
+    addVenuePostcode(event, tr);
+    addEndDate(event, tr);
+    addCategory(event, tr);
+
+    if(isAddButton) {
+      addAddButton(event,tr);
+    } else {
+      deleteButton(event, tr);
+    }
+    table.appendChild(tr);
+  }
+
+  const addEventName = function(event, tr){
+    const eventName = document.createElement('td');
+    eventName.innerText = event.title;
+    tr.appendChild(eventName);
+  }
+  const addEventVenue = function(event, tr){
+    const venueName = document.createElement('td');
+    venueName.innerText = event.venue_name;
+    tr.appendChild(venueName);
+  }
+  const addVenuePostcode = function(event, tr){
+    const venuePostcode = document.createElement('td');
+    venuePostcode.innerText = event.postal_code;
+    tr.appendChild(venuePostcode);
+  }
+  const addCategory = function(event, tr){
+    const category = document.createElement('td');
+    // category.innerText = event.categories.category.id;
+    tr.appendChild(category);
+  }
+  const addEndDate = function(event, tr){
+    const endDate = document.createElement('td');
+    endDate.innerText = event.stop_time;
+    tr.appendChild(endDate);
+  }
+
+  const addAddButton = function(event, tr){
+    const buttonCell = document.createElement('td');
+    const button = document.createElement('button')
+    button.innerText = 'add';
+    button.addEventListener('click', function() {
+      const newRequest = new Request('http://localhost:3000/api/EventWishList');
+      newRequest.post(function(body) {
+      alert('Event added to Wishlist')}, event);
+    });
+    buttonCell.appendChild(button);
+    tr.appendChild(buttonCell);
+  }
+
+  const deleteButton = function(event, tr){
+    const deleteButtonCell = document.createElement('td');
+    const deleteButton = document.createElement('button')
+    deleteButton.innerText = 'delete';
+    deleteButton.addEventListener('click', function() {
+      const newRequest = new Request(`http://localhost:3000/api/EventWishList/${event.id}`);
+      newRequest.deleteById(event.id);
+    });
+    //calls that request delete by id))
+
+    // need js method that adds a function to the button
+    // so I cam call delete by id on that event
+    deleteButtonCell.appendChild(deleteButton);
+    tr.appendChild(deleteButtonCell);
+  }
+
+  PopulateTable(this.eventsWishList);
+}
+
+//tableViewer.render(ture);
+
+// const getSavedEvents = function() {
+//   const request = new XMLHttpRequest();
+//   request.open('GET', 'http://localhost:3000/api/eventify')
+//   request.addEventListener('load', function(){
+//     if(this.status !== 200) {
+//       return;
+//     }
+//     const eventWishList = JSON.parse(this.responseText);
+//   }
+//   request.send()
+// }
+//
+
+module.exports = TableViewer;
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const FormView = __webpack_require__(4);
+const Request = __webpack_require__(0);
+const MapWrapper = __webpack_require__(6);
+const NewPageView = __webpack_require__(1);
+const TableViewer = __webpack_require__(2);
 
 
 const app = function(){
@@ -348,12 +472,12 @@ document.addEventListener('DOMContentLoaded', app);
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const NewPageView = __webpack_require__(0);
-const Request = __webpack_require__(1);
-const TableView = __webpack_require__(7);
+const NewPageView = __webpack_require__(1);
+const Request = __webpack_require__(0);
+const TableView = __webpack_require__(2);
 
 
 
@@ -373,13 +497,12 @@ FormView.prototype.searchByCity= function(){
 
   const searchUrl = `http://localhost:3000/api/citysearch/${inputCity}/${categorySelected}`;
 
- const request = new Request(searchUrl);
+  const request = new Request(searchUrl);
 
 
   request.get(function(object){
     const table = new TableView(object);
     table.render(true);
-
   });
 
 }
@@ -404,7 +527,8 @@ FormView.prototype.searchByCity= function(){
         const request = new Request(searchUrl);
 
         request.get(function(object){
-          console.log(object);
+          const table = new TableView(object);
+          table.render(true);
 
         })
 
@@ -422,7 +546,7 @@ FormView.prototype.searchByCity= function(){
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports) {
 
 const DisplayChanger =function(){
@@ -454,7 +578,7 @@ module.exports= DisplayChanger;
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports) {
 
 const MapWrapper = function(container, coords, zoom) {
@@ -532,129 +656,6 @@ MapWrapper.prototype.centerOnInputCity = function(city, map){
 }
 
   module.exports = MapWrapper;
-
-
-/***/ }),
-/* 6 */,
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const Request = __webpack_require__(1);
-
-
-
-const TableViewer = function(eventsWishList) {
-  this.eventsWishList = eventsWishList;
-}
-
-// const searchButton = document.querySelector('#search_events');
-// searchButton.addEventListener('click', function() {
-//   const url =
-// })
-
-//const tableViewer = new TableViewer(events);
-
-TableViewer.prototype.render = function(isAddButton) {
-
-  const PopulateTable = function(eventWishList){
-    const table = document.querySelector('#table_body');
-    eventWishList.forEach(function(event){
-      createEventEntryInTable(event, table)
-    });
-  }
-
-  // Below is the code that creates rows with event info
-
-  const createEventEntryInTable = function(event, table) {
-    const tr = document.createElement('tr');
-    addEventName(event, tr);
-    addEventVenue(event, tr);
-    addVenuePostcode(event, tr);
-    addEndDate(event, tr);
-    addCategory(event, tr);
-
-    if(isAddButton) {
-      addAddButton(event,tr);
-    } else {
-      addDeleteButton(event, tr);
-    }
-    table.appendChild(tr);
-  }
-
-  const addEventName = function(event, tr){
-    const eventName = document.createElement('td');
-    eventName.innerText = event.title;
-    tr.appendChild(eventName);
-  }
-  const addEventVenue = function(event, tr){
-    const venueName = document.createElement('td');
-    venueName.innerText = event.venue_name;
-    tr.appendChild(venueName);
-  }
-  const addVenuePostcode = function(event, tr){
-    const venuePostcode = document.createElement('td');
-    venuePostcode.innerText = event.postal_code;
-    tr.appendChild(venuePostcode);
-  }
-  const addCategory = function(event, tr){
-    const category = document.createElement('td');
-    // category.innerText = event.categories.category.id;
-    tr.appendChild(category);
-  }
-  const addEndDate = function(event, tr){
-    const endDate = document.createElement('td');
-    endDate.innerText = event.stop_time;
-    tr.appendChild(endDate);
-  }
-
-  const addAddButton = function(event, tr){
-    const buttonCell = document.createElement('td');
-    const button = document.createElement('button')
-    button.innerText = 'add';
-    button.addEventListener('click', function() {
-      const newRequest = new Request('http://localhost:3000/api/EventWishList');
-      newRequest.post(function(body) {
-      alert('Event added to Wishlist')}, event);
-    });
-    buttonCell.appendChild(button);
-    tr.appendChild(buttonCell);
-  }
-
-  const addDeleteButton = function(event, tr){
-    const deleteButtonCell = document.createElement('td');
-    const deleteButton = document.createElement('button')
-    deleteButton.innerText = 'delete';
-    deleteButton.addEventListener('click', function() {
-      const newRequest = new Request(`http://localhost:3000/api/EventWishList/${event.id}`);
-      newRequest.deleteById(event.id);
-    });
-    //calls that request delete by id))
-
-    // need js method that adds a function to the button
-    // so I cam call delete by id on that event
-    deleteButtonCell.appendChild(deleteButton);
-    tr.appendChild(deleteButtonCell);
-  }
-
-  PopulateTable(this.eventsWishList);
-}
-
-//tableViewer.render(ture);
-
-// const getSavedEvents = function() {
-//   const request = new XMLHttpRequest();
-//   request.open('GET', 'http://localhost:3000/api/eventify')
-//   request.addEventListener('load', function(){
-//     if(this.status !== 200) {
-//       return;
-//     }
-//     const eventWishList = JSON.parse(this.responseText);
-//   }
-//   request.send()
-// }
-//
-
-module.exports = TableViewer;
 
 
 /***/ })

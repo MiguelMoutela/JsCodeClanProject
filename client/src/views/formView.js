@@ -26,7 +26,6 @@ FormView.prototype.searchByCity= function(){
   request.get(function(object){
     const table = new TableView(object);
     table.render(true);
-
   });
 
 }
@@ -51,7 +50,8 @@ FormView.prototype.searchByCity= function(){
         const request = new Request(searchUrl);
 
         request.get(function(object){
-          console.log(object);
+          const table = new TableView(object);
+          table.render(true);
 
         })
 

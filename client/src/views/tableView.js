@@ -17,7 +17,9 @@ TableViewer.prototype.render = function(isAddButton) {
 
   const PopulateTable = function(eventWishList){
     const table = document.querySelector('#table_body');
-    eventWishList.forEach(function(event){
+    console.log(eventWishList.events.event);
+    eventWishList.events.event.forEach(function(event){
+      console.log(event);
       createEventEntryInTable(event, table)
     });
   }
