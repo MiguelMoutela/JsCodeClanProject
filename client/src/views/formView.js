@@ -23,14 +23,27 @@ FormView.prototype.searchByCity= function(mainMap){
   nextPageButton.addEventListener('click', function() {
     pageNumber++;
     console.log(pageNumber);
+    const searchUrl = `http://localhost:3000/api/citysearch/${inputCity}/${categorySelected}/${pageNumber}`;
 
+    const request = new Request(searchUrl);
+
+    request.get(function(object){
+      console.log(object);
+      if(object.events === null) {
+        alert("There are no events listed.")
+      } else
+      {
+      mainMap.displayEventMarkers(object);
+      const tableView = new TableView(object);
+      tableView.render(true);
+    }
   });
+})
 
 
   const searchUrl = `http://localhost:3000/api/citysearch/${inputCity}/${categorySelected}/${pageNumber}`;
 
   const request = new Request(searchUrl);
-console.log(request);
 
   request.get(function(object){
     console.log(object);
