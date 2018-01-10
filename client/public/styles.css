@@ -4,7 +4,8 @@
 #homepageForm,
 #searchBox,
 #events_table,
-#about_container  {
+#about_container,
+#next-page {
   display:none;
 }
 

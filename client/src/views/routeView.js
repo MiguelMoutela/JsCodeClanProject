@@ -1,4 +1,7 @@
+// NOTE this is code to be used for future extension for route calculation
 // const Request = require('./services/request.js');
+
+
 //
 //
 // const RouteView = function(){

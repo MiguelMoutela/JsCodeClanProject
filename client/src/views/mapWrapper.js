@@ -117,6 +117,8 @@ MapWrapper.prototype.displayEventMarkers = function(object) {
 
     });
 
+
+//NOTE this is code for a possible way of calculating route
     // marker.addListener('dblclick', function() {
     //   var directionsDisplay = new google.maps.DirectionsRenderer();
     //   var directionsService = new google.maps.DirectionsService();

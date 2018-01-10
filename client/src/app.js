@@ -136,8 +136,6 @@ const app = function(){
 
   // const tableViewer = new TableViewer();
   // tableViewer.render(false);
-
-
 }
 
 document.addEventListener('DOMContentLoaded', app);
