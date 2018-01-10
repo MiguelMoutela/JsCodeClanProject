@@ -1,13 +1,9 @@
 const Request = require('../services/request.js');
 const MapWrapper = require('./mapWrapper.js');
 
-
-const DbView = function(){
-
-}
+const DbView = function(){}
 
 DbView.prototype.renderDbMap= function(){
-
 
   const url = 'http://localhost:3000/api/EventWishList';
 
@@ -21,14 +17,11 @@ DbView.prototype.renderDbMap= function(){
     const lngCenter = parseFloat(object[1].longitude);
 
     const newMapCenter = {
-
       lat: latCenter,
       lng: lngCenter
-
     }
 
     const mainMap = new MapWrapper(mapContainer, newMapCenter, 15 );
-
 
     if(object.length === 0) {
       alert("You have no events saved ")
@@ -56,11 +49,7 @@ DbView.prototype.renderDbMap= function(){
         });
       }
     }
-
   })
 }
-
-
-
 
 module.exports = DbView;

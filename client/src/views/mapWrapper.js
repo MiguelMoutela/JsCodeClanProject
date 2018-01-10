@@ -13,7 +13,13 @@ MapWrapper.prototype.refresh = function() {
 MapWrapper.prototype.updateMap = function (coords, zoom) {
   this.map.setCenter(coords);
   this.map.setZoom(zoom);
+}
 
+MapWrapper.prototype.clearMarkers = function(){
+  this.markers.forEach(function(marker){
+    marker.setMap(null);
+  })
+this.markers= [];
 }
 
 MapWrapper.prototype.aroundMe = function(){
@@ -46,11 +52,8 @@ MapWrapper.prototype.addMarker = function (coords) {
 }
 
 MapWrapper.prototype.addMarkerInfoWindow = function(content){
-
   const infoWindow = new google.maps.InfoWindow(content);
-
   return infoWindow;
-
 }
 
 MapWrapper.prototype.addPersonMarker = function (coords) {
@@ -62,18 +65,6 @@ MapWrapper.prototype.addPersonMarker = function (coords) {
   });
   return marker;
 }
-
-// MapWrapper.prototype.setRadius = function (coords, radius) {
-//   const circleOptions = {
-//     center: coords,
-//     fillOpacity: 0,
-//     strokeOpacity:0,
-//     map: this.map,
-//     radius: radius
-//   }
-//   const myCircle = new google.maps.Circle(circleOptions);
-//   this.map.fitBounds(myCircle.getBounds());
-// }
 
 MapWrapper.prototype.centerOnInputCity = function(city, map){
   const  geocoder = new google.maps.Geocoder();
@@ -91,7 +82,6 @@ MapWrapper.prototype.centerOnInputCity = function(city, map){
     };
   }.bind(this));
 }
-
 
 MapWrapper.prototype.displayEventMarkers = function(object) {
   for (i = 0; i < object.events.event.length; i++) {
@@ -116,7 +106,6 @@ MapWrapper.prototype.displayEventMarkers = function(object) {
       markerInfo.open(this.map, marker);
 
     });
-
 
 //NOTE this is code for a possible way of calculating route
     // marker.addListener('dblclick', function() {
@@ -254,7 +243,5 @@ MapWrapper.prototype.displayEventMarkers = function(object) {
 
   }
 }
-
-
 
 module.exports = MapWrapper;

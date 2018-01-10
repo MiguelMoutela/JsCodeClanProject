@@ -1,14 +1,11 @@
 const DisplayChanger = require('./displayChanger.js');
 
-const NewPageView = function(){
-
-}
+const NewPageView = function(){}
 
 const display = new DisplayChanger();
 
 NewPageView.prototype.clearpage = function(){
   display.classOFF('toggleable');
-
 }
 
 NewPageView.prototype.createHomepage = function(){
@@ -51,7 +48,7 @@ NewPageView.prototype.createNearSearch = function(){
   display.displayOff('start_date');
   display.displayOff('end_date_label');
   display.displayOff('end_date');
-  display.displayOn('search_city_button');
+  display.displayOff('search_city_button');
   display.displayOn('main_map');
   display.displayOn('events_table');
   display.displayOn("next-page");

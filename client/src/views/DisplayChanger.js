@@ -23,4 +23,5 @@ DisplayChanger.prototype.classOFF = function(id){
     elements[i].style.display = 'none';
   }
 }
+
 module.exports= DisplayChanger;
