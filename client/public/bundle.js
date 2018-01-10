@@ -512,7 +512,8 @@ MapWrapper.prototype.aroundMe = function(){
 MapWrapper.prototype.addMarker = function (coords) {
   const marker = new google.maps.Marker({
     position: coords,
-    map: this.map
+    map: this.map,
+    animation: google.maps.Animation.DROP
   });
   return marker;
 }
