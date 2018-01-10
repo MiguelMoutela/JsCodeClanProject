@@ -66,9 +66,10 @@ const app = function(){
     const newSearch = new NewPageView();
     newSearch.clearpage();
     newSearch.createDbView();
+    const dbMap = new DbView();
+    dbMap.renderDbMap();
     const newRequest = new Request('http://localhost:3000/api/EventWishList');
     newRequest.get(function(events){
-      console.log(events);
       const tableViewer = new TableViewer(events);
       tableViewer.render(false);
     })
