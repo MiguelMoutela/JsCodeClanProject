@@ -59,7 +59,7 @@ MapWrapper.prototype.addPersonMarker = function (coords) {
     // icon: 'https://maps.google.com/mapfiles/ms/micons/blue-dot.png'
     icon: 'https://maps.google.com/mapfiles/kml/paddle/blu-stars.png'
   });
-
+  return marker;
 }
 
 // MapWrapper.prototype.setRadius = function (coords, radius) {
@@ -112,7 +112,32 @@ MapWrapper.prototype.displayEventMarkers = function(object) {
     const marker =  this.addMarker(coords);
     marker.addListener('click', function() {
       markerInfo.open(this.map, marker);
-    });
+      // const autocomplete = new google.maps.places.autocomplete(DOM_NODE);
+      // console.log(autocomplete);
+      // autocomplete.bindTo('bounds', this.map);
+      // autocomplete.addListener('place_changed', function(){
+      //   const place = autocomplete.getPlace();
+      // });
+
+      const CalculateAndRenderRoute = function(origin,destination){
+        const directionsService = new google.maps.directionsService();
+        const  directionsDisplay = new google.maps.DirectionsRenderer();
+        request = {
+          origin : origin,
+          destination: destination
+
+        }
+
+        directionsDisplay.setMap(this.map);
+        directionsService.route(request,function(result,status){
+          if(status==='OK'){
+            directionsDisplay.setDirections(result);
+          }
+
+        })
+
+      }
+    })
   }
 }
 
