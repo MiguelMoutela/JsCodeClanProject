@@ -51,7 +51,7 @@ NewPageView.prototype.createNearSearch = function(){
   display.displayOff('start_date');
   display.displayOff('end_date_label');
   display.displayOff('end_date');
-  display.displayOff('search_city_button');
+  display.displayOn('search_city_button');
   display.displayOn('main_map');
   display.displayOn('events_table');
   display.displayOn("next-page");
@@ -77,15 +77,12 @@ NewPageView.prototype.createAboutPage = function(){
   display.displayOn('about_container');
   display.displayOn('about_title');
   display.displayOn('about_text');
-
 }
 
 NewPageView.prototype.changeAboutPageElement = function(id,text){
 
  display.displayOn('about_container');
  document.getElementById(id).innerText = text;
-
 }
-
 
 module.exports = NewPageView;

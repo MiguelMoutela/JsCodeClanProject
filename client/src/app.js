@@ -54,8 +54,11 @@ const app = function(){
     mainMap.aroundMe();
   }
 
-  const nearSearchButton = document.querySelector('#near_search');
-  nearSearchButton.addEventListener('click', nearSearchLoader);
+
+  const aroundMehomepageButton = document.querySelector('#near_search');
+  aroundMehomepageButton.addEventListener('click', nearSearchLoader);
+
+
 
 
   // NOTE the following two functions are related to the
@@ -117,26 +120,37 @@ const app = function(){
   const aroundMeSearch = function(event){
     event.preventDefault();
     formView.searchAroundMe(mainMap);
-
   }
 
 
   const aroundMeSearchButton = document.querySelector('#search_around_me_button');
   aroundMeSearchButton.addEventListener('click', aroundMeSearch);
 
-  const testLoader =function(){
-    const newSearch = new NewPageView();
-    newSearch.clearpage();
-    newSearch.createCitySearch();
-    mainMap.refresh();
-    mainMap.updateMap(defaultLocation, 3);
-  }
+//   const navCitySearchButton = document.querySelector('#city-nav');
+//   navCitySearchButton.addEventListener('click', function(){
+//   testLoader();
+//   console.log('hi');
+// });
 
-  const navCitySearchButton = document.querySelector('#city-nav');
-  navCitySearchButton.addEventListener('click', function(){
-  testLoader();
-  console.log('hi');
-});
+  const homepageButton = document.querySelector('#home-nav');
+  homepageButton.addEventListener('click', function(){
+    const newHomepage = new NewPageView();
+    newHomepage.clearpage();
+    newHomepage.createHomepage();
+
+  });
+
+  const cityButton = document.querySelector('#city-nav');
+  cityButton.addEventListener('click', citySearchLoader);
+
+  const nearSearchButton = document.querySelector('#aroundMe-nav');
+  nearSearchButton.addEventListener('click', nearSearchLoader);
+
+  const dbButton = document.querySelector('#myEvents-nav');
+  dbButton.addEventListener('click', dbViewLoader);
+
+  const aboutButton = document.querySelector('#about-nav');
+  aboutButton.addEventListener('click', aboutPageLoader);
 
   // NOTE not sure what this request to get all events with cat comedy was used for...
 
