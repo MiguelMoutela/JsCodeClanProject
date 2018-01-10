@@ -87,7 +87,8 @@ const app = function(){
     const newSearch = new NewPageView();
     newSearch.clearpage();
     newSearch.createAboutPage();
-
+   homepage.changeAboutPageElement('about_title','About');
+   homepage.changeAboutPageElement('about_text','Eventify 1.0\n Created by:\n Hamish, Joao, Marta and Miguel AKA Team Fantastic');
   }
 
   const aboutPageButton = document.querySelector('#about_view');
