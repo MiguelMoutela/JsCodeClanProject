@@ -31,6 +31,7 @@ NewPageView.prototype.createCitySearch = function(){
   display.displayOff('search_around_me_button');
   display.displayOn('main_map');
   display.displayOn('events_table');
+  display.displayOn("next-page");
 }
 
 NewPageView.prototype.createNearSearch = function(){
@@ -49,6 +50,7 @@ NewPageView.prototype.createNearSearch = function(){
   display.displayOff('search_city_button');
   display.displayOn('main_map');
   display.displayOn('events_table');
+  display.displayOn("next-page");
 }
 
 NewPageView.prototype.createDbView = function(){
@@ -60,6 +62,7 @@ NewPageView.prototype.createDbView = function(){
   display.displayOff('radius_label');
   display.displayOn('main_map');
   display.displayOn('events_table');
+  display.displayOff("next-page");
 }
 
 NewPageView.prototype.createAboutPage = function(){

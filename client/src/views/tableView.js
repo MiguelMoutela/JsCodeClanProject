@@ -52,6 +52,12 @@ TableViewer.prototype.render = function(isAddButton) {
     table.appendChild(tr);
   }
 
+  const nextPageButton = document.querySelector('#next-page');
+  nextPageButton.addEventListener('click', function() {
+    const table = document.querySelector('#table_body');
+    table.innerHTML = '';
+  });
+
   const addEventName = function(event, tr){
     const eventName = document.createElement('td');
     eventName.innerText = event.title;
