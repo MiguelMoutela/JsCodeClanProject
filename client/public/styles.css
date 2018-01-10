@@ -1,11 +1,11 @@
-#burguer_nav,
 #homepage_top_cont,
 #homepage_sub_top_cont,
 #homepageForm,
 #searchBox,
 #events_table,
 #about_container,
-#next-page {
+#next-page,
+#navigation {
   display:none;
 }
 
