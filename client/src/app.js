@@ -125,6 +125,10 @@ const app = function(){
   const aroundMeSearchButton = document.querySelector('#search_around_me_button');
   aroundMeSearchButton.addEventListener('click', aroundMeSearch);
 
+  const navCitySearchButton = document.querySelector('#city-nav');
+  navCitySearchButton.addEventListener('click', showCitySearch);
+
+
   // NOTE not sure what this request to get all events with cat comedy was used for...
 
   // const request = new Request('http://api.eventful.com/json/events/search?app_key=ZpGXZc399XdxLZG9&q=comedy');
