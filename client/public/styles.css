@@ -10,7 +10,7 @@
 }
 
 
-.burger {
+/* .burger {
   $width: 28px;
   display:inline-block;
   border: 0;
@@ -19,7 +19,7 @@
   padding: 0;
   cursor: pointer;
 
-}
+} */
 
 #main_map {
   height:500px;

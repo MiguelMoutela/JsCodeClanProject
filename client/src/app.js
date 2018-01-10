@@ -3,6 +3,7 @@ const Request = require('./services/request.js');
 const MapWrapper = require('./views/mapWrapper.js');
 const NewPageView = require('./views/newPageView.js');
 const TableViewer = require('./views/tableView.js');
+const DbView = require('./views/dbView.js');
 
 
 const app = function(){
@@ -65,9 +66,10 @@ const app = function(){
     const newSearch = new NewPageView();
     newSearch.clearpage();
     newSearch.createDbView();
+    const dbMap = new DbView();
+    dbMap.renderDbMap();
     const newRequest = new Request('http://localhost:3000/api/EventWishList');
     newRequest.get(function(events){
-      console.log(events);
       const tableViewer = new TableViewer(events);
       tableViewer.render(false);
     })
@@ -85,7 +87,8 @@ const app = function(){
     const newSearch = new NewPageView();
     newSearch.clearpage();
     newSearch.createAboutPage();
-
+   homepage.changeAboutPageElement('about_title','About');
+   homepage.changeAboutPageElement('about_text','Eventify 1.0\n Created by:\n Hamish, Joao, Marta and Miguel AKA Team Fantastic');
   }
 
   const aboutPageButton = document.querySelector('#about_view');
