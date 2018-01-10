@@ -46,7 +46,7 @@ const app = function(){
   // NOTE the following two functions are related to the
   //search around button  me  on homepage
 
-  const nearSearchLoader =function(){
+  const nearSearchLoader = function(){
     const newSearch = new NewPageView();
     newSearch.clearpage();
     newSearch.createNearSearch();
@@ -104,7 +104,6 @@ const app = function(){
     const inputCity = document.querySelector('#city').value;
     mainMap.centerOnInputCity(inputCity);
     formView.searchByCity(mainMap);
-
   }
 
 
@@ -125,9 +124,19 @@ const app = function(){
   const aroundMeSearchButton = document.querySelector('#search_around_me_button');
   aroundMeSearchButton.addEventListener('click', aroundMeSearch);
 
-  const navCitySearchButton = document.querySelector('#city-nav');
-  navCitySearchButton.addEventListener('click', showCitySearch);
+  const testLoader =function(){
+    const newSearch = new NewPageView();
+    newSearch.clearpage();
+    newSearch.createCitySearch();
+    mainMap.refresh();
+    mainMap.updateMap(defaultLocation, 3);
+  }
 
+  const navCitySearchButton = document.querySelector('#city-nav');
+  navCitySearchButton.addEventListener('click', function(){
+  testLoader();
+  console.log('hi');
+});
 
   // NOTE not sure what this request to get all events with cat comedy was used for...
 
