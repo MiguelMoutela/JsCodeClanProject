@@ -21,8 +21,7 @@ const app = function(){
     lng: 0.0
   };
 
-  const mainMap = new MapWrapper(mapContainer, defaultLocation, 3 );
-
+  let mainMap = new MapWrapper(mapContainer, defaultLocation, 3 );
 
   // NOTE creating a new formview to call formview functions//
 
@@ -42,11 +41,10 @@ const app = function(){
   const citySearchButton = document.querySelector('#city_search');
   citySearchButton.addEventListener('click', citySearchLoader);
 
-
   // NOTE the following two functions are related to the
   //search around button  me  on homepage
 
-  const nearSearchLoader =function(){
+  const nearSearchLoader = function(){
     const newSearch = new NewPageView();
     newSearch.clearpage();
     newSearch.createNearSearch();
@@ -54,13 +52,11 @@ const app = function(){
     mainMap.aroundMe();
   }
 
-  const nearSearchButton = document.querySelector('#near_search');
-  nearSearchButton.addEventListener('click', nearSearchLoader);
-
+  const aroundMehomepageButton = document.querySelector('#near_search');
+  aroundMehomepageButton.addEventListener('click', nearSearchLoader);
 
   // NOTE the following two functions are related to the
   //view database button  on homepage
-
 
   const dbViewLoader =function(){
     const newSearch = new NewPageView();
@@ -75,10 +71,8 @@ const app = function(){
     })
   }
 
-
   const dbViewButton = document.querySelector('#db_view');
   dbViewButton.addEventListener('click', dbViewLoader);
-
 
   // NOTE the following two functions are related to the
   //about button  on homepage
@@ -94,8 +88,6 @@ const app = function(){
   const aboutPageButton = document.querySelector('#about_view');
   aboutPageButton.addEventListener('click', aboutPageLoader);
 
-
-
   // NOTE the following two functions are related to the
   //search button on the search form
 
@@ -104,39 +96,74 @@ const app = function(){
     const inputCity = document.querySelector('#city').value;
     mainMap.centerOnInputCity(inputCity);
     formView.searchByCity(mainMap);
-
   }
-
 
   const searchButton = document.querySelector('#search_city_button');
   searchButton.addEventListener('click', showCitySearch);
-
-
 
   //NOTE following two functions deal with search around me button on form
 
   const aroundMeSearch = function(event){
     event.preventDefault();
     formView.searchAroundMe(mainMap);
-
   }
-
 
   const aroundMeSearchButton = document.querySelector('#search_around_me_button');
   aroundMeSearchButton.addEventListener('click', aroundMeSearch);
 
-  // NOTE not sure what this request to get all events with cat comedy was used for...
+  const homepageButton = document.querySelector('#home-nav');
+  homepageButton.addEventListener('click', function(){
+    const newHomepage = new NewPageView();
+    newHomepage.clearpage();
+    newHomepage.createHomepage();
+  });
 
-  // const request = new Request('http://api.eventful.com/json/events/search?app_key=ZpGXZc399XdxLZG9&q=comedy');
-  // request.get(function(page) {
-  //   const tableViewer = new TableViewer(page.events.event);
-  //   tableViewer.render(true);
-  // });
+  const cityButton = document.querySelector('#city-nav');
+  cityButton.addEventListener('click', function(){
+    const table = document.querySelector('#table_body');
+    table.innerHTML = '';
+    const newHomepage = new NewPageView();
+    newHomepage.clearpage();
+    newHomepage.createCitySearch();
+    mainMap = new MapWrapper(mapContainer, defaultLocation, 3 );
+  });
 
+  const nearSearchButton = document.querySelector('#aroundMe-nav');
+  nearSearchButton.addEventListener('click', function(){
+    const table = document.querySelector('#table_body');
+    table.innerHTML = '';
+    const newHomepage = new NewPageView();
+    newHomepage.clearpage();
+    newHomepage.createNearSearch();
+    mainMap = new MapWrapper(mapContainer, defaultLocation, 3 );
+    mainMap.aroundMe();
+  });
 
+  const dbButton = document.querySelector('#myEvents-nav');
+  dbButton.addEventListener('click', function(){
+    const table = document.querySelector('#table_body');
+    table.innerHTML = '';
+    const newHomepage = new NewPageView();
+    newHomepage.clearpage();
+    newHomepage.createDbView();
+    const dbMap = new DbView();
+    dbMap.renderDbMap();
+    const newRequest = new Request('http://localhost:3000/api/EventWishList');
+    newRequest.get(function(events){
+      const tableViewer = new TableViewer(events);
+      tableViewer.render(false);
+    })
+  });
 
-  // const tableViewer = new TableViewer();
-  // tableViewer.render(false);
+  const aboutButton = document.querySelector('#about-nav');
+  aboutButton.addEventListener('click', function(){
+    const newHomepage = new NewPageView();
+    newHomepage.clearpage();
+    newHomepage.createAboutPage();
+    newHomepage.changeAboutPageElement('about_title','About');
+    newHomepage.changeAboutPageElement('about_text','Eventify 1.0\n Created by:\n Hamish, Joao, Marta and Miguel AKA Team Fantastic');
+
+  });
 }
 
 document.addEventListener('DOMContentLoaded', app);

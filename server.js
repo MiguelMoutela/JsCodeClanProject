@@ -22,39 +22,27 @@ MongoClient.connect('mongodb://localhost:27017',function(err,client){
     res.sendFile(path.join(__dirname + 'index.html'));
   });
 
-
-  //api/Paris
-  //api/music
-
-  //server.get('/api/:location')
   server.get('/api/citysearch/:city/:category/:pageNumber', function(req,res) {
     const url = `http://api.eventful.com/json/events/search?app_key=ZpGXZc399XdxLZG9&location=${req.params.city}&category=${req.params.category}&date=Future&page_number=${req.params.pageNumber};`
 
-    //This request goes from localhost:3000 to api.eventful.com
     request(url, function(error, response, body) {
-      //Body came back from api (eventful)
       if(error) {
         res.status(500);
         res.send();
         return;
       }
-      //Res is refering to the response you are sending to client(UI)
       res.send(body);
     });
   });
 
   server.get('/api/aroundMeSearch/:lat/:lng/:radius/:category/:pageNumber', function(req,res) {
-    const url = `
-http://api.eventful.com/json/events/search?app_key=ZpGXZc399XdxLZG9&where=${req.params.lat},${req.params.lng}&within=${req.params.radius}&category=${req.params.category}&date=Future&page_number=${req.params.pageNumber}`;
-
+    const url = `http://api.eventful.com/json/events/search?app_key=ZpGXZc399XdxLZG9&where=${req.params.lat},${req.params.lng}&within=${req.params.radius}&category=${req.params.category}&date=Future&page_number=${req.params.pageNumber}`;
     request(url, function(error, response, body) {
-
       if(error) {
         res.status(500);
         res.send();
         return;
       }
-
       res.send(body);
     });
   });
@@ -82,7 +70,6 @@ http://api.eventful.com/json/events/search?app_key=ZpGXZc399XdxLZG9&where=${req.
         return;
       }
       res.json(result);
-
     });
   });
 

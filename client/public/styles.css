@@ -1,43 +1,43 @@
-#burguer_nav,
 #homepage_top_cont,
 #homepage_sub_top_cont,
 #homepageForm,
 #searchBox,
 #events_table,
 #about_container,
-#next-page {
+#next-page,
+#navigation {
   display:none;
 }
 
+body {
+  background-color: AliceBlue;
+}
 
-/* .burger {
-  $width: 28px;
-  display:inline-block;
-  border: 0;
-  background: none;
-  outline: 0;
-  padding: 0;
-  cursor: pointer;
-
-} */
+table td, th{
+  border: 1px solid black;
+}
 
 #main_map {
   height:500px;
-  width:1200px;
+  width: 98.5%;
   display:none;
-  /* background: transparent url(./images/Loading.gif) no-repeat center center; */
+  border: 1px solid grey;
+  margin: 10px 10px 10px 10px;
+  content display: center;
 }
- /* NOTE for possible future CSS */
-/* #main_map img {
-  display: none;
- }
-
- #main_map.currently-loading img {
-    display: block;
-    height:500px;
-    width:1200px;
-} */
 
 th, td {
   padding: 10px;
+}
+
+.homepage_button{
+height:100px;
+width:200px;
+border-radius: 10px;
+font-size: 20px;
+text-align: center;
+}
+
+#homepage_form {
+  justify-content: center;
 }

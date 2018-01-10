@@ -1,14 +1,11 @@
 const DisplayChanger = require('./displayChanger.js');
 
-const NewPageView = function(){
-
-}
+const NewPageView = function(){}
 
 const display = new DisplayChanger();
 
 NewPageView.prototype.clearpage = function(){
   display.classOFF('toggleable');
-
 }
 
 NewPageView.prototype.createHomepage = function(){
@@ -19,7 +16,10 @@ NewPageView.prototype.createHomepage = function(){
 
 NewPageView.prototype.createCitySearch = function(){
 
-  display.displayOn('burguer_nav');
+  display.displayOn('navigation');
+  display.displayOn('city');
+  display.displayOn('city_label');
+  display.displayOn('div-navigation');
   display.displayOn('event_selection_form');
   display.displayOn('searchBox');
   display.displayOff('radius');
@@ -36,7 +36,8 @@ NewPageView.prototype.createCitySearch = function(){
 
 NewPageView.prototype.createNearSearch = function(){
 
-  display.displayOn('burguer_nav');
+  display.displayOn('navigation');
+  display.displayOn('div-navigation');
   display.displayOn('event_selection_form');
   display.displayOn('searchBox');
   display.displayOn('radius');
@@ -55,7 +56,8 @@ NewPageView.prototype.createNearSearch = function(){
 
 NewPageView.prototype.createDbView = function(){
 
-  display.displayOn('burguer_nav');
+  display.displayOn('navigation');
+  display.displayOn('div-navigation');
   display.displayOff('event_selection_form');
   display.displayOff('searchBox');
   display.displayOff('radius');
@@ -67,18 +69,17 @@ NewPageView.prototype.createDbView = function(){
 
 NewPageView.prototype.createAboutPage = function(){
 
+  display.displayOn('navigation');
+  display.displayOn('div-navigation');
   display.displayOn('about_container');
   display.displayOn('about_title');
   display.displayOn('about_text');
-
 }
 
 NewPageView.prototype.changeAboutPageElement = function(id,text){
 
  display.displayOn('about_container');
  document.getElementById(id).innerText = text;
-
 }
-
 
 module.exports = NewPageView;

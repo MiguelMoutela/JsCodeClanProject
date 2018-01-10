@@ -10,16 +10,13 @@
 <body>
 
   <div id="body_container">
-
-    <div id="navigation" class="toggleable">
-      <nav id="burger_navigation" class="navigation">
-        <ul>
-          <li id="home-nav">Home</li>
-          <li id="city-nav">Choose a City</li>
-          <li id="aroundMe-nav">Around me</li>
-          <li id="myEvents-nav">My Events</li>
-          <li id="about-nav">About</li>
-        </ul>
+    <div id="div-navigation" class="toggleable">
+      <nav id="navigation" class="navigation">
+          <button id="home-nav" type="button" name="button">Home</button>
+          <button id="city-nav" type="button" name="button">Choose a City</button>
+          <button id="aroundMe-nav" type="button" name="button">Around Me</button>
+          <button id="myEvents-nav" type="button" name="button">My Events</button>
+          <button id="about-nav" type="button" name="button">About</button>
       </nav>
     </div>
 
@@ -30,20 +27,17 @@
     <div id="homepage_sub_top_cont" class="toggleable">
       <h2 id = "homepage_subtitle"> Search </h2>
     </div>
+
     <div id="homepageForm" class="toggleable">
-
-
       <form id="homepage_form" action="index.html" method="post">
-        <input id ="city_search" class= "homepage_button" type="button"  value="by city or postcode">
-        <input id ="near_search" class= "homepage_button" type="button"   value="around me">
-        <input id ="db_view" class= "homepage_button" type="button"  value="My  choosen events ">
-        <input id ="about_view" class= "homepage_button" type="button"  value="about">
+        <input id ="city_search" class= "homepage_button" type="button"  value="By City">
+        <input id ="near_search" class= "homepage_button" type="button"   value="Around Me">
+        <input id ="db_view" class= "homepage_button" type="button"  value="My Chosen Events ">
+        <input id ="about_view" class= "homepage_button" type="button"  value="About">
       </form>
     </div>
 
-
     <div id="searchBox">
-
       <form id="event_selection_form" class="toggleable">
         <label id= "radius_label" for="radius">Radius</label>
         <input type="text" id="radius" name="radius">
@@ -86,13 +80,11 @@
         <label id = "end_date_label" for="end_date">End date</label>
         <input type="date" id="end_date" name="end_date">
         <button id="search_city_button" type="submit">Search for events</button>
-        <button id="search_around_me_button" type="submit">Search around me </button>
+        <button id="search_around_me_button" type="submit">Search around me</button>
       </form>
     </div>
 
     <div id="main_map" class="toggleable" ></div>
-
-    <!-- <div id="main_map" class="toggleable"><img src="./images/Loading.gif" /></div>  -->
 
     <div id="events_table" class="toggleable">
       <table>
