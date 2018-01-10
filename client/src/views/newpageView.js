@@ -62,7 +62,7 @@ NewPageView.prototype.createDbView = function(){
   display.displayOff('radius_label');
   display.displayOn('main_map');
   display.displayOn('events_table');
-  display.displayOn("next-page");
+  display.displayOff("next-page");
 }
 
 NewPageView.prototype.createAboutPage = function(){
