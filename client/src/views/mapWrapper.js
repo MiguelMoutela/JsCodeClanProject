@@ -106,6 +106,8 @@ MapWrapper.prototype.displayEventMarkers = function(object) {
       markerInfo.open(this.map, marker);
 
     });
+  }
+}
 
 //NOTE this is code for a possible way of calculating route
     // marker.addListener('dblclick', function() {
@@ -241,7 +243,7 @@ MapWrapper.prototype.displayEventMarkers = function(object) {
 
 
 
-  }
-}
+
+
 
 module.exports = MapWrapper;

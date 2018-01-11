@@ -13,8 +13,8 @@ DbView.prototype.renderDbMap= function(){
 
     const mapContainer = document.querySelector('#main_map');
 
-    const latCenter = parseFloat(object[1].latitude);
-    const lngCenter = parseFloat(object[1].longitude);
+    const latCenter = parseFloat(object[0].latitude);
+    const lngCenter = parseFloat(object[0].longitude);
 
     const newMapCenter = {
       lat: latCenter,

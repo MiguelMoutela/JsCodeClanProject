@@ -96,6 +96,8 @@ const app = function(){
     const inputCity = document.querySelector('#city').value;
     mainMap.centerOnInputCity(inputCity);
     formView.searchByCity(mainMap);
+    const table = document.querySelector('#table_body');
+    table.innerHTML = '';
   }
 
   const searchButton = document.querySelector('#search_city_button');
@@ -106,6 +108,8 @@ const app = function(){
   const aroundMeSearch = function(event){
     event.preventDefault();
     formView.searchAroundMe(mainMap);
+    const newtable = document.querySelector('#table_body');
+    newtable.innerHTML = '';
   }
 
   const aroundMeSearchButton = document.querySelector('#search_around_me_button');
@@ -125,6 +129,8 @@ const app = function(){
     const newHomepage = new NewPageView();
     newHomepage.clearpage();
     newHomepage.createCitySearch();
+    const cityButton = document.querySelector('#search_city_button');
+    cityButton.style.display='block';
     mainMap = new MapWrapper(mapContainer, defaultLocation, 3 );
   });
 
@@ -135,6 +141,8 @@ const app = function(){
     const newHomepage = new NewPageView();
     newHomepage.clearpage();
     newHomepage.createNearSearch();
+    const aroundMeButton = document.querySelector('#search_around_me_button');
+    aroundMeButton.style.display='block';
     mainMap = new MapWrapper(mapContainer, defaultLocation, 3 );
     mainMap.aroundMe();
   });
