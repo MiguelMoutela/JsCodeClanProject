@@ -21,7 +21,7 @@ Route Planner.
 Integrate weather information from Weather API.
 Police data including crimes committed for surrounding area.
 
-##AIMS/PURPOSE:
+## AIMS/PURPOSE:
 To gain experience working in a team with other developers - to understand some of the challenges this creates and ways to overcome these.
 
 To have the opportunity to try using agile practices.
