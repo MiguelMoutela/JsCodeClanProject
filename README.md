@@ -11,12 +11,12 @@ Eventful
 Google Maps
 Geo-Location
 
-### MVP
+## MVP
 Display upcoming events on a map, and relevant details within a table.
 Allow users to add events to a 'favourites list' database.
 Perform CRUD operation on database items.
 
-### Possible Extensions
+## Possible Extensions
 Route Planner.
 Integrate weather information from Weather API.
 Police data including crimes committed for surrounding area.
