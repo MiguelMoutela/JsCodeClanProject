@@ -1,11 +1,111 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="styles.css">
-    <script src="/bundle.js"></script>
-    <title>Event Dashboard</title>
-  </head>
-  <body>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://maps.googleapis.com/maps/api/js"></script>
+  <script src="/bundle.js"></script>
+  <title>Map Display</title>
+</head>
+<body>
+
+  <div id="body_container">
+    <div id="div-navigation" class="toggleable">
+      <nav id="navigation" class="navigation">
+          <button id="home-nav" type="button" name="button">Home</button>
+          <button id="city-nav" type="button" name="button">Choose a City</button>
+          <button id="aroundMe-nav" type="button" name="button">Around Me</button>
+          <button id="myEvents-nav" type="button" name="button">My Events</button>
+          <button id="about-nav" type="button" name="button">About</button>
+      </nav>
+    </div>
+
+    <div id="homepage_top_cont" class="toggleable">
+      <h1 id= "homepage_title"> Eventify</h1>
+    </div>
+
+    <div id="homepage_sub_top_cont" class="toggleable">
+      <h2 id = "homepage_subtitle"> Search </h2>
+    </div>
+
+    <div id="homepageForm" class="toggleable">
+      <form id="homepage_form" action="index.html" method="post">
+        <input id ="city_search" class= "homepage_button" type="button"  value="By City">
+        <input id ="near_search" class= "homepage_button" type="button"   value="Around Me">
+        <input id ="db_view" class= "homepage_button" type="button"  value="My Chosen Events ">
+        <input id ="about_view" class= "homepage_button" type="button"  value="About">
+      </form>
+    </div>
+
+    <div id="searchBox">
+      <form id="event_selection_form" class="toggleable">
+        <label id= "radius_label" for="radius">Radius</label>
+        <input type="text" id="radius" name="radius">
+        <label id ="city_label" for="city">Type a city</label>
+        <input type="text" id="city" name="city">
+        <label for="categories_list">Select a category</label>
+        <select id="categories_list" name="categories_list">
+          <option value='music'> Music </option>
+          <option value='conference'> Conferences </option>
+          <option value='comedy'> Comedy </option>
+          <option value='learning_education'> Learning and Education </option>
+          <option value='family_fun_kids'> Family  friendly events </option>
+          <option value='festivals_parades'> Festivals and Parades </option>
+          <option value='movies_film'> Movies and films </option>
+          <option value='food'> Food </option>
+          <option value='fundraisers'> Fundraising </option>
+          <option value='art'> Art </option>
+          <option value='support'> Support events </option>
+          <option value='holiday'> Holiday related events </option>
+          <option value='books'> Books </option>
+          <option value='attractions'> Attractions </option>
+          <option value='community'> Community events </option>
+          <option value='business'> Business events </option>
+          <option value='singles_social'> Events for one </option>
+          <option value='schools_alumni'> Alumni related events </option>
+          <option value='clubs_associations'> Clubs and Associations </option>
+          <option value='outdoors_recreation'> Outdoors events </option>
+          <option value='performing_arts'> Performing arts events </option>
+          <option value='animals'> Animal related events </option>
+          <option value='politics_activism'> Politics and activism </option>
+          <option value='sales'> Sales </option>
+          <option value='science'> Science events </option>
+          <option value='religion_spirituality'> Religion and spirituality </option>
+          <option value='sports'> Sports </option>
+          <option value='technology'> Technology </option>
+          <option value='other'> Unclassified events </option>
+        </select>
+        <label id = "start_date_label" for="start_date">Start date</label>
+        <input type="date" id="start_date" name="start_date">
+        <label id = "end_date_label" for="end_date">End date</label>
+        <input type="date" id="end_date" name="end_date">
+        <button id="search_city_button" type="submit">Search for events</button>
+        <button id="search_around_me_button" type="submit">Search around me</button>
+      </form>
+    </div>
+
+    <div id="main_map" class="toggleable" ></div>
+
+    <div id="events_table" class="toggleable">
+      <table>
+        <thead>
+          <th>Event name</th>
+          <th>Venue name</th>
+          <th>Postcode</th>
+          <th>End Time</th>
+          <th>Category</th>
+          <th>Database action</th>
+        </thead>
+        <tbody id="table_body">
+        </tbody>
+      </table>
+      <button id="next-page"> Next Page</button>
+    </div>
+    <div id="about_container" class="toggleable">
+      <h1 id = "about_title">ABOUT TITLE TO GO HERE</h1>
+      <p id = "about_text">text about to go here</p>
+    </div>
+  </div>
+
+</body>
 </html>
